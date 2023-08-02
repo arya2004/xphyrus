@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.AuthAPI", "Xphyrus.AuthAPI\Xphyrus.AuthAPI.csproj", "{63B8A180-071D-4A31-88A3-8B3889E5A00E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.SubmissionAPI", "Xphyrus.SubmissionAPI\Xphyrus.SubmissionAPI.csproj", "{44EB117B-90FF-4336-ABD9-2DE3289F21F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.ExaminerAPI", "Xphyrus.ExaminerAPI\Xphyrus.ExaminerAPI.csproj", "{D6321722-F61E-4ED7-8968-C70589D89CA2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63B8A180-071D-4A31-88A3-8B3889E5A00E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B8A180-071D-4A31-88A3-8B3889E5A00E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B8A180-071D-4A31-88A3-8B3889E5A00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B8A180-071D-4A31-88A3-8B3889E5A00E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F407FA8D-CD10-4817-82CD-2AA5D1417A21}
+	EndGlobalSection
+EndGlobal
