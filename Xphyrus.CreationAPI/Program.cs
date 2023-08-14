@@ -1,6 +1,18 @@
+using StackExchange.Redis;
+using Xphyrus.CreationAPI.Service;
+using Xphyrus.CreationAPI.Service.IService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+{
+    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+    return ConnectionMultiplexer.Connect(options);
+});
+
+builder.Services.AddScoped<ISpacesService, SpacesService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

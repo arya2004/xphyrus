@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.AuthAPI", "Xphyrus.AuthAPI\Xphyrus.AuthAPI.csproj", "{63B8A180-071D-4A31-88A3-8B3889E5A00E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.AuthAPI", "Xphyrus.AuthAPI\Xphyrus.AuthAPI.csproj", "{63B8A180-071D-4A31-88A3-8B3889E5A00E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.SubmissionAPI", "Xphyrus.SubmissionAPI\Xphyrus.SubmissionAPI.csproj", "{44EB117B-90FF-4336-ABD9-2DE3289F21F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.SubmissionAPI", "Xphyrus.SubmissionAPI\Xphyrus.SubmissionAPI.csproj", "{44EB117B-90FF-4336-ABD9-2DE3289F21F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.ExaminerAPI", "Xphyrus.ExaminerAPI\Xphyrus.ExaminerAPI.csproj", "{D6321722-F61E-4ED7-8968-C70589D89CA2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.CreationAPI", "Xphyrus.CreationAPI\Xphyrus.CreationAPI.csproj", "{33725DF4-5CD4-48AA-937C-FB581137D374}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44EB117B-90FF-4336-ABD9-2DE3289F21F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6321722-F61E-4ED7-8968-C70589D89CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33725DF4-5CD4-48AA-937C-FB581137D374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33725DF4-5CD4-48AA-937C-FB581137D374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33725DF4-5CD4-48AA-937C-FB581137D374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33725DF4-5CD4-48AA-937C-FB581137D374}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

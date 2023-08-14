@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Xphyrus.ExaminerAPI/Xphyrus.ExaminerAPI.csproj", "Xphyrus.ExaminerAPI/"]
-RUN dotnet restore "Xphyrus.ExaminerAPI/Xphyrus.ExaminerAPI.csproj"
+COPY ["Xphyrus.CreationAPI/Xphyrus.CreationAPI.csproj", "Xphyrus.CreationAPI/"]
+RUN dotnet restore "Xphyrus.CreationAPI/Xphyrus.CreationAPI.csproj"
 COPY . .
-WORKDIR "/src/Xphyrus.ExaminerAPI"
-RUN dotnet build "Xphyrus.ExaminerAPI.csproj" -c Release -o /app/build
+WORKDIR "/src/Xphyrus.CreationAPI"
+RUN dotnet build "Xphyrus.CreationAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Xphyrus.ExaminerAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Xphyrus.CreationAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Xphyrus.ExaminerAPI.dll"]
+ENTRYPOINT ["dotnet", "Xphyrus.CreationAPI.dll"]

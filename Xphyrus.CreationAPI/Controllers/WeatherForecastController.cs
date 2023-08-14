@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Xphyrus.ExaminerAPI.Controllers
+namespace Xphyrus.CreationAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

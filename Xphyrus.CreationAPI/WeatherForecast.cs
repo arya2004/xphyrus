@@ -1,4 +1,4 @@
-namespace Xphyrus.ExaminerAPI
+namespace Xphyrus.CreationAPI
 {
     public class WeatherForecast
     {
