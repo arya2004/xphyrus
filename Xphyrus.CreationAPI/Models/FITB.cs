@@ -2,6 +2,8 @@
 {
     public class FITB
     {
-        public string Id { get; set; }
+        public string IncompleteSentence { get; set; }
+        public string[]? Choices { get; set; }
+        public string[] Correct { get; set; }
     }
 }

@@ -6,8 +6,11 @@ namespace Xphyrus.CreationAPI.Service.IService
     {
         Task<Spaces> CreateSpace(Spaces spaces);
         Task<Spaces> GetSpaces(string spackId);
+        Task<Spaces> GetAdminSpaces(string spackId);
+        Task<Spaces> GetUserSpaces(string spackId);
         Task<Spaces> UpdateSpace(Spaces spaces);
         Task<bool> DeleteSpace(string spackId);
+
 
     }
 }

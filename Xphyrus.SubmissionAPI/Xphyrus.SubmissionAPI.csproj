@@ -15,4 +15,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Dtos\" />
+    <Folder Include="Service\IService\" />
+  </ItemGroup>
+
 </Project>

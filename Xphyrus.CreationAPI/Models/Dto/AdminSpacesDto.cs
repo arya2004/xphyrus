@@ -1,18 +1,15 @@
-﻿namespace Xphyrus.CreationAPI.Models
+﻿namespace Xphyrus.CreationAPI.Models.Dto
 {
-    public class Spaces
+    public class AdminSpacesDto
     {
-        public Spaces()
-        {
-            
-        }
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string  Code { get; set; }
+        public string Code { get; set; }
         public bool IsStrict { get; set; }
         public string[] Admins { get; set; }
-        public Taker[] Takers { get; set; }
+       
+        public string[] Joined { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -21,11 +18,5 @@
         public List<FITB>? FITBs { get; set; }
         public List<Essay>? Essays { get; set; }
         public List<Coding>? Codings { get; set; }
-    }
-
-    public class Taker
-    {
-        public string UserId { get; set; }
-        public bool HasSubmitted { get; set; }
     }
 }

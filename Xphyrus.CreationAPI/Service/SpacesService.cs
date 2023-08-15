@@ -27,12 +27,29 @@ namespace Xphyrus.CreationAPI.Service
             var data = await _database.StringGetAsync(spackId);
             return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<Spaces>(data);
         }
+        public async Task<Spaces> Get(string spackId)
+        {
+            var data = await _database.StringGetAsync(spackId);
+            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<Spaces>(data);
+        }
+
 
         public async Task<Spaces> UpdateSpace(Spaces spaces)
         {
             var created = await _database.StringSetAsync(spaces.Id, JsonSerializer.Serialize(spaces), TimeSpan.FromDays(30000));
             if (!created) return null;
             return await GetSpaces(spaces.Id);
+        }
+
+        public async Task<Spaces> GetAdminSpaces(string spackId)
+        {
+            var data = await _database.StringGetAsync(spackId);
+            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<Spaces>(data);
+        }
+
+        public async Task<Spaces> GetUserSpaces(string spackId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

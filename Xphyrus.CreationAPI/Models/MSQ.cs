@@ -2,6 +2,8 @@
 {
     public class MSQ
     {
-        public string Id { get; set; }
+        public string Question { get; set; }
+        public string[] Choices { get; set; }
+        public int[] Corrects { get; set; }
     }
 }

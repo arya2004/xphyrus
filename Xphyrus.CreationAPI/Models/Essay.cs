@@ -2,6 +2,7 @@
 {
     public class Essay
     {   
-        public string Id { get; set; }
+        public string Paragraph { get; set; }
+
     }
 }
