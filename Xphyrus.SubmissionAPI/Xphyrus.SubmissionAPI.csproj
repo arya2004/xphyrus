@@ -33,8 +33,4 @@
 	  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.31.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Service\IService\" />
-  </ItemGroup>
-
 </Project>

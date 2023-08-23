@@ -21,6 +21,9 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
