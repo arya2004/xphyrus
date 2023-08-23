@@ -1,4 +1,6 @@
-﻿namespace Xphyrus.CreationAPI.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Xphyrus.CreationAPI.Models
 {
     public class Spaces
     {
@@ -11,21 +13,12 @@
         public string Description { get; set; }
         public string  Code { get; set; }
         public bool IsStrict { get; set; }
-        public string[] Admins { get; set; }
-        public Taker[] Takers { get; set; }
+        public ICollection<IdentityUser> Admins { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<MCQ>? MCQs { get; set; }
-        public List<MSQ>? MSQs { get; set; }
-        public List<FITB>? FITBs { get; set; }
-        public List<Essay>? Essays { get; set; }
-        public List<Coding>? Codings { get; set; }
+        public ICollection<Coding> Codings { get; set; }
     }
 
-    public class Taker
-    {
-        public string UserId { get; set; }
-        public bool HasSubmitted { get; set; }
-    }
+   
 }

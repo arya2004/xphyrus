@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.AuthAPI", "Xphyrus.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.SubmissionAPI", "Xphyrus.SubmissionAPI\Xphyrus.SubmissionAPI.csproj", "{44EB117B-90FF-4336-ABD9-2DE3289F21F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.CreationAPI", "Xphyrus.CreationAPI\Xphyrus.CreationAPI.csproj", "{33725DF4-5CD4-48AA-937C-FB581137D374}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.AssesmentAPI", "Xphyrus.CreationAPI\Xphyrus.AssesmentAPI.csproj", "{33725DF4-5CD4-48AA-937C-FB581137D374}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

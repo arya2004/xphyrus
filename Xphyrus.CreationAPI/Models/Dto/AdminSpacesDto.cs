@@ -13,10 +13,7 @@
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public List<MCQ>? MCQs { get; set; }
-        public List<MSQ>? MSQs { get; set; }
-        public List<FITB>? FITBs { get; set; }
-        public List<Essay>? Essays { get; set; }
+ 
         public List<Coding>? Codings { get; set; }
     }
 }
