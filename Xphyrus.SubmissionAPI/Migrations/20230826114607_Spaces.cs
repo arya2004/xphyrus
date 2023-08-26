@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Xphyrus.AssesmentAPI.Migrations
+namespace Xphyrus.SubmissionAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initMigs : Migration
+    public partial class Spaces : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

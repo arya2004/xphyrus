@@ -1,6 +1,7 @@
 ﻿using Azure;
 using Newtonsoft.Json;
 using System;
+using System.Text;
 using Xphyrus.SubmissionAPI.Models.Dtos;
 using Xphyrus.SubmissionAPI.Service.IService;
 
@@ -25,7 +26,8 @@ namespace Xphyrus.SubmissionAPI.Service
         }
 
         public async Task<TokenResponse> SubmitPost(SubmissionRequest request)
-        {
+        {   
+            
             return new TokenResponse();
         }
            

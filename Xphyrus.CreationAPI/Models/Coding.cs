@@ -4,7 +4,7 @@ namespace Xphyrus.CreationAPI.Models
 {
     public class Coding
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Prompt { get; set; }
         public string Language { get; set; }
@@ -21,7 +21,7 @@ namespace Xphyrus.CreationAPI.Models
 
     public class EvliationCase
     {   
-        public string EvliationCaseId { get; set; }
+        public int EvliationCaseId { get; set; }
         public string InputCase { get; set; }
         public string OutputCase { get; set; }
     }

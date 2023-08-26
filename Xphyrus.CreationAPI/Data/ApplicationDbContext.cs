@@ -10,11 +10,12 @@ namespace Xphyrus.CreationAPI.Data
         {
         }
         public DbSet<Coding> Coding { get; set; }
-        public DbSet<EvliationCase> evliationCases { get; set; }
+        public DbSet<EvliationCase> EvliationCases { get; set; }
         public DbSet<MasterCode> MasterCode { get; set; }
-        public DbSet<COnstraint> constrainss { get; set; }
-        public DbSet<Example> examples { get; set; }
-
+        public DbSet<COnstraint> Constrainss { get; set; }
+        public DbSet<Example> Examples { get; set; }
+        public DbSet<Assesment> Assesments { get; set; }
+        public DbSet<AssesmentAdmin> AssesmentAdmins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

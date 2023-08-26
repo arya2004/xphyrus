@@ -1,15 +1,52 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initMig : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Assesments",
+                columns: table => new
+                {
+                    AssesmentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsStrict = table.Column<bool>(type: "bit", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assesments", x => x.AssesmentId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AssesmentAdmins",
+                columns: table => new
+                {
+                    AssesmentAdminId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AssesmentId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AssesmentAdmins", x => x.AssesmentAdminId);
+                    table.ForeignKey(
+                        name: "FK_AssesmentAdmins_Assesments_AssesmentId",
+                        column: x => x.AssesmentId,
+                        principalTable: "Assesments",
+                        principalColumn: "AssesmentId");
+                });
+
             migrationBuilder.CreateTable(
                 name: "Coding",
                 columns: table => new
@@ -19,15 +56,21 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     Prompt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     InputFormat = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OutputFormat = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    OutputFormat = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AssesmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Coding", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Coding_Assesments_AssesmentId",
+                        column: x => x.AssesmentId,
+                        principalTable: "Assesments",
+                        principalColumn: "AssesmentId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "constrainss",
+                name: "Constrainss",
                 columns: table => new
                 {
                     COnstraintId = table.Column<int>(type: "int", nullable: false)
@@ -37,35 +80,36 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_constrainss", x => x.COnstraintId);
+                    table.PrimaryKey("PK_Constrainss", x => x.COnstraintId);
                     table.ForeignKey(
-                        name: "FK_constrainss_Coding_CodingId",
+                        name: "FK_Constrainss_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "evliationCases",
+                name: "EvliationCases",
                 columns: table => new
                 {
-                    EvliationCaseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EvliationCaseId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     InputCase = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OutputCase = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_evliationCases", x => x.EvliationCaseId);
+                    table.PrimaryKey("PK_EvliationCases", x => x.EvliationCaseId);
                     table.ForeignKey(
-                        name: "FK_evliationCases_Coding_CodingId",
+                        name: "FK_EvliationCases_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "examples",
+                name: "Examples",
                 columns: table => new
                 {
                     ExampleId = table.Column<int>(type: "int", nullable: false)
@@ -77,9 +121,9 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_examples", x => x.ExampleId);
+                    table.PrimaryKey("PK_Examples", x => x.ExampleId);
                     table.ForeignKey(
-                        name: "FK_examples_Coding_CodingId",
+                        name: "FK_Examples_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
                         principalColumn: "Id");
@@ -106,18 +150,28 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_constrainss_CodingId",
-                table: "constrainss",
+                name: "IX_AssesmentAdmins_AssesmentId",
+                table: "AssesmentAdmins",
+                column: "AssesmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Coding_AssesmentId",
+                table: "Coding",
+                column: "AssesmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Constrainss_CodingId",
+                table: "Constrainss",
                 column: "CodingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_evliationCases_CodingId",
-                table: "evliationCases",
+                name: "IX_EvliationCases_CodingId",
+                table: "EvliationCases",
                 column: "CodingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_examples_CodingId",
-                table: "examples",
+                name: "IX_Examples_CodingId",
+                table: "Examples",
                 column: "CodingId");
 
             migrationBuilder.CreateIndex(
@@ -130,19 +184,25 @@ namespace Xphyrus.AssesmentAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "constrainss");
+                name: "AssesmentAdmins");
 
             migrationBuilder.DropTable(
-                name: "evliationCases");
+                name: "Constrainss");
 
             migrationBuilder.DropTable(
-                name: "examples");
+                name: "EvliationCases");
+
+            migrationBuilder.DropTable(
+                name: "Examples");
 
             migrationBuilder.DropTable(
                 name: "MasterCode");
 
             migrationBuilder.DropTable(
                 name: "Coding");
+
+            migrationBuilder.DropTable(
+                name: "Assesments");
         }
     }
 }

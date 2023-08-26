@@ -1,55 +1,59 @@
-﻿using StackExchange.Redis;
-using System.Text.Json;
-using Xphyrus.CreationAPI.Models;
-using Xphyrus.CreationAPI.Service.IService;
+﻿//using Microsoft.EntityFrameworkCore;
+//using StackExchange.Redis;
+//using System.Text.Json;
+//using Xphyrus.CreationAPI.Data;
+//using Xphyrus.CreationAPI.Models;
+//using Xphyrus.CreationAPI.Models.Dto;
+//using Xphyrus.CreationAPI.Service.IService;
 
-namespace Xphyrus.CreationAPI.Service
-{
-    public class SpacesService : ISpacesService
-    {   
-        private readonly IDatabase _database;
-        public SpacesService(IConnectionMultiplexer redis)
-        {
-            _database = redis.GetDatabase();
-        }
-        public async Task<Spaces> CreateSpace(Spaces spaces)
-        {
-            throw new NotImplementedException();
-        }
+//namespace Xphyrus.CreationAPI.Service
+//{
+//    public class SpacesService : ISpacesService
+//    {   
+//        private readonly IDatabase _database;
+//        private readonly ApplicatioDbContext _applicatioDbContext;
+//        public SpacesService(IConnectionMultiplexer redis, ApplicatioDbContext applicatioDbContext)
+//        {
+//            _database = redis.GetDatabase();
+//            _applicatioDbContext = applicatioDbContext;
+//        }
 
-        public async Task<bool> DeleteSpace(string spacesId)
-        {
-            return await _database.KeyDeleteAsync(spacesId);
-        }
+//        public async Task<Assesment> CreateSpace(Assesment spaces)
+//        {
+//            _applicatioDbContext.spaces.AddAsync(spaces);
+//            _applicatioDbContext.SaveChanges();
+//            Assesment spaces1 = await _applicatioDbContext.spaces.FirstOrDefaultAsync(i => i.Id == spaces.Id);
+//            return spaces1;
+            
+//        }
 
-        public async Task<Spaces> GetSpaces(string spackId)
-        {
-            var data = await _database.StringGetAsync(spackId);
-            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<Spaces>(data);
-        }
-        public async Task<Spaces> Get(string spackId)
-        {
-            var data = await _database.StringGetAsync(spackId);
-            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<Spaces>(data);
-        }
+//        public async Task<bool> DeleteSpace(string spackId)
+//        {
+//            Assesment? spaces = await _applicatioDbContext.spaces.FirstOrDefaultAsync(u => u.Id == spackId);
+//            if(spaces == null) return false;
+//            _applicatioDbContext.spaces.Remove(spaces);
+//            _applicatioDbContext.SaveChanges();
+//            return true;
+//        }
 
+//        public Task<Assesment> GetAdminSpaces(string spackId)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public async Task<Spaces> UpdateSpace(Spaces spaces)
-        {
-            var created = await _database.StringSetAsync(spaces.Id, JsonSerializer.Serialize(spaces), TimeSpan.FromDays(30000));
-            if (!created) return null;
-            return await GetSpaces(spaces.Id);
-        }
+//        public Task<Assesment> GetStudentSpaces(string spackId)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public async Task<Spaces> GetAdminSpaces(string spackId)
-        {
-            var data = await _database.StringGetAsync(spackId);
-            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<Spaces>(data);
-        }
+//        public Task<Assesment> UpdateSpace(Assesment spaces)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-        public async Task<Spaces> GetUserSpaces(string spackId)
-        {
-            throw new NotImplementedException();
-        }
-    }
-}
+//        Task<AdminSpacesDto> ISpacesService.GetAdminSpaces(string spackId)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//}
