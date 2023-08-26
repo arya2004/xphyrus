@@ -5,6 +5,8 @@ using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System.Text;
 using Xphyrus.SubmissionAPI.Data;
+using Xphyrus.SubmissionAPI.Service;
+using Xphyrus.SubmissionAPI.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,9 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
+
+
+builder.Services.AddScoped<IJudgeService, JudgeService>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
