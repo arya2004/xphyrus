@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class Admin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,9 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 name: "AssesmentAdmins",
                 columns: table => new
                 {
-                    AssesmentAdminId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AssesmentAdminId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AdminId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AssesmentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -51,7 +53,8 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 name: "Coding",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Prompt = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -76,7 +79,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     COnstraintId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Constraint = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CodingId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,7 +99,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InputCase = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OutputCase = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CodingId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -117,7 +120,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Output = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Explaination = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CodingId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,7 +140,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Language = table.Column<int>(type: "int", nullable: false),
-                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CodingId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

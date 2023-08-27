@@ -1,9 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System.Text;
+using Xphyrus.AssesmentAPI;
 using Xphyrus.CreationAPI.Data;
 using Xphyrus.CreationAPI.Service;
 using Xphyrus.CreationAPI.Service.IService;
@@ -24,6 +26,9 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //builder.Services.AddScoped<ISpacesService, SpacesService>();
 

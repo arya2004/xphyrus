@@ -1,6 +1,6 @@
 ﻿namespace Xphyrus.CreationAPI.Models.Dto
 {
-    public class AdminSpacesDto
+    public class AdminAssesmentDto
     {
         public string Id { get; set; }
         public string Name { get; set; }

@@ -7,7 +7,7 @@ namespace Xphyrus.CreationAPI.Service.IService
     {
         Task<Assesment> CreateSpace(Assesment spaces);
         
-        Task<AdminSpacesDto> GetAdminSpaces(string spackId);
+        Task<AdminAssesmentDto> GetAdminSpaces(string spackId);
         Task<Assesment> GetStudentSpaces(string spackId);
         Task<Assesment> UpdateSpace(Assesment spaces);
         Task<bool> DeleteSpace(string spackId);

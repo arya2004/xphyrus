@@ -21,5 +21,11 @@ namespace Xphyrus.SubmissionAPI.Controllers
         {
             return await _judgeService.GetResponse(id);
         }
+        [HttpPost]
+
+        public async Task<ActionResult<object>> PostSubmission([FromBody]SubmissionRequest request)
+        {
+            return await _judgeService.SubmitPost(request);
+        }
     }
 }

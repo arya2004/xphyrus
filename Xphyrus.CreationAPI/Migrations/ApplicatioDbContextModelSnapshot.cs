@@ -61,16 +61,20 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
             modelBuilder.Entity("Xphyrus.CreationAPI.Models.AssesmentAdmin", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("AssesmentAdminId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssesmentAdminId"));
+
+                    b.Property<string>("AdminId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("AssesmentId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AssesmentAdminId");
 
                     b.HasIndex("AssesmentId");
 

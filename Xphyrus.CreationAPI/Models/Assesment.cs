@@ -22,9 +22,9 @@ namespace Xphyrus.CreationAPI.Models
 
     public class AssesmentAdmin
     {
-        
+        [Key]
         public int AssesmentAdminId { get; set; }
-        public string Id { get; set; }
+        public string AdminId { get; set; }
     }
 
    

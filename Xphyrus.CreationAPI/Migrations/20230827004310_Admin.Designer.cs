@@ -12,8 +12,8 @@ using Xphyrus.CreationAPI.Data;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     [DbContext(typeof(ApplicatioDbContext))]
-    [Migration("20230826153403_Init1")]
-    partial class Init1
+    [Migration("20230827004310_Admin")]
+    partial class Admin
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,16 +64,20 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
             modelBuilder.Entity("Xphyrus.CreationAPI.Models.AssesmentAdmin", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("AssesmentAdminId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssesmentAdminId"));
+
+                    b.Property<string>("AdminId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("AssesmentId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AssesmentAdminId");
 
                     b.HasIndex("AssesmentId");
 
@@ -88,8 +92,8 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("COnstraintId"));
 
-                    b.Property<string>("CodingId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("CodingId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Constraint")
                         .IsRequired()
@@ -104,8 +108,11 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
             modelBuilder.Entity("Xphyrus.CreationAPI.Models.Coding", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("AssesmentId")
                         .HasColumnType("int");
@@ -145,8 +152,8 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EvliationCaseId"));
 
-                    b.Property<string>("CodingId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("CodingId")
+                        .HasColumnType("int");
 
                     b.Property<string>("InputCase")
                         .IsRequired()
@@ -171,8 +178,8 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ExampleId"));
 
-                    b.Property<string>("CodingId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("CodingId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Explaination")
                         .IsRequired()
@@ -205,8 +212,8 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CodingId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("CodingId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Language")
                         .HasColumnType("int");
