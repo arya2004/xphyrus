@@ -65,9 +65,9 @@ namespace Xphyrus.AuthAPI.Service
             var roles = await _userManager.GetRolesAsync(user);
             return new UserDto
             {
-                Email = requestDto.Email,
+                Email = user.Email,
                 Token = _jwtService.GenerateToken(user, roles),
-                Displlayname = requestDto.Email
+                Displlayname = user.Email
             };
         }
 

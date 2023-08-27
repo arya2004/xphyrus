@@ -24,6 +24,7 @@ namespace Xphyrus.AuthAPI.Service
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.DisplayName),
+                
               
             };
             claimsList.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));

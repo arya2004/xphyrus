@@ -11,9 +11,9 @@ namespace Xphyrus.SubmissionAPI.Models
         public string Result { get; set; }
         public bool IsAccepted { get; set; }
 
-        public IdentityUser Student  { get; set; }
+        public int StudentId  { get; set; }
         public int AssignmentId { get; set; }
-        public int SpacesId { get; set; }
+        public int AssesmentId { get; set; }
 
     }
 }

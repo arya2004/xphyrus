@@ -23,7 +23,7 @@ namespace Xphyrus.SubmissionAPI.Service
             var apiContent = await resp.Content.ReadAsStringAsync();
             var ress = JsonConvert.DeserializeObject<SubmissionStatusResponse>(apiContent);
             return ress;
-            return JsonConvert.DeserializeObject<SubmissionStatusResponse>(Convert.ToString(resp));
+            
             
         }
 
