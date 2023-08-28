@@ -4,10 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System.Text;
-using Xphyrus.MessageBus;
 using Xphyrus.SubmissionAPI.Data;
-using Xphyrus.SubmissionAPI.Service;
-using Xphyrus.SubmissionAPI.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +22,6 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
     });
 
 
-builder.Services.AddScoped<IJudgeService, JudgeService>();
-builder.Services.AddScoped<IBus, Bus>();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
