@@ -15,7 +15,6 @@ namespace Xphyrus.CreationAPI.Data
         public DbSet<COnstraint> Constrainss { get; set; }
         public DbSet<Example> Examples { get; set; }
         public DbSet<Assesment> Assesments { get; set; }
-        public DbSet<AssesmentAdmin> AssesmentAdmins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

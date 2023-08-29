@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System.Text;
-using Xphyrus.SubmissionAPI.Data;
+using Xphyrus.EvaluationAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

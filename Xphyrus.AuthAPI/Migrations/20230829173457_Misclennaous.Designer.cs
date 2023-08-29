@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xphyrus.AuthAPI.Data;
 
@@ -11,9 +12,11 @@ using Xphyrus.AuthAPI.Data;
 namespace Xphyrus.AuthAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230829173457_Misclennaous")]
+    partial class Misclennaous
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,9 +231,9 @@ namespace Xphyrus.AuthAPI.Migrations
                     b.Property<string>("AssesmentAdminsId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ApplicationUser")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AssesmentId")
                         .IsRequired()
@@ -241,6 +244,8 @@ namespace Xphyrus.AuthAPI.Migrations
 
                     b.HasKey("AssesmentAdminsId");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.ToTable("AssesmentAdmins");
                 });
 
@@ -249,9 +254,9 @@ namespace Xphyrus.AuthAPI.Migrations
                     b.Property<string>("AssesmentParticipantId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ApplicationUser")
+                    b.Property<string>("ApplicationUserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AssesmentId")
                         .IsRequired()
@@ -264,6 +269,8 @@ namespace Xphyrus.AuthAPI.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("AssesmentParticipantId");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("AssesmentParticipants");
                 });
@@ -317,6 +324,28 @@ namespace Xphyrus.AuthAPI.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Xphyrus.AuthAPI.Models.AssesmentAdmins", b =>
+                {
+                    b.HasOne("Xphyrus.AuthAPI.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("Xphyrus.AuthAPI.Models.AssesmentParticipant", b =>
+                {
+                    b.HasOne("Xphyrus.AuthAPI.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 #pragma warning restore 612, 618
         }

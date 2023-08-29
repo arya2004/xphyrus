@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Xphyrus.AssesmentAPI.Models.Dto;
 using Xphyrus.AssesmentAPI.Models.ResReq;
+using Xphyrus.AssesmentAPI.Service.IService;
 using Xphyrus.CreationAPI.Data;
 using Xphyrus.CreationAPI.Models;
-using Xphyrus.CreationAPI.Service.IService;
+using Xphyrus.CreationAPI.Models.Dto;
 
 namespace Xphyrus.CreationAPI.Controllers
 {
@@ -15,19 +18,48 @@ namespace Xphyrus.CreationAPI.Controllers
         private readonly ApplicatioDbContext _applicatioDbContext;
         private ResponseDto _responseDto;
         private IMapper _mapper;
-        public AssesmentController(ApplicatioDbContext applicatioDbContext, IMapper mapper)
+        private readonly IAuthService _authService;
+        public AssesmentController(ApplicatioDbContext applicatioDbContext, IMapper mapper, IAuthService authService)
         {
             _applicatioDbContext = applicatioDbContext;
             _responseDto = new ResponseDto();
             _mapper = mapper;
+            _authService = authService;
         }
+        
         [HttpGet]
-        public async Task<ResponseDto> GetAssesments(int assesmentId)
+        public async Task<ResponseDto> GetAssesments(string assesmentCode)
         {
             try
             {
-                Assesment? assesment = _applicatioDbContext.Assesments.FirstOrDefault(u => u.AssesmentId == assesmentId);
+                Assesment? assesment = _applicatioDbContext.Assesments.FirstOrDefault(u => u.Code == assesmentCode);
+                if (assesment == null)
+                {
+                    _responseDto.IsSuccess = false;
+                    return _responseDto;
+                }
                 _responseDto.Result = assesment;
+            }
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = ex.Message;
+            }
+            return _responseDto;
+        }
+        //invoked by auth service
+        [HttpGet("CheckIfAssesmentExist/{assesmentCode}")]
+        public async Task<ResponseDto> CheckIfAssesmentExist(string assesmentCode)
+        {
+            try
+            {
+                Assesment? assesment = await _applicatioDbContext.Assesments.FirstOrDefaultAsync(u => u.Code == assesmentCode);
+                if (assesment == null)
+                {
+                    _responseDto.IsSuccess = false;
+                    return _responseDto;
+                }
+                _responseDto.Result = assesmentCode;
             }
             catch (Exception ex)
             {
@@ -44,6 +76,17 @@ namespace Xphyrus.CreationAPI.Controllers
             {
                 _applicatioDbContext.Assesments.Add(assesment);
                 _applicatioDbContext.SaveChanges();
+                Assesment assesFromDb = await _applicatioDbContext.Assesments.FirstOrDefaultAsync(u => u.Code == assesment.Code);
+                AssesmentAdminDto assesmentAdminDto = new AssesmentAdminDto()
+                {
+                    AssesmentId = assesFromDb.AssesmentId,
+                    ApplicationUserEmail = "temp@t.com",
+                    HasResultDeclared = false
+
+                };
+                _responseDto = await _authService.ToCreateAssesmentAdmin(assesmentAdminDto);
+                
+
             }
             catch (Exception ex)
             {
@@ -54,7 +97,7 @@ namespace Xphyrus.CreationAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult<ResponseDto>> DeleteAssesment(int assesmentId )
+        public async Task<ActionResult<ResponseDto>> DeleteAssesment(string assesmentId )
         {
             
 

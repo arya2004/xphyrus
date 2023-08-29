@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Admin : Migration
+    public partial class Misc : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,11 +15,10 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 name: "Assesments",
                 columns: table => new
                 {
-                    AssesmentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AssesmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsStrict = table.Column<bool>(type: "bit", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -31,40 +30,20 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AssesmentAdmins",
-                columns: table => new
-                {
-                    AssesmentAdminId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AdminId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AssesmentId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AssesmentAdmins", x => x.AssesmentAdminId);
-                    table.ForeignKey(
-                        name: "FK_AssesmentAdmins_Assesments_AssesmentId",
-                        column: x => x.AssesmentId,
-                        principalTable: "Assesments",
-                        principalColumn: "AssesmentId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Coding",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prompt = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    InputFormat = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OutputFormat = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AssesmentId = table.Column<int>(type: "int", nullable: true)
+                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Prompt = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InputFormat = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OutputFormat = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssesmentId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Coding", x => x.Id);
+                    table.PrimaryKey("PK_Coding", x => x.CodingId);
                     table.ForeignKey(
                         name: "FK_Coding_Assesments_AssesmentId",
                         column: x => x.AssesmentId,
@@ -76,10 +55,9 @@ namespace Xphyrus.AssesmentAPI.Migrations
                 name: "Constrainss",
                 columns: table => new
                 {
-                    COnstraintId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Constraint = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodingId = table.Column<int>(type: "int", nullable: true)
+                    COnstraintId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Constraint = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,18 +66,17 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         name: "FK_Constrainss_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
-                        principalColumn: "Id");
+                        principalColumn: "CodingId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "EvliationCases",
                 columns: table => new
                 {
-                    EvliationCaseId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EvliationCaseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     InputCase = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OutputCase = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodingId = table.Column<int>(type: "int", nullable: true)
+                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -108,19 +85,18 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         name: "FK_EvliationCases_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
-                        principalColumn: "Id");
+                        principalColumn: "CodingId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Examples",
                 columns: table => new
                 {
-                    ExampleId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Output = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Explaination = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodingId = table.Column<int>(type: "int", nullable: true)
+                    ExampleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Input = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Output = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Explaination = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,18 +105,17 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         name: "FK_Examples_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
-                        principalColumn: "Id");
+                        principalColumn: "CodingId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "MasterCode",
                 columns: table => new
                 {
-                    MasterCodeId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MasterCodeId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Language = table.Column<int>(type: "int", nullable: false),
-                    CodingId = table.Column<int>(type: "int", nullable: true)
+                    CodingId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -149,13 +124,8 @@ namespace Xphyrus.AssesmentAPI.Migrations
                         name: "FK_MasterCode_Coding_CodingId",
                         column: x => x.CodingId,
                         principalTable: "Coding",
-                        principalColumn: "Id");
+                        principalColumn: "CodingId");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AssesmentAdmins_AssesmentId",
-                table: "AssesmentAdmins",
-                column: "AssesmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Coding_AssesmentId",
@@ -186,9 +156,6 @@ namespace Xphyrus.AssesmentAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AssesmentAdmins");
-
             migrationBuilder.DropTable(
                 name: "Constrainss");
 

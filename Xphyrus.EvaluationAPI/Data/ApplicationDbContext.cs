@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Xphyrus.EvaluationAPI;
 
-namespace Xphyrus.SubmissionAPI.Data
+namespace Xphyrus.EvaluationAPI.Data
 {
     public class ApplicatioDbContext : DbContext
     {

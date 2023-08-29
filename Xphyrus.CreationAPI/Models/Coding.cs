@@ -1,49 +1,55 @@
-﻿using System.Data;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace Xphyrus.CreationAPI.Models
 {
     public class Coding
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Prompt { get; set; }
-        public string Language { get; set; }
-        public string InputFormat { get; set; }
-        public string OutputFormat { get; set; }
+        [Key]
+        public string CodingId { get; set; } = Guid.NewGuid().ToString();
+        public string? Title { get; set; }
+        public string? Prompt { get; set; }
+        public string? Language { get; set; }
+        public string? InputFormat { get; set; }
+        public string? OutputFormat { get; set; }
 
-        public ICollection<Example> Examples { get; set; }
+        public ICollection<Example>? Examples { get; set; }
 
-        public ICollection<COnstraint> Constrains { get; set; }
-        public ICollection<MasterCode> Code { get; set; }
+        public ICollection<COnstraint>? Constrains { get; set; }
+        public ICollection<MasterCode>? Code { get; set; }
 
-        public ICollection<EvliationCase> EvliationCases { get; set; }
+        public ICollection<EvliationCase>? EvliationCases { get; set; }
     }
 
     public class EvliationCase
     {   
-        public int EvliationCaseId { get; set; }
+        [Key] 
+        public string EvliationCaseId { get; set; } = Guid.NewGuid().ToString();
         public string InputCase { get; set; }
         public string OutputCase { get; set; }
     }
 
     public class MasterCode
     {
-        public int MasterCodeId { get; set; }
-        public string Code { get; set; }
+        [Key] 
+        public string MasterCodeId { get; set; } = Guid.NewGuid().ToString();
+        public string? Code { get; set; }
         public int Language { get; set; }
     }
 
     public class COnstraint
     {
-        public int COnstraintId { get; set; }
-        public string Constraint { get; set; }
+        [Key]
+        public string COnstraintId { get; set; } = Guid.NewGuid().ToString();
+        public string? Constraint { get; set; }
     }
 
     public class Example
     {
-        public int ExampleId { get; set; }
-        public string  Input { get; set; }
-        public string  Output { get; set; }
-        public string  Explaination { get; set; }
+        [Key] 
+        public string ExampleId { get; set; } = Guid.NewGuid().ToString();
+        public string?  Input { get; set; }
+        public string?  Output { get; set; }
+        public string?  Explaination { get; set; }
     }
 }

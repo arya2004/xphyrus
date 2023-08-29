@@ -5,10 +5,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System.Text;
+using System.Threading.Tasks.Dataflow;
 using Xphyrus.AssesmentAPI;
+using Xphyrus.AssesmentAPI.Service;
+using Xphyrus.AssesmentAPI.Service.IService;
 using Xphyrus.CreationAPI.Data;
-using Xphyrus.CreationAPI.Service;
-using Xphyrus.CreationAPI.Service.IService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,8 @@ IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-//builder.Services.AddScoped<ISpacesService, SpacesService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
