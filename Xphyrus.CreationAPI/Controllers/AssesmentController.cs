@@ -132,5 +132,30 @@ namespace Xphyrus.CreationAPI.Controllers
             return _responseDto;
 
         }
+
+        [HttpPost("StartAssesment")]
+        public async Task<ActionResult<ResponseDto>> StartAssesment(StartAssesmentDto startAssesmentDto)
+        {
+            try
+            {
+                _responseDto = await _authService.ToStartAssesment(startAssesmentDto);
+                if (!_responseDto.IsSuccess)
+                {
+                    return _responseDto;
+                }
+                //start now
+                Assesment? assesment = await _applicatioDbContext.Assesments.Include(i => i.Codings).ThenInclude(c => c.Examples).SingleOrDefaultAsync(u => u.Code == startAssesmentDto.AssesmentId);
+                _responseDto.Result = assesment;
+                _responseDto.IsSuccess = true;
+                return _responseDto;
+            }
+            catch (Exception ex)
+            {
+
+                _responseDto.Message = ex.Message;
+                _responseDto.IsSuccess=false;
+            }
+            return _responseDto;
+        }
     }
 }

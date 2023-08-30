@@ -45,6 +45,17 @@ namespace Xphyrus.AssesmentAPI.Service
             return JsonConvert.DeserializeObject<ResponseDto>(responseBody);
             
         }
+
+        public async Task<ResponseDto> ToStartAssesment(StartAssesmentDto startAssesmentDto)
+        {
+            var httpClient = _httpClientFactory.CreateClient();
+            var uri = _configuration.GetValue<string>("ServiceUrls:AuthAPI") + "/api/UserRegistrationAPI/Start";
+            var json = JsonConvert.SerializeObject(startAssesmentDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(uri, content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<ResponseDto>(responseBody);
+        }
     }
 
 }

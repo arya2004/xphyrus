@@ -24,7 +24,7 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
 
-
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJudgeService, JudgeService>();
 builder.Services.AddScoped<IBus, Bus>();
 
