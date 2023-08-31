@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System.Text;
 using Xphyrus.EvaluationAPI.Models.Dtos;
+using Xphyrus.EvaluationAPI.Service;
+using Xphyrus.EvaluationAPI.Service.IService;
 
 namespace Xphyrus.EvaluationAPI.MessageBrokerListner
 {
@@ -11,7 +13,8 @@ namespace Xphyrus.EvaluationAPI.MessageBrokerListner
         private readonly string _queueName;
         private readonly IConfiguration _configuration;
         private ServiceBusProcessor _processor;
-        public AzureServiceBusConsumer(IConfiguration configuration)
+        private readonly ResultService _resultService;
+        public AzureServiceBusConsumer(IConfiguration configuration, ResultService resultService)
         {
             _configuration = configuration;
             _serviceBusConnectionSring = _configuration.GetValue<string>("ServiceBusConnectionString");
@@ -21,7 +24,7 @@ namespace Xphyrus.EvaluationAPI.MessageBrokerListner
 
             _processor = client.CreateProcessor(_queueName);
         
-            
+            _resultService = resultService;
         }
 
         public async Task Start()
@@ -51,7 +54,8 @@ namespace Xphyrus.EvaluationAPI.MessageBrokerListner
             try
             {
                 //try to log email
-               // await _rewardService.UpdateRewards(objmessage);
+                await _resultService.AddResult(objmessage);
+                Console.WriteLine(objmessage);
                 await arg.CompleteMessageAsync(arg.Message);
             }
             catch (Exception ex)

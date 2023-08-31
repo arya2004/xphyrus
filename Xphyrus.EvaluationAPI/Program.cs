@@ -21,16 +21,20 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
     return ConnectionMultiplexer.Connect(options);
 });
 
+//builder.Services.AddDbContext<ApplicatioDbContext>(
+//    options =>
+//    {
+//        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//    });
 
 
-builder.Services.AddScoped<IJudgeService, JudgeService>();
-builder.Services.AddSingleton<IJudgeServiceFactory, JudgeServiceFactory>();
 
 builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
+
 var optionBuilder = new DbContextOptionsBuilder<ApplicatioDbContext>(); //cant use scoped db on singletoon service
-IJudgeServiceFactory js = new JudgeServiceFactory();
+
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-builder.Services.AddSingleton(new ResultService(optionBuilder.Options,));
+builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
 
 
 builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
