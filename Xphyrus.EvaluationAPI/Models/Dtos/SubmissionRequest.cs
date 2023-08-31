@@ -6,7 +6,7 @@
         public int? language_id { get; set; }
         public int? number_of_runs { get; set; }
         public string? stdin { get; set; }
-        public string? exprected_output { get; set; }
+        public string? expected_output { get; set; }
         public int? cpu_time_limit { get; set; }
         public int? cpu_extra_time { get; set; }
         public int? wall_time_limit { get; set; }
