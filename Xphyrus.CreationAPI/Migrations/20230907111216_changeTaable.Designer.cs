@@ -12,8 +12,8 @@ using Xphyrus.AssesmentAPI.Data;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     [DbContext(typeof(ApplicatioDbContext))]
-    [Migration("20230829173431_Misclennaous")]
-    partial class Misclennaous
+    [Migration("20230907111216_changeTaable")]
+    partial class changeTaable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Assesment", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Assesment", b =>
                 {
                     b.Property<string>("AssesmentId")
                         .HasColumnType("nvarchar(450)");
@@ -56,7 +56,52 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("Assesments");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.COnstraint", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.AssesmentAdmins", b =>
+                {
+                    b.Property<string>("AssesmentAdminsId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssesmentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasResultDeclared")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AssesmentAdminsId");
+
+                    b.ToTable("AssesmentAdmins");
+                });
+
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.AssesmentParticipant", b =>
+                {
+                    b.Property<string>("AssesmentParticipantId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ApplicationUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AssesmentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HasCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasStarted")
+                        .HasColumnType("bit");
+
+                    b.HasKey("AssesmentParticipantId");
+
+                    b.ToTable("AssesmentParticipants");
+                });
+
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.COnstraint", b =>
                 {
                     b.Property<string>("COnstraintId")
                         .HasColumnType("nvarchar(450)");
@@ -74,7 +119,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("Constrainss");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Coding", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Coding", b =>
                 {
                     b.Property<string>("CodingId")
                         .HasColumnType("nvarchar(450)");
@@ -104,7 +149,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("Coding");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.EvliationCase", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.EvliationCase", b =>
                 {
                     b.Property<string>("EvliationCaseId")
                         .HasColumnType("nvarchar(450)");
@@ -127,7 +172,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("EvliationCases");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Example", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Example", b =>
                 {
                     b.Property<string>("ExampleId")
                         .HasColumnType("nvarchar(450)");
@@ -151,7 +196,7 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("Examples");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.MasterCode", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.MasterCode", b =>
                 {
                     b.Property<string>("MasterCodeId")
                         .HasColumnType("nvarchar(450)");
@@ -172,47 +217,47 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("MasterCode");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.COnstraint", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.COnstraint", b =>
                 {
-                    b.HasOne("Xphyrus.CreationAPI.Models.Coding", null)
+                    b.HasOne("Xphyrus.AssesmentAPI.Models.Coding", null)
                         .WithMany("Constrains")
                         .HasForeignKey("CodingId");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Coding", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Coding", b =>
                 {
-                    b.HasOne("Xphyrus.CreationAPI.Models.Assesment", null)
+                    b.HasOne("Xphyrus.AssesmentAPI.Models.Assesment", null)
                         .WithMany("Codings")
                         .HasForeignKey("AssesmentId");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.EvliationCase", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.EvliationCase", b =>
                 {
-                    b.HasOne("Xphyrus.CreationAPI.Models.Coding", null)
+                    b.HasOne("Xphyrus.AssesmentAPI.Models.Coding", null)
                         .WithMany("EvliationCases")
                         .HasForeignKey("CodingId");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Example", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Example", b =>
                 {
-                    b.HasOne("Xphyrus.CreationAPI.Models.Coding", null)
+                    b.HasOne("Xphyrus.AssesmentAPI.Models.Coding", null)
                         .WithMany("Examples")
                         .HasForeignKey("CodingId");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.MasterCode", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.MasterCode", b =>
                 {
-                    b.HasOne("Xphyrus.CreationAPI.Models.Coding", null)
+                    b.HasOne("Xphyrus.AssesmentAPI.Models.Coding", null)
                         .WithMany("Code")
                         .HasForeignKey("CodingId");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Assesment", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Assesment", b =>
                 {
                     b.Navigation("Codings");
                 });
 
-            modelBuilder.Entity("Xphyrus.CreationAPI.Models.Coding", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Coding", b =>
                 {
                     b.Navigation("Code");
 

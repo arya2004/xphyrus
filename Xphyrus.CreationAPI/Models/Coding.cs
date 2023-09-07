@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Data;
 
-namespace Xphyrus.CreationAPI.Models
+namespace Xphyrus.AssesmentAPI.Models
 {
     public class Coding
     {
@@ -12,6 +12,7 @@ namespace Xphyrus.CreationAPI.Models
         public string? Language { get; set; }
         public string? InputFormat { get; set; }
         public string? OutputFormat { get; set; }
+
 
         public ICollection<Example>? Examples { get; set; }
 

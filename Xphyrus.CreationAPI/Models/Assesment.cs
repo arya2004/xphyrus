@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace Xphyrus.CreationAPI.Models
+namespace Xphyrus.AssesmentAPI.Models
 {
     public class Assesment
     {

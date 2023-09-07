@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Xphyrus.CreationAPI.Models;
+using Xphyrus.AssesmentAPI.Models;
 
-namespace Xphyrus.CreationAPI.Data
+namespace Xphyrus.AssesmentAPI.Data
 {
     public class ApplicatioDbContext : DbContext
     {
@@ -15,10 +15,13 @@ namespace Xphyrus.CreationAPI.Data
         public DbSet<COnstraint> Constrainss { get; set; }
         public DbSet<Example> Examples { get; set; }
         public DbSet<Assesment> Assesments { get; set; }
+        public DbSet<AssesmentAdmins> AssesmentAdmins { get; set; }
+        public DbSet<AssesmentParticipant> AssesmentParticipants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+       
         }
     }
 }
