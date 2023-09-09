@@ -10,7 +10,7 @@ using Xphyrus.AssesmentAPI.Models;
 using Xphyrus.AssesmentAPI.Models.Dto;
 using Xphyrus.AssesmentAPI.Models.ResReq;
 using Xphyrus.AssesmentAPI.Service.IService;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xphyrus.AssesmentAPI.Controllers
 {
@@ -74,9 +74,10 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
         [HttpPost]
+       // [Authorize(Roles ="ADMIN")]
         public async Task<ResponseDto> CreateAssesments([FromBody] AssesmentDto assesment)
         {
-
+            
             try
             {
                 Assesment toSave = _mapper.Map<Assesment>(assesment);
