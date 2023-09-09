@@ -11,6 +11,7 @@ using Xphyrus.AssesmentAPI.Models.Dto;
 using Xphyrus.AssesmentAPI.Models.ResReq;
 using Xphyrus.AssesmentAPI.Service.IService;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Xphyrus.AssesmentAPI.Controllers
 {
@@ -74,10 +75,14 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
         [HttpPost]
-       // [Authorize(Roles ="ADMIN")]
+       [Authorize(Roles ="ADMIN")]
         public async Task<ResponseDto> CreateAssesments([FromBody] AssesmentDto assesment)
         {
-            
+            var text = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            Console.WriteLine(text);
+          
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            Console.WriteLine(email);
             try
             {
                 Assesment toSave = _mapper.Map<Assesment>(assesment);
