@@ -1,14 +1,14 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Xphyrus.EvaluationAPI.MessageBrokerListner;
+using Xphyrus.EmailAPI.MessageBrokerListner;
 
-namespace Xphyrus.EvaluationAPI.Extension
+namespace Xphyrus.EmailAPI.Extension
 {
     public static class ApplicaioBuilderExtensions
     {
-        private static IAzureServiceBusConsumer azureServiceBusConsumer { get; set; }
-        public static IApplicationBuilder UseAzureServiceBusConsumer(this IApplicationBuilder app)
+        private static IAzureServiceBus azureServiceBusConsumer { get; set; }
+        public static IApplicationBuilder USeAzureServiceBusConsumer(this IApplicationBuilder app)
         {
-            azureServiceBusConsumer = app.ApplicationServices.GetService<IAzureServiceBusConsumer>();
+            azureServiceBusConsumer = app.ApplicationServices.GetService<IAzureServiceBus>();
             var hostAppLife = app.ApplicationServices.GetService<IHostApplicationLifetime>();
 
             hostAppLife.ApplicationStarted.Register(OnStart);

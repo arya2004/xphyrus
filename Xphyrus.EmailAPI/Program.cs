@@ -5,7 +5,8 @@ using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
 using System.Text;
-
+using Xphyrus.EmailAPI.Extension;
+using Xphyrus.EmailAPI.MessageBrokerListner;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
     var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
     return ConnectionMultiplexer.Connect(options);
 });
+
+builder.Services.AddSingleton<IAzureServiceBus,  AzureServiceBus>();
 
 //builder.Services.AddDbContext<ApplicatioDbContext>(
 //    options =>
@@ -97,5 +100,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.USeAzureServiceBusConsumer();
 app.Run();

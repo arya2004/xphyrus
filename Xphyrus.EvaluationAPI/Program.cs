@@ -106,5 +106,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.USeAzureServiceBusConsumer();
+app.UseAzureServiceBusConsumer();
 app.Run();
