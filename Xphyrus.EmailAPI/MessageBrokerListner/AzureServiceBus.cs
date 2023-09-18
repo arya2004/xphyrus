@@ -15,7 +15,8 @@ namespace Xphyrus.EmailAPI.MessageBrokerListner
         private readonly IConfiguration _configuration;
         private readonly string smtpServer = "smtp.office365.com";
         private readonly int smtpPort = 587;
-        
+        private readonly string username = "xphyrus@outlook.com";
+        private readonly string password = "!Ziegler00601221";
 
         private ServiceBusProcessor _processor;
         public AzureServiceBus(IConfiguration configuration)
@@ -91,7 +92,7 @@ namespace Xphyrus.EmailAPI.MessageBrokerListner
                     {
                         smtpClient?.Dispose();
                     }
-                    await Task.Delay(5000);
+                    await Task.Delay(2000);
 
                 }
                 

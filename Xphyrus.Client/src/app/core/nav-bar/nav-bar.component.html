@@ -23,12 +23,20 @@
         <i class="bi bi-list mobile-nav-toggle d-none"></i>
      
       </nav><!-- .navbar -->
+      <ng-container *ngIf="(accountService.currentUser$ | async) === null">
       <div>
         <a class="btn-getstarted scrollto mx-2" routerLink="/account/login">Login</a>
         
         <a class="btn-getstarted scrollto mx-2" routerLink="/account/register">Register</a>
       </div>
-     
+    </ng-container>
+    <ng-container *ngIf="accountService.currentUser$ | async as user">
+      <div>
+        <div>{{user.email}} </div> 
+        
+        <a class="btn-getstarted scrollto mx-2" routerLink="/account/register">Logotu</a>
+      </div>
+    </ng-container>
 
     </div>
   </header><!-- End Header -->

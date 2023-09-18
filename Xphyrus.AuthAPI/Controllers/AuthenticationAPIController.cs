@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Xphyrus.AuthAPI.Models.Dto;
 using Xphyrus.AuthAPI.Models.ResReq;
 using Xphyrus.AuthAPI.Service.IService;
@@ -53,6 +56,21 @@ namespace Xphyrus.AuthAPI.Controllers
             var result = await _authService.AssignRole(registerRequestDto.Email, registerRequestDto.Role.ToUpper());
             if(!result) _responseDto.IsSuccess = false;
             return Ok(_responseDto);
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<ResponseDto>> LoadCurrentUser()
+        {
+            var text = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = await _userManager.FindByEmailAsync(email);
+
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user),
+                Displlayname = user.DisplayName
+
+            };
         }
     }
 }

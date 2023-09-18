@@ -8,7 +8,7 @@ namespace Xphyrus.AssesmentAPI.Models
     {
         [Key]
         public string AssesmentId { get; set; } = Guid.NewGuid().ToString();
-        public string? Name { get; set; }
+        public string? Name { get; set; } 
         public string? Description { get; set; }
         public string?  Code { get; set; }
         public bool IsStrict { get; set; }
