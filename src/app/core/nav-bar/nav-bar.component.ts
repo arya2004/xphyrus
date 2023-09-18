@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AccountService } from 'src/app/account/account.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class NavBarComponent {
 
+  constructor(public accountService: AccountService) {}
 }

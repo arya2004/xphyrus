@@ -9,9 +9,9 @@ import { MyassesmentComponent } from './myassesment/myassesment.component';
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
-  {path: 'account/login', component:LoginComponent},
-  {path: 'account/register', component: RegisterComponent},
-  {path: 'account/register', component: RegisterComponent},
+  {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
+
+
   {path: 'assesment/new', component: NewassesmentComponent},
   {path: 'assesment/start', component: AssesmentComponent},
   {path: 'assesment/my', component: MyassesmentComponent},
