@@ -6,13 +6,14 @@ import { RegisterComponent } from './account/register/register.component';
 import { NewassesmentComponent } from './newassesment/newassesment.component';
 import { AssesmentComponent } from './assesment/assesment.component';
 import { MyassesmentComponent } from './myassesment/myassesment.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
 
 
-  {path: 'assesment/new', component: NewassesmentComponent},
+  {path: 'assesment/new' ,component: NewassesmentComponent},
   {path: 'assesment/start', component: AssesmentComponent},
   {path: 'assesment/my', component: MyassesmentComponent},
 
