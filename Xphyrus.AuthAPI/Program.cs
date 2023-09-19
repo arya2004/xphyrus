@@ -44,19 +44,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //authen before authorizations
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                //what it checking agaist
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:Secret"])),
-                ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
-                ValidateIssuer = true,
-                ValidateAudience = false
-            };
-        });
+builder.Services.AddAuthentication(x => {
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        //what it checking agaist
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JwtOptions:Secret"))),
+        ValidIssuer = builder.Configuration.GetValue<string>("JwtOptions:Issuer"),
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidAudience = builder.Configuration.GetValue<string>("JwtOptions:Audience")
+    };
+});
 builder.Services.AddAuthorization();
 
 

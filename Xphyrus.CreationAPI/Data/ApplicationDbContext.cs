@@ -11,9 +11,6 @@ namespace Xphyrus.AssesmentAPI.Data
         }
         public DbSet<Coding> Coding { get; set; }
         public DbSet<EvliationCase> EvliationCases { get; set; }
-        public DbSet<MasterCode> MasterCode { get; set; }
-        public DbSet<COnstraint> Constrainss { get; set; }
-        public DbSet<Example> Examples { get; set; }
         public DbSet<Assesment> Assesments { get; set; }
         public DbSet<AssesmentAdmins> AssesmentAdmins { get; set; }
         public DbSet<AssesmentParticipant> AssesmentParticipants { get; set; }

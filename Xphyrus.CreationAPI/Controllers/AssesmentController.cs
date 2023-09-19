@@ -124,7 +124,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
 
             try
             {
-                Assesment? assesment =  await _applicatioDbContext.Assesments.Include(a => a.Codings).ThenInclude(a => a.Examples).Include(a => a.Codings).ThenInclude(a => a.Constrains).Include(a => a.Codings).ThenInclude(a => a.Code).Include(a => a.Codings).ThenInclude(a => a.EvliationCases).FirstOrDefaultAsync(u => u.AssesmentId == assesmentId);
+                Assesment? assesment =  await _applicatioDbContext.Assesments.Include(a => a.Codings).Include(a => a.Codings).Include(a => a.Codings).Include(a => a.Codings).ThenInclude(a => a.EvliationCases).FirstOrDefaultAsync(u => u.AssesmentId == assesmentId);
                 if (assesment == null)
                 {
                     _responseDto.Message = "cant find lol";

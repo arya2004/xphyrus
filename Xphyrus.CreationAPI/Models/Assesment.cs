@@ -15,7 +15,7 @@ namespace Xphyrus.AssesmentAPI.Models
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public ICollection<Coding>? Codings { get; set; }
+        public Coding? Codings { get; set; }
 
     }
 

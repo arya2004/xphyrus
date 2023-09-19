@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xphyrus.AssesmentAPI.Data;
 
@@ -11,9 +12,11 @@ using Xphyrus.AssesmentAPI.Data;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     [DbContext(typeof(ApplicatioDbContext))]
-    partial class ApplicatioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230919105952_dataSimplifications")]
+    partial class dataSimplifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

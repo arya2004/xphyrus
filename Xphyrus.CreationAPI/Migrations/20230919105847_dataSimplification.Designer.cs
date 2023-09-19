@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xphyrus.AssesmentAPI.Data;
 
@@ -11,9 +12,11 @@ using Xphyrus.AssesmentAPI.Data;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     [DbContext(typeof(ApplicatioDbContext))]
-    partial class ApplicatioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230919105847_dataSimplification")]
+    partial class dataSimplification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,6 +106,19 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("AssesmentParticipants");
                 });
 
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.COnstraint", b =>
+                {
+                    b.Property<string>("COnstraintId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Constraint")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("COnstraintId");
+
+                    b.ToTable("Constrainss");
+                });
+
             modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Coding", b =>
                 {
                     b.Property<string>("CodingId")
@@ -161,6 +177,41 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.HasIndex("CodingId");
 
                     b.ToTable("EvliationCases");
+                });
+
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Example", b =>
+                {
+                    b.Property<string>("ExampleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Explaination")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Input")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Output")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ExampleId");
+
+                    b.ToTable("Examples");
+                });
+
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.MasterCode", b =>
+                {
+                    b.Property<string>("MasterCodeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
+
+                    b.HasKey("MasterCodeId");
+
+                    b.ToTable("MasterCode");
                 });
 
             modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Assesment", b =>

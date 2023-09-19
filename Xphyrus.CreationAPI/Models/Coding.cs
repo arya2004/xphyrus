@@ -12,13 +12,11 @@ namespace Xphyrus.AssesmentAPI.Models
         public string? Language { get; set; }
         public string? InputFormat { get; set; }
         public string? OutputFormat { get; set; }
+        public string Constrain1 { get; set; }
+        public string Constrain2 { get; set; }
+        public string Constrain3 { get; set; }
 
-
-        public ICollection<Example>? Examples { get; set; }
-
-        public ICollection<COnstraint>? Constrains { get; set; }
-        public ICollection<MasterCode>? Code { get; set; }
-
+      
         public ICollection<EvliationCase>? EvliationCases { get; set; }
     }
 
