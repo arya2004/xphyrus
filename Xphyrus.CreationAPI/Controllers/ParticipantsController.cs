@@ -7,7 +7,8 @@ using Xphyrus.AssesmentAPI.Models;
 using Xphyrus.AssesmentAPI.Models.Dto;
 using Xphyrus.AssesmentAPI.Models.ResReq;
 using Xphyrus.AssesmentAPI.Service.IService;
-
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xphyrus.AssesmentAPI.Controllers
 {
@@ -48,9 +49,21 @@ namespace Xphyrus.AssesmentAPI.Controllers
         //check code
         //check if registers already
         //regisre
+        [Authorize]
+        
         public async Task<ActionResult<ResponseDto>> RegisterForAssesment(string AssesmentCode)
         {
-          
+
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var participantId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (email == null || participantId == null)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = "invalid token";
+                return _responseDto;
+            }
+
+
             Assesment? assesment = _applicationDbContext.Assesments.FirstOrDefault(u => u.Code == AssesmentCode);
             if (assesment == null)
             {   
@@ -60,7 +73,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
             }
             AssesmentParticipant assesmentParticipant = new AssesmentParticipant()
             {
-                ApplicationUser = "a",
+                ApplicationUser = participantId,
                 AssesmentId = assesment.AssesmentId,
                 HasCompleted = false,
                 HasStarted = false,
@@ -74,11 +87,21 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
         [HttpPost("Start")]
-        public async Task<ActionResult<ResponseDto>> StartAssesment([FromBody] StartAssesmentDto startAssesmentDto)
-        {
+        public async Task<ActionResult<ResponseDto>> StartAssesment([FromBody] string AssesmentCode)
+        {   
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var participantId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (email == null || participantId == null)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = "invalid token";
+                return _responseDto;
+            }
+
+
             try
             {
-                AssesmentParticipant? assesmentParticipant = await _applicationDbContext.AssesmentParticipants.SingleOrDefaultAsync(u => (u.AssesmentId == startAssesmentDto.AssesmentCode && u.ApplicationUser == startAssesmentDto.UserEmail));
+                AssesmentParticipant? assesmentParticipant = await _applicationDbContext.AssesmentParticipants.FirstOrDefaultAsync(u => (u.AssesmentId == AssesmentCode && u.ApplicationUser == participantId));
                 if (assesmentParticipant == null)
                 {
                     _responseDto.IsSuccess = false;
@@ -90,8 +113,9 @@ namespace Xphyrus.AssesmentAPI.Controllers
                     assesmentParticipant.HasStarted = true;
                     _applicationDbContext.AssesmentParticipants.Update(assesmentParticipant);
                     await _applicationDbContext.SaveChangesAsync();
+                    Assesment? assesmnet = await _applicationDbContext.Assesments.Where(u => u.AssesmentId == assesmentParticipant.AssesmentId).Include(u => u.Codings).FirstOrDefaultAsync();
                     _responseDto.IsSuccess = true;
-                    _responseDto.Result = assesmentParticipant;
+                    _responseDto.Result = assesmnet;
                     return _responseDto;
                 }
                 _responseDto.IsSuccess = false;

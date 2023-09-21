@@ -11,9 +11,9 @@ namespace Xphyrus.AssesmentAPI.Models.Dto
         public string? InputFormat { get; set; }
         public string? OutputFormat { get; set; }
 
-        public string Constrain1 { get; set; }
-        public string Constrain2 { get; set; }
-        public string Constrain3 { get; set; }
+        public string? Constrain1 { get; set; }
+        public string? Constrain2 { get; set; }
+        public string? Constrain3 { get; set; }
 
 
         public ICollection<EvliationCaseDto>? EvliationCases { get; set; }

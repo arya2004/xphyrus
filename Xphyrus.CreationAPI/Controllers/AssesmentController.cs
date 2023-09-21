@@ -75,14 +75,14 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
         [HttpPost]
-       [Authorize(Roles ="ADMIN")]
+       //[Authorize(Roles ="ADMIN")]
         public async Task<ResponseDto> CreateAssesments([FromBody] AssesmentDto assesment)
         {
-            var text = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            Console.WriteLine(text);
-          
-            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             Console.WriteLine(email);
+          
+            //var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            //Console.WriteLine(email);
             try
             {
                 Assesment toSave = _mapper.Map<Assesment>(assesment);
@@ -96,14 +96,14 @@ namespace Xphyrus.AssesmentAPI.Controllers
                     return _responseDto;
                 }
                 
-                AssesmentAdmins assesmentAdminDto = new AssesmentAdmins()
+                AssesmentAdmins assesmentAdmin = new AssesmentAdmins()
                 {
                     AssesmentId = assesFromDb.AssesmentId,
-                    ApplicationUser = "temp@t.com",
+                    ApplicationUser = email,
                     HasResultDeclared = false
 
                 };
-                await _applicatioDbContext.AssesmentAdmins.AddAsync(assesmentAdminDto);
+                await _applicatioDbContext.AssesmentAdmins.AddAsync(assesmentAdmin);
                 await _applicatioDbContext.SaveChangesAsync();
        
 

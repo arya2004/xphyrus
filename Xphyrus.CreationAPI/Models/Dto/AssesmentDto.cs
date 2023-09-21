@@ -11,6 +11,7 @@ namespace Xphyrus.AssesmentAPI.Models.Dto
         public bool IsStrict { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public DateTime Duration { get; set; }
         public CodingDto Codings { get; set; }
 
 
