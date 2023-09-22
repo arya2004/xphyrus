@@ -75,12 +75,14 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
         [HttpPost]
-       //[Authorize(Roles ="ADMIN")]
+       [Authorize]
         public async Task<ResponseDto> CreateAssesments([FromBody] AssesmentDto assesment)
         {
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             Console.WriteLine(email);
-          
+            var adminId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Console.WriteLine(email);
+
             //var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             //Console.WriteLine(email);
             try
@@ -99,7 +101,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
                 AssesmentAdmins assesmentAdmin = new AssesmentAdmins()
                 {
                     AssesmentId = assesFromDb.AssesmentId,
-                    ApplicationUser = email,
+                    ApplicationUser = adminId,
                     HasResultDeclared = false
 
                 };
@@ -179,6 +181,38 @@ namespace Xphyrus.AssesmentAPI.Controllers
             }
             return _responseDto;
 
+        }
+        [HttpGet("created")]
+        //[Authorize(Roles ="ADMIN")]
+        public async Task<ActionResult<ResponseDto>> GetAssesment()
+        {
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var adminId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if(email == null || adminId == null)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = "invalid token";
+            }
+            try
+            {
+                IQueryable<AssesmentAdmins> adm = _applicatioDbContext.AssesmentAdmins.Where(a => a.ApplicationUser == adminId);
+                var primaryKeyValues = adm.Select(entity => entity.AssesmentId).ToArray();
+                IQueryable<Assesment> ass = _applicatioDbContext.Assesments.Where(entity => primaryKeyValues.Contains(entity.AssesmentId));
+
+                _responseDto.IsSuccess = true;
+                _responseDto.Result = ass;
+            }
+            catch (Exception ex)
+            {
+
+                _responseDto.IsSuccess=false;
+                _responseDto.Message = ex.Message;
+            }
+            
+
+
+            return _responseDto;
         }
 
      

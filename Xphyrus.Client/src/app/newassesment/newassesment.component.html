@@ -1,1 +1,41 @@
-<p>newassesment works!</p>
+<form [formGroup]="codingForm" (ngSubmit)="onSubmit()">
+    <div>
+    <label>Title: <input type="text" formControlName="Title"></label>
+</div>
+<div>
+    <label>Prompt: <input type="text" formControlName="Prompt"></label>
+</div>
+<div>
+    <label>Language: <input type="text" formControlName="Language"></label>
+</div>
+<div>
+    <label>Input Format: <input type="text" formControlName="InputFormat"></label>
+</div>
+<div>
+    <label>Output Format: <input type="text" formControlName="OutputFormat"></label>
+</div>
+<div>
+    <label>Constrain1: <input type="text" formControlName="Constrain1"></label>
+</div>
+<div>
+    <label>Constrain2: <input type="text" formControlName="Constrain2"></label>
+</div>
+<div>
+    <label>Constrain3: <input type="text" formControlName="Constrain3"></label>
+</div>
+  
+    <!-- Form array for EvliationCases -->
+    <div formArrayName="EvliationCases">
+      <div *ngFor="let evaluationCase of getEvaluationCasesArray().controls; let i = index">
+        <div [formGroupName]="i">
+            
+          <label>Input Case: <input type="text" formControlName="InputCase"></label>
+          <label>Output Case: <input type="text" formControlName="OutputCase"></label>
+        </div>
+      </div>
+      <button type="button" (click)="addEvaluationCase()">Add Evaluation Case</button>
+    </div>
+  
+    <button type="submit">Submit</button>
+  </form>
+  
