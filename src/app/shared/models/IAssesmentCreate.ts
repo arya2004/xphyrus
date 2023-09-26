@@ -1,34 +1,39 @@
-export interface AssesmentDto {
-    Name: string | null | undefined;
-     Description: string | null | undefined;
-     Code: string | null | undefined;
-     IsStrict: boolean;
-     StartDate: Date;
-     EndDate: Date;
-     Duration: Date;
-     Codings: CodingDto;
-  }
-  
-  
-  
+export interface Assesment{
+  name: string
+  description: string
+  code: string
+  isStrict: boolean
+  startDate: string
+  endDate: string
+  duration: string
+  codings: Coding[]
+  mcQs: McQ[]
+}
 
+export interface Coding {
+  title: string
+  prompt: string
+  language: string
+  inputFormat: string
+  outputFormat: string
+  constrain1: string
+  constrain2: string
+  constrain3: string
+  evliationCases: EvliationCase[]
+}
 
-export interface CodingDto {
-     Title: string | null | undefined;
-     Prompt: string | null | undefined;
-     Language: string | null | undefined;
-     InputFormat: string | null | undefined;
-     OutputFormat: string | null | undefined;
-     Constrain1: string | null | undefined;
-     Constrain2: string | null | undefined;
-     Constrain3: string | null | undefined;
-     EvliationCases: EvliationCaseDto[] | null | undefined;
-  }
-  
-  class EvliationCaseDto {
-     InputCase: string | null | undefined;
-     OutputCase: string | null | undefined;
-  }
+export interface EvliationCase {
+  inputCase: string
+  outputCase: string
+}
 
-  
-  
+export interface McQ {
+  question: string
+  correctAnswer: number
+  options: Option[]
+}
+
+export interface Option {
+  optionNumber: number
+  value: string
+}
