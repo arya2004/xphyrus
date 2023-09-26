@@ -14,10 +14,9 @@ namespace Xphyrus.AssesmentAPI
                config.CreateMap<AssesmentDto, Assesment>().ReverseMap();
                 config.CreateMap<CodingDto, Coding>().ReverseMap();
                 config.CreateMap<EvliationCaseDto, EvliationCase>().ReverseMap();
-                config.CreateMap<MasterCodeDto, MasterCode>().ReverseMap();
-                config.CreateMap<COnstraint, COnstraintDto>().ReverseMap();
-                config.CreateMap<Example, ExampleDto>().ReverseMap();
                 config.CreateMap<AssesmentDto, Assesment>().ReverseMap();
+                config.CreateMap<MCQ, MCQDto>().ReverseMap();
+                config.CreateMap<OptionsDto, Options>().ReverseMap();
             });
                 return mappingCOnfig;
         }

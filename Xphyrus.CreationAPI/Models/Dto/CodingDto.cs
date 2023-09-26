@@ -26,25 +26,8 @@ namespace Xphyrus.AssesmentAPI.Models.Dto
         public string? OutputCase { get; set; }
     }
 
-    public class MasterCodeDto
-    {
 
-        public string? Code { get; set; }
-        public int Language { get; set; }
-    }
 
-    public class COnstraintDto
-    {
 
-        public string? Constraint { get; set; }
-    }
-
-    public class ExampleDto
-    {
-
-        public string? Input { get; set; }
-        public string? Output { get; set; }
-        public string? Explaination { get; set; }
-    }
 
 }

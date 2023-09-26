@@ -16,7 +16,8 @@ namespace Xphyrus.AssesmentAPI.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime Duration { get; set; }
-        public Coding? Codings { get; set; }
+        public ICollection<Coding>? Codings { get; set; }
+        public ICollection<MCQ>? MCQs { get; set; }
 
     }
 

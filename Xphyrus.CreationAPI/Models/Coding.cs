@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 namespace Xphyrus.AssesmentAPI.Models
@@ -18,37 +19,26 @@ namespace Xphyrus.AssesmentAPI.Models
 
       
         public ICollection<EvliationCase>? EvliationCases { get; set; }
+
+
+        public string? AssesmentId { get; set; }
+        [ForeignKey("AssesmentId")]
+        public Assesment? Assesment { get; set; }
     }
 
     public class EvliationCase
     {   
         [Key] 
         public string EvliationCaseId { get; set; } = Guid.NewGuid().ToString();
-        public string InputCase { get; set; }
-        public string OutputCase { get; set; }
+        public string? InputCase { get; set; }
+        public string? OutputCase { get; set; }
+
+        public string? CodingId { get; set; }
+        [ForeignKey("CodingId")]
+        public Coding? Coding { get; set; }
     }
 
-    public class MasterCode
-    {
-        [Key] 
-        public string MasterCodeId { get; set; } = Guid.NewGuid().ToString();
-        public string? Code { get; set; }
-        public int Language { get; set; }
-    }
-
-    public class COnstraint
-    {
-        [Key]
-        public string COnstraintId { get; set; } = Guid.NewGuid().ToString();
-        public string? Constraint { get; set; }
-    }
-
-    public class Example
-    {
-        [Key] 
-        public string ExampleId { get; set; } = Guid.NewGuid().ToString();
-        public string?  Input { get; set; }
-        public string?  Output { get; set; }
-        public string?  Explaination { get; set; }
-    }
+   
+  
+   
 }
