@@ -58,8 +58,8 @@ namespace Xphyrus.EvaluationAPI.MessageBrokerListner
             {
                 SubmissionRequest temp = new SubmissionRequest()
                 {
-                    source_code = "#include <stdio.h>\n\nint main(void) {\n  char name[10];\n  scanf(\"%s\", name);\n  printf(\"hello, %s\\n\", name);\n  return 0;\n}",
-                    language_id = 50,
+                    source_code = objmessage.source_code,
+                    language_id = objmessage.language_id,
                     stdin = objmessage.stdin ?? "dotnet meow"
                 };
                 var httpClient = _httpClientFactory.CreateClient();
