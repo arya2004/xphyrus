@@ -27,24 +27,21 @@ namespace Xphyrus.SubmissionAPI.Service
             
         }
 
-        public async Task<object> SubmitPost(SubmissionRequest request)
+        public async Task<TokenResponse> SubmitPost(SubmissionRequest request)
         {
             var httpClient = _httpClientFactory.CreateClient();
             var uri = new Uri("http://localhost:2358/submissions/");
             var json = JsonConvert.SerializeObject(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await httpClient.PostAsync(uri, content);
-            if (response.IsSuccessStatusCode)
-            {
+           
 
                 // Print response body
-                var responseBody = await response.Content.ReadAsStringAsync();
-                return responseBody;
-            }
-            else
-            {
-                return response.IsSuccessStatusCode;
-            }
+               var responseBody = await response.Content.ReadAsStringAsync();
+                TokenResponse? ress = JsonConvert.DeserializeObject<TokenResponse>(responseBody);
+                return ress;
+            
+          
         }
            
     }

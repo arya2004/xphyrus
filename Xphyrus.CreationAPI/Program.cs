@@ -7,9 +7,9 @@ using StackExchange.Redis;
 using System.Text;
 using System.Threading.Tasks.Dataflow;
 using Xphyrus.AssesmentAPI;
+using Xphyrus.AssesmentAPI.Data;
 using Xphyrus.AssesmentAPI.Service;
 using Xphyrus.AssesmentAPI.Service.IService;
-using Xphyrus.CreationAPI.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,19 +40,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //authen before authorizations
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
+builder.Services.AddAuthentication(x => {
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})  .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                //what it checking agaist
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtOptions:Secret"])),
-                ValidIssuer = builder.Configuration["JwtOptions:Issuer"],
-                ValidateIssuer = true,
-                ValidateAudience = false
-            };
-        });
+            ValidateIssuerSigningKey = true,
+            //what it checking agaist
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JwtOptions:Secret"))),
+            ValidIssuer = builder.Configuration.GetValue<string>("JwtOptions:Issuer"),
+            ValidateIssuer = true,
+            ValidateAudience = false,
+            ValidAudience = builder.Configuration.GetValue<string>("JwtOptions:Audience")
+        };
+    });
 builder.Services.AddAuthorization();
 
 
@@ -82,6 +85,15 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -91,8 +103,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
+app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -24,13 +24,14 @@ namespace Xphyrus.AuthAPI.Service
             {
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.DisplayName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
+
                 
               
             };
             claimsList.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var credential = new SigningCredentials(_symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature);
-
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claimsList),

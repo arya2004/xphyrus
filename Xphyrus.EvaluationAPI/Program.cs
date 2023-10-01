@@ -3,8 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
+using System;
 using System.Text;
 using Xphyrus.EvaluationAPI.Data;
+using Xphyrus.EvaluationAPI.Extension;
+using Xphyrus.EvaluationAPI.Factory;
+using Xphyrus.EvaluationAPI.MessageBrokerListner;
+using Xphyrus.EvaluationAPI.Service;
+using Xphyrus.EvaluationAPI.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +21,26 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
     return ConnectionMultiplexer.Connect(options);
 });
 
-builder.Services.AddDbContext<ApplicatioDbContext>(
-    options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    });
+//builder.Services.AddDbContext<ApplicatioDbContext>(
+//    options =>
+//    {
+//        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+//    });
 
 
+
+builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
+
+var optionBuilder = new DbContextOptionsBuilder<ApplicatioDbContext>(); //cant use scoped db on singletoon service
+
+optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
+
+
+builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
+
 
 
 builder.Services.AddControllers();
@@ -90,5 +106,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseAzureServiceBusConsumer();
 app.Run();

@@ -223,51 +223,6 @@ namespace Xphyrus.AuthAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Xphyrus.AuthAPI.Models.AssesmentAdmins", b =>
-                {
-                    b.Property<string>("AssesmentAdminsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApplicationUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AssesmentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasResultDeclared")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AssesmentAdminsId");
-
-                    b.ToTable("AssesmentAdmins");
-                });
-
-            modelBuilder.Entity("Xphyrus.AuthAPI.Models.AssesmentParticipant", b =>
-                {
-                    b.Property<string>("AssesmentParticipantId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ApplicationUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AssesmentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("HasCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("HasStarted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("AssesmentParticipantId");
-
-                    b.ToTable("AssesmentParticipants");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
