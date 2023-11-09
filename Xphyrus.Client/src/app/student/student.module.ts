@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StartComponent } from './start/start.component';
 import { PageComponent } from './page/page.component';
+import { StudentRoutingModule } from './student-routing.module';
 
 
 
@@ -13,7 +14,8 @@ import { PageComponent } from './page/page.component';
     PageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    StudentRoutingModule
   ],
   exports:[
     StartComponent,

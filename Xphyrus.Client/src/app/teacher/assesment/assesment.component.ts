@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-start',
-  templateUrl: './start.component.html',
-  styleUrls: ['./start.component.scss']
+  selector: 'app-assesment',
+  templateUrl: './assesment.component.html',
+  styleUrls: ['./assesment.component.scss']
 })
-export class StartComponent implements OnInit {
+export class AssesmentComponent implements OnInit{
   id: number;
   private sub: any;
 
