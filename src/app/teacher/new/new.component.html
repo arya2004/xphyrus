@@ -1,0 +1,79 @@
+<form class="example-form" [formGroup]="userForm">
+    <div>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Users Creation</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="primary-container">
+            <mat-form-field>
+              <input matInput placeholder="First Name" value="" formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Last Name" value="" formControlName="lastName">
+            </mat-form-field>
+          </div>
+          <div formArrayName="address">
+            <div class="address-container" *ngFor="let group of addressArray.controls; let i = index;"
+              [formGroupName]="i">
+              <fieldset>
+                <legend>
+                  <h3>Address: {{i + 1}}</h3>
+                </legend>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="Street" value="" formControlName="street">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="City" value="" formControlName="city">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput placeholder="State" value="" formControlName="state">
+                  </mat-form-field>
+                </div>
+                <form formArrayName="contacts">
+                  <div *ngFor="let subgroup of group.get('contacts').value.controls ;let idx = index;" [formGroupName]="idx">
+                  
+                    <mat-form-field>
+                      <input matInput placeholder="Contact Person" value="" formControlName="contactPerson">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput placeholder="Phone Number" value="" formControlName="phoneNumber">
+                    </mat-form-field>
+                  </div>
+                  <button mat-raised-button (click)="addContact(i)">Add more Contacts</button>
+                </form>
+              </fieldset>
+            </div>
+          </div>
+          <div class="form-row org-desc-parent-margin">
+            <button mat-raised-button (click)="addAddress()">Add more address</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+  <mat-card class="pre-code">
+    <mat-card-header>
+      <mat-card-title>Users Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <pre>{{userForm.value | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="pre-code">
+    <mat-card-header>
+      <mat-card-title>Users Information is Valid</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <pre>{{userForm.valid | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="pre-code">
+    <mat-card-header>
+      <mat-card-title>Users Information is Invalid</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <pre>{{userForm.invalid | json}}</pre>
+    </mat-card-content>
+  </mat-card>

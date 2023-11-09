@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input'; 
+import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { MyassesmentComponent } from './myassesment/myassesment.component';
-import { MyassesmentModule } from './myassesment/myassesment.module';
-import { NewassesmentModule } from './newassesment/newassesment.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,15 @@ import { NewassesmentModule } from './newassesment/newassesment.module';
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
-    MyassesmentModule,
-    NewassesmentModule
+    BrowserAnimationsModule,
+
+    FormsModule, 
+    ReactiveFormsModule,
+  
+    MatInputModule,
+    MatCardModule
+    
+  
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
