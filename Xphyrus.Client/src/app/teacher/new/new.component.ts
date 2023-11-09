@@ -38,6 +38,10 @@ export class NewComponent {
   get addressArray(): FormArray {
     return <FormArray>this.userForm.get('address');
   }
+ 
+  get contactsArray(): FormArray {
+    return <FormArray>this.addressArray.value.get('contacts');
+  }
 
   addAddress(): void {
     this.addressArray.push(this.addAddressGroup());
@@ -57,4 +61,5 @@ export class NewComponent {
   getControls() {
     return (this.userForm.get('contacts') as FormArray).controls;
   }
+  get moew() { return <FormArray>this.addressArray.get('contacts'); }
 }
