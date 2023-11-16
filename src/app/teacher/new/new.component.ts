@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TeacherService } from '../teacher.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,36 +13,50 @@ export class NewComponent {
   name = 'Angular';
   public userForm: FormGroup;
   
-  constructor(private _fb: FormBuilder) {
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
+
+  constructor(private _fb: FormBuilder, private router: Router, private teacherService: TeacherService) {
     this.userForm = this._fb.group({
-      firstName: ['', Validators.minLength(3)],
-      lastName: [''],
-      address: this._fb.array([this.addAddressGroup()])
+      name: ['', Validators.minLength(3)],
+      description: [''],
+      isStrict: false,
+      start: new FormControl(),
+      end: new FormControl(),
+      duration: 1,
+      codings: this._fb.array([this.addAddressGroup()])
     });
   }
 
   private addAddressGroup(): FormGroup {
     return this._fb.group({
-      street: [],
-      city: [],
-      state: [],
-      contacts: this._fb.array([])
+      title: [],
+      prompt: [],
+      language: [],
+      inputFormat: [],
+      outputFormat: [],
+      constrain1: [],
+      constrain2:[],
+      constrain3: [],
+      evliationCases: this._fb.array([])
     });
   }
 
   private contactsGroup(): FormGroup {
     return this._fb.group({
-      contactPerson: ['', Validators.required],
-      phoneNumber: ['', [Validators.maxLength(10)]], 
+      inputCase: ['', Validators.required],
+      outputCase: ['', [Validators.maxLength(10)]], 
     });
   }
 
   get addressArray(): FormArray {
-    return <FormArray>this.userForm.get('address');
+    return <FormArray>this.userForm.get('codings');
   }
  
   get contactsArray(): FormArray {
-    return <FormArray>this.addressArray.value.get('contacts');
+    return <FormArray>this.addressArray.value.get('evliationCases');
   }
 
   addAddress(): void {
@@ -52,14 +68,21 @@ export class NewComponent {
   }
 
   addContact(index: number): void {
-    (<FormArray>(<FormGroup>this.addressArray.controls[index]).controls['contacts']).push(this.contactsGroup());
+    (<FormArray>(<FormGroup>this.addressArray.controls[index]).controls['evliationCases']).push(this.contactsGroup());
   }
 
   deletePhoneNumber(control: any, index: number) {
     control.removeAt(index)
   }
   getControls() {
-    return (this.userForm.get('contacts') as FormArray).controls;
+    return (this.userForm.get('evliationCases') as FormArray).controls;
   }
-  get moew() { return <FormArray>this.addressArray.get('contacts'); }
+  createTest(){
+    console.log(this.userForm.value);
+    this.teacherService.postAssignment(this.userForm.value).subscribe({
+      next: () => this.router.navigateByUrl('/teacher/')
+    })
+  }
+    
+  
 }

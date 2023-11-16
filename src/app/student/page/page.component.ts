@@ -80,6 +80,10 @@ export class PageComponent  {
     // let op = { identifier: id, range: range, text: text, forceMoveMarkers: true };
     // editor.executeEdits("my-source", [op]);
   }
-
+  onSubmit()
+  {
+    console.log("jello");
+    
+  }
 
 }
