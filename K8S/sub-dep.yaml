@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authapidep
+  name: aubapidep
   labels:
     app: authapi
 spec:
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-lb
+  name: sub-lb
 spec:
   selector:
     app.kubernetes.io/name: authapi

@@ -1,3 +1,9 @@
+
+ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+
+above loadballancer in different namespace
+authservice-cip:80  put this in appsett.prod.json for url
+
 # Microservice-based Online Assessment Platform
 
 This repository contains the source code and documentation for a Microservice-based Online Assessment (OA) platform built using ASP.NET Core for the backend and Angular for the frontend. This platform is designed to facilitate online assessments and examinations, offering a scalable and flexible solution for organizations to conduct assessments efficiently.
