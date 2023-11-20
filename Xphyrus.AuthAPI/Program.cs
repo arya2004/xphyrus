@@ -8,6 +8,7 @@ using System;
 using System.Text;
 using Xphyrus.AuthAPI;
 using Xphyrus.AuthAPI.Data;
+using Xphyrus.AuthAPI.Data.Initialize;
 using Xphyrus.AuthAPI.Models;
 using Xphyrus.AuthAPI.Service;
 using Xphyrus.AuthAPI.Service.IService;
@@ -15,12 +16,25 @@ using Xphyrus.AuthAPI.Service.IService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddDbContext<ApplicationDbContext>(
+if(builder.Environment.IsProduction())
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
+
+}
+else
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+}
+
+
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 
@@ -35,6 +49,7 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddHttpClient();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAssesmentService, AssesmentService>();
@@ -112,6 +127,19 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+SeedDatabase();
+
 app.MapControllers();
 
 app.Run();
+
+
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize(app.Environment.IsProduction());
+    }
+}
