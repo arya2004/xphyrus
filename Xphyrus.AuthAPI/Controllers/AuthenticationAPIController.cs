@@ -19,7 +19,7 @@ namespace Xphyrus.AuthAPI.Controllers
         protected ResponseDto _responseDto;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
-       private readonly IJwtService _jwtService;
+        private readonly IJwtService _jwtService;
         public AuthenticationAPIController(IAuthService authService, IConfiguration configuration, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IJwtService jwtService)
         {
             _authService = authService;
@@ -27,9 +27,17 @@ namespace Xphyrus.AuthAPI.Controllers
             _responseDto = new ResponseDto();
             _roleManager = roleManager;
             _userManager = userManager;
-            _jwtService = jwtService;   
+            _jwtService = jwtService;
 
         }
+
+        [HttpGet("")]
+        public async Task<ActionResult<ResponseDto>> Persistant()
+        {
+            return _responseDto;
+        
+        }
+
 
         [HttpPost("register")]
         public async Task<ActionResult<ResponseDto>> Register([FromBody] RegisterRequestDto registerRequestDto)
@@ -67,7 +75,7 @@ namespace Xphyrus.AuthAPI.Controllers
             return Ok(_responseDto);
         }
       
-        [HttpGet("")]
+        [HttpGet("user")]
         public async Task<ActionResult<ResponseDto>> LoadCurrentUser()
         {
             //var text = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authapidep
+  labels:
+    app: authapi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: authapi
+  template:
+    metadata:
+      name: authapik8s
+      labels:
+        env: prod
+        app: authapi
+        app.kubernetes.io/name: authapi
+    spec:
+      containers:
+        - name: authapi
+          image: zieglernattacatalyst/xphyrusauthapi
+          ports:
+            - name: auth-port
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-lb
+spec:
+  selector:
+    app.kubernetes.io/name: authapi
+  ports:
+    - name: auth-lb-port
+      port: 8080
+      targetPort: 80
+      protocol: TCP
+  type: LoadBalancer
+  

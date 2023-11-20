@@ -19,4 +19,4 @@ RUN dotnet publish "Xphyrus.AuthAPI.csproj" -c Release -o /app/publish /p:UseApp
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Xphyrus.AuthAPI.dll"]
+ENTRYPOINT ["dotnet", "Xphyrus.AuthAPI.dll","--server.urls", "http://+:80;https://+:443"]
