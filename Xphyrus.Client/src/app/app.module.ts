@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input'; 
+import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { MyassesmentComponent } from './myassesment/myassesment.component';
-import { MyassesmentModule } from './myassesment/myassesment.module';
-import { NewassesmentModule } from './newassesment/newassesment.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,8 +23,21 @@ import { NewassesmentModule } from './newassesment/newassesment.module';
     AppRoutingModule,
     CoreModule,
     HttpClientModule,
-    MyassesmentModule,
-    NewassesmentModule
+    BrowserAnimationsModule,
+ 
+    FormsModule, 
+    ReactiveFormsModule,
+  
+    MatInputModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+    
+  
+  ],
+  exports:[
+    MatDatepickerModule, 
+    MatNativeDateModule 
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

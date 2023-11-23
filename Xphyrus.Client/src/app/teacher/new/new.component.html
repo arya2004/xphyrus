@@ -1,0 +1,141 @@
+
+
+<form class="example-form" [formGroup]="userForm">
+    <div>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>New Test </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="primary-container">
+            <mat-form-field>
+              <input matInput placeholder="Name" value="" formControlName="name">
+            </mat-form-field>
+         
+          </div>
+          <div class="primary-container">
+            <mat-form-field  appearance="fill">
+              <mat-label>Description</mat-label>
+              <textarea matInput value="" formControlName="description"></textarea>
+             
+            </mat-form-field>
+    
+          </div>
+          <div class="primary-container">
+            
+            <mat-form-field appearance="fill">
+              <mat-label>Submission duration</mat-label>
+              <mat-date-range-input [formGroup]="userForm" [rangePicker]="picker">
+                <input matStartDate formControlName="start" placeholder="Start date">
+                <input matEndDate formControlName="end" placeholder="End date">
+              </mat-date-range-input>
+              <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
+            
+              <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+              <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+            </mat-form-field>
+            
+            <p>Selected range: {{range.value | json}}</p>
+
+          </div>
+
+
+          <div formArrayName="codings">
+            <div class="codings-container" *ngFor="let group of addressArray.controls; let i = index;"
+              [formGroupName]="i">
+              <fieldset>
+                <legend>
+                  <h3>Question: {{i + 1}}</h3>
+                </legend>
+                <div>
+                  <mat-form-field>
+                    <input matInput placeholder="Title" value="" formControlName="title">
+                  </mat-form-field>
+               
+                 
+
+                  <div >
+                    <mat-form-field >
+                      <textarea matInput  placeholder="Prompt" value="" formControlName="prompt" ></textarea>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="primary-container">
+                    <mat-form-field>
+                      <input matInput placeholder="Language" value="" formControlName="language">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <textarea matInput placeholder="Input format" value="" formControlName="inputFormat"></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <textarea matInput placeholder="output format" value="" formControlName="outputFormat"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="primary-container">
+                    <mat-form-field>
+                      <input matInput placeholder="constrain 1" value="" formControlName="constrain1">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput placeholder="constrain 1" value="" formControlName="constrain2">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput placeholder="constrain 1" value="" formControlName="constrain3">
+                    </mat-form-field>
+                  </div>
+
+
+                </div>
+                <form formArrayName="evliationCases">
+                  <!-- $any() solves issue -->
+                  <div *ngFor="let subgroup of $any(group).controls.evliationCases.controls ;let idx = index;" [formGroupName]="idx">
+                  
+                    <mat-form-field>
+                      <input matInput placeholder="Input Case" value="" formControlName="inputCase">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput placeholder="Output case" value="" formControlName="outputCase">
+                    </mat-form-field>
+                  </div>
+                  <button mat-raised-button (click)="addContact(i)">Add more Eval Cases</button>
+                </form>
+              </fieldset>
+            </div>
+          </div>
+          <div class="form-row org-desc-parent-margin">
+            <button mat-raised-button (click)="addAddress()">Add more Questions</button>
+          </div>
+         
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </form>
+  <mat-card class="pre-code">
+    <mat-card-header>
+      <mat-card-title>Users Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <pre>{{userForm.value | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="pre-code">
+    <mat-card-header>
+      <mat-card-title>Users Information is Valid</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <pre>{{userForm.valid | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="pre-code">
+    <mat-card-header>
+      <mat-card-title>Users Information is Invalid</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <pre>{{userForm.invalid | json}}</pre>
+    </mat-card-content>
+  </mat-card>
+  <div class="form-row org-desc-parent-margin">
+    <button mat-raised-button (click)="createTest()">Create</button>
+  </div>

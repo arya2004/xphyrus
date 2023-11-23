@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Xphyrus.CreationAPI/Xphyrus.CreationAPI.csproj", "Xphyrus.CreationAPI/"]
-RUN dotnet restore "Xphyrus.CreationAPI/Xphyrus.CreationAPI.csproj"
+COPY ["Xphyrus.CreationAPI/Xphyrus.AssesmentAPI.csproj", "Xphyrus.CreationAPI/"]
+RUN dotnet restore "Xphyrus.CreationAPI/Xphyrus.AssesmentAPI.csproj"
 COPY . .
 WORKDIR "/src/Xphyrus.CreationAPI"
-RUN dotnet build "Xphyrus.CreationAPI.csproj" -c Release -o /app/build
+RUN dotnet build "Xphyrus.AssesmentAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Xphyrus.CreationAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Xphyrus.AssesmentAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Xphyrus.CreationAPI.dll"]
+ENTRYPOINT ["dotnet", "Xphyrus.AssesmentAPI.dll","--server.urls", "http://+:80;https://+:443"]

@@ -1,50 +1,15 @@
-<h1>Editor</h1>
-<button (click)="updateOptions()">Change Language</button>
-<button (click)="code = ''; codeInput=''">Set Value To Empty String</button>
-<button (click)="code = null; codeInput=null">Set Value To Null</button>
-<button (click)="code = undefined; codeInput=undefined">Set Value To undefined</button>
-<button (click)="showMultiple = !showMultiple">{{showMultiple ? 'Hide' : 'Show'}} Multiple Editor</button>
-
-<div >
-    <ngx-monaco-editor  [options]="options" [(ngModel)]="code" (onInit)="onInit($event)"></ngx-monaco-editor>
-</div>
-
-<ngx-monaco-editor *ngIf="showMultiple" [options]="options" [(ngModel)]="code"></ngx-monaco-editor>
-
-<pre>{{code | json}}</pre>
-
-
-
 
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
 
-        
       <div class="row g-5">
-        
-       
 
         <div class="col-lg-12">
-            
-            
-
-            
            
           <div class="row gy-4 posts-list">
-            
-            <div class="example-container">
-                <mat-form-field hintLabel="Max 10 characters" appearance="fill"   >
-                  <mat-label>Enter Code</mat-label>
-                  <input matInput #input maxlength="10" placeholder="Ex. Qj13h5n">
-                  <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-                  <div class="d-grid read-more mt-auto align-self-end col-1">
-                    <button  class="btn btn-lg btn-primary mt-3" type="submit" (click)="onSubmit()">Join</button>
-                  </div>
-                </mat-form-field>
-               
-            </div>
-
-           
+            <div class="read-more mt-auto align-self-end">
+                <a routerLink="/teacher/new">Creaate New </a>
+              </div>
 
 
             <div class="col-lg-6">
@@ -70,7 +35,7 @@
                 </div>
 
                 <div class="read-more mt-auto align-self-end">
-                  <a href="blog-details.html">Start</a>
+                  <a href="blog-details.html">Read More</a>
                 </div>
 
               </article>
@@ -99,7 +64,7 @@
                 </div>
 
                 <div class="read-more mt-auto align-self-end">
-                  <a href="blog-details.html">Start</a>
+                  <a href="blog-details.html">Read More</a>
                 </div>
 
               </article>
@@ -128,7 +93,7 @@
                 </div>
 
                 <div class="read-more mt-auto align-self-end">
-                  <a href="blog-details.html">Start</a>
+                  <a href="blog-details.html">Read More</a>
                 </div>
 
               </article>
@@ -158,7 +123,7 @@
                 </div>
 
                 <div class="read-more mt-auto align-self-end">
-                  <a href="blog-details.html">Start</a>
+                  <a href="blog-details.html">Read More</a>
                 </div>
 
               </article>
@@ -187,7 +152,7 @@
                 </div>
 
                 <div class="read-more mt-auto align-self-end">
-                  <a href="blog-details.html">Start</a>
+                  <a href="blog-details.html">Read More</a>
                 </div>
 
               </article>
@@ -216,7 +181,7 @@
                 </div>
 
                 <div class="read-more mt-auto align-self-end">
-                  <a href="blog-details.html">Start</a>
+                  <a href="blog-details.html">Read More</a>
                 </div>
 
               </article>

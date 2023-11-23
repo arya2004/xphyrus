@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: authapi
+spec:
+  type: ClusterIP
+  selector:
+    app: authapi
+  ports:
+    - name: authapi
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    
+#authservice-cip:80  put this in appsett.prod.json for url
