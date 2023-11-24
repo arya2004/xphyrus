@@ -48,6 +48,8 @@ namespace Xphyrus.SubmissionAPI.Controllers
         {
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            t.SubmissionRequest.StudentId = email;
+            t.SubmissionRequest.AssesmentId = t.submission.AssignmentId;
 
             try
             {

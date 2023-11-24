@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using Xphyrus.EvaluationAPI.Models.Dtos;
 using Xphyrus.EvaluationAPI.Models.ResReq;
 using Xphyrus.EvaluationAPI.Service.IService;
@@ -27,6 +29,11 @@ namespace Xphyrus.EvaluationAPI.Controllers
         [HttpPost]
 
         public async Task<ActionResult<object>> PostSubmission([FromBody] SubmissionRequest request)
+        {
+            return await _judgeService.SubmitPost(request);
+        }
+
+        public async Task<ActionResult<object>> GetSubmissionForAssesment([FromBody] string assesmentId)
         {
             return await _judgeService.SubmitPost(request);
         }

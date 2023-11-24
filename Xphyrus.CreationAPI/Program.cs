@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks.Dataflow;
 using Xphyrus.AssesmentAPI;
 using Xphyrus.AssesmentAPI.Data;
+using Xphyrus.AssesmentAPI.Data.Initialize;
 using Xphyrus.AssesmentAPI.Service;
 using Xphyrus.AssesmentAPI.Service.IService;
 
@@ -31,7 +32,7 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpClient();
 
@@ -97,11 +98,10 @@ builder.Services.AddCors(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseCors("CorsPolicy");
 
@@ -109,6 +109,18 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+SeedDatabase();
+
 app.MapControllers();
 
 app.Run();
+
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize(app.Environment.IsProduction());
+    }
+}

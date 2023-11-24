@@ -6,6 +6,7 @@ using StackExchange.Redis;
 using System.Text;
 using Xphyrus.MessageBus;
 using Xphyrus.SubmissionAPI.Data;
+using Xphyrus.SubmissionAPI.Data.Initialize;
 using Xphyrus.SubmissionAPI.Service;
 using Xphyrus.SubmissionAPI.Service.IService;
 using Xphyrus.SubmissionAPI.Utility;
@@ -28,6 +29,7 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackendApiAuthHttpClientHandler>();
 
+builder.Services.AddScoped<IDbInitializer, DbInitializer>(); 
 builder.Services.AddScoped<IAssesmentService, AssesmentService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJudgeService, JudgeService>();
@@ -102,11 +104,10 @@ builder.Services.AddCors(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseCors("CorsPolicy");
 
@@ -114,6 +115,18 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+SeedDatabase();
+
 app.MapControllers();
 
 app.Run();
+
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize(app.Environment.IsProduction());
+    }
+}

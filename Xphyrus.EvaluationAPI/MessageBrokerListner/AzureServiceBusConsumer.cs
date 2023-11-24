@@ -63,7 +63,7 @@ namespace Xphyrus.EvaluationAPI.MessageBrokerListner
                     stdin = objmessage.stdin ?? "dotnet meow"
                 };
                 var httpClient = _httpClientFactory.CreateClient();
-                var uri = new Uri("http://localhost:2358/submissions/");
+                var uri = new Uri("https://coding-classroom.com/judge/submissions/");
                 var json = JsonConvert.SerializeObject(temp);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync(uri, content);

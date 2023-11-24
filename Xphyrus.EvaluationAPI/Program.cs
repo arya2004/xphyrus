@@ -6,6 +6,7 @@ using StackExchange.Redis;
 using System;
 using System.Text;
 using Xphyrus.EvaluationAPI.Data;
+using Xphyrus.EvaluationAPI.Data.Initialize;
 using Xphyrus.EvaluationAPI.Extension;
 using Xphyrus.EvaluationAPI.Factory;
 using Xphyrus.EvaluationAPI.MessageBrokerListner;
@@ -38,7 +39,7 @@ builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
 
 
 builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
-
+//builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddHttpContextAccessor();
 
 
@@ -95,16 +96,27 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+//SeedDatabase();
+
 app.MapControllers();
 app.UseAzureServiceBusConsumer();
 app.Run();
+
+
+//void SeedDatabase()
+//{
+//    using (var scope = app.Services.CreateScope())
+//    {
+//        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+//        dbInitializer.Initialize(app.Environment.IsProduction());
+//    }
+//}
