@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subapidep
+  labels:
+    app: subapi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: subapi
+  template:
+    metadata:
+      name: subapik8s
+      labels:
+        env: prod
+        app: subapi
+        app.kubernetes.io/name: subapi
+    spec:
+      containers:
+        - name: subapi
+          image: zieglernattacatalyst/xphyrusauthapi
+          ports:
+            - name: sub-port
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: sub-lb
+# spec:
+#   selector:
+#     app.kubernetes.io/name: authapi
+#   ports:
+#     - name: auth-lb-port
+#       port: 8080
+#       targetPort: 80
+#       protocol: TCP
+#   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: subapi
+spec:
+  type: ClusterIP
+  selector:
+    app: subapi
+  ports:
+    - name: subapi
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    
+  
