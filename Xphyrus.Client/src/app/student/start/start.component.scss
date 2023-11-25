@@ -28,3 +28,33 @@ p {
   .pre-code {
     margin-top: 25px;
   }
+
+  .parent {
+    border: 1px solid black;
+    margin: 1rem;
+    padding: 2rem 2rem;
+    height: 80%;
+   
+  }
+  .child {
+    display: inline-block;
+    border: 1px solid red;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    height: 100%;
+    width: 50%;
+    
+  }
+  .smolchild {
+    display: inline-block;
+    border: 1px solid red;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    height: 10%;
+    width: 50%;
+    
+  }
+
+  .template-editor {
+    height: 500px;
+}

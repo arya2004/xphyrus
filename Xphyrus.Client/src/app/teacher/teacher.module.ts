@@ -10,6 +10,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { MatSelectModule} from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -17,6 +21,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     NewComponent
   ],
   imports: [
+    
     CommonModule,
     TeacherRoutingModule,
     MatButtonModule, 
@@ -25,7 +30,11 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatCardModule,
     FormsModule, 
     ReactiveFormsModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    AngularEditorModule,
+    MatSelectModule,
+    MatIconModule,
+    SharedModule
 
   ],
   exports:

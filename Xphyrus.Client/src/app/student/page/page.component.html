@@ -32,19 +32,19 @@
            
           <div class="row gy-4 posts-list">
             
-            <div class="example-container">
-                <mat-form-field hintLabel="Max 10 characters" appearance="fill"   >
-                  <mat-label>Enter Code</mat-label>
-                  <input matInput #input maxlength="10" placeholder="Ex. Qj13h5n">
-                  <mat-hint align="end">{{input.value.length}}/10</mat-hint>
-                  <div class="d-grid read-more mt-auto align-self-end col-1">
-                    <button  class="btn btn-lg btn-primary mt-3" type="submit" (click)="onSubmit()">Join</button>
-                  </div>
-                </mat-form-field>
-               
+            
+            <div class="add-cases-form" [formGroup]="codeId">
+              <mat-form-field appearance="fill">
+                <input matInput
+                       formControlName="code"
+                       placeholder="Enter Code">
+            </mat-form-field>
+</div>
+          
+            <div class="form-row org-desc-parent-margin">
+              <button mat-raised-button (click)="onSubmit()" style="background-color: purple; color: white;">Join</button>
             </div>
 
-           
 
 
             <div class="col-lg-6">

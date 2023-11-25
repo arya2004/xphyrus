@@ -1,31 +1,33 @@
-export interface Assesment{
-  name: string
-  description: string
-  code: string
-  isStrict: boolean
-  startDate: string
-  endDate: string
-  duration: string
-  codings: Coding[]
-  mcQs: McQ[]
-}
+import { CloseScrollStrategy } from "@angular/cdk/overlay"
 
-export interface Coding {
+export interface IAssignment {
   title: string
-  prompt: string
-  language: string
-  inputFormat: string
-  outputFormat: string
-  constrain1: string
-  constrain2: string
-  constrain3: string
-  evliationCases: EvliationCase[]
+  isStrict: boolean
+  description: string
+  startDate: Date
+  endDate: Date
+  duration: TimeRanges
+  evaluationCases: IEvaluationCase[]
+}
+export class Assignment implements IAssignment {
+  title: string
+  isStrict: boolean
+  description: string
+  startDate: Date
+  endDate: Date
+  duration: TimeRanges
+  evaluationCases: IEvaluationCase[]
 }
 
-export interface EvliationCase {
+export interface IEvaluationCase {
   inputCase: string
   outputCase: string
 }
+export class EvaluationCase implements IEvaluationCase {
+  inputCase: string
+  outputCase: string
+}
+
 
 export interface McQ {
   question: string

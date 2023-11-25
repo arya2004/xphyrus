@@ -13,7 +13,7 @@ export class StudentService {
 
   assignmnetUrl  = environment.assesmentApiUrl;
 
-  joinAssemsnet(id: number)
+  joinAssemsnet(id: string)
   {
     return this.http.get<IResponse<any>>(this.assignmnetUrl+ `?assesmentCode=${id}`);
   }
