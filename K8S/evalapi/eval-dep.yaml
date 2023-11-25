@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: evalapi
-          image: zieglernattacatalyst/xphyrusauthapi
+          image: zieglernattacatalyst/xphyrusevalapi
           ports:
             - name: eval-port
               containerPort: 80

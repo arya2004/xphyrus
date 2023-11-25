@@ -17,11 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
-{
-    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
-    return ConnectionMultiplexer.Connect(options);
-});
+//builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+//{
+//    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+//    return ConnectionMultiplexer.Connect(options);
+//});
 
 builder.Services.AddDbContext<ApplicatioDbContext>(
     options =>
