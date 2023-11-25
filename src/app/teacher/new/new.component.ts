@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, assertPlatform } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TeacherService } from '../teacher.service';
 import { Router } from '@angular/router';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
 
 
 @Component({
@@ -9,80 +11,71 @@ import { Router } from '@angular/router';
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.scss']
 })
-export class NewComponent {
-  name = 'Angular';
-  public userForm: FormGroup;
-  
+export class NewComponent implements OnInit {
+
+  constructor(private fb:FormBuilder, private teacherService: TeacherService) {}
+
+  ngOnInit(): void {
+    this.addLesson();
+  }
+
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
 
-  constructor(private _fb: FormBuilder, private router: Router, private teacherService: TeacherService) {
-    this.userForm = this._fb.group({
-      name: ['', Validators.minLength(3)],
-      description: [''],
-      isStrict: false,
-      start: new FormControl(),
-      end: new FormControl(),
-      duration: 1,
-      codings: this._fb.array([this.addAddressGroup()])
-    });
+
+  description = "";
+  config: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '15rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Arial',
+   
+  };
+
+
+  above = this. fb.group({
+    title: ['']
+  })
+  form = this.fb.group({
+
+    cases: this.fb.array([])
+  });
+
+
+  get cases() {
+    return this.form.controls["cases"] as FormArray;
   }
 
-  private addAddressGroup(): FormGroup {
-    return this._fb.group({
-      title: [],
-      prompt: [],
-      language: [],
-      inputFormat: [],
-      outputFormat: [],
-      constrain1: [],
-      constrain2:[],
-      constrain3: [],
-      evliationCases: this._fb.array([])
+  addLesson() {
+    const lessonForm = this.fb.group({
+      input: ['', Validators.required],
+      output: ['', Validators.required]
     });
+    this.cases.push(lessonForm);
   }
 
-  private contactsGroup(): FormGroup {
-    return this._fb.group({
-      inputCase: ['', Validators.required],
-      outputCase: ['', [Validators.maxLength(10)]], 
-    });
+  deleteLesson(lessonIndex: number) {
+    this.cases.removeAt(lessonIndex);
   }
 
-  get addressArray(): FormArray {
-    return <FormArray>this.userForm.get('codings');
-  }
+  onSubmit()
+  { 
+    const coding: IAssignment = new Assignment();
+    coding.title = this.above.value.title
+    coding.description = this.description
+    coding.startDate = this.range.value.start
+    coding.endDate = this.range.value.end
+    coding.evaluationCases = this.cases.value
  
-  get contactsArray(): FormArray {
-    return <FormArray>this.addressArray.value.get('evliationCases');
-  }
-
-  addAddress(): void {
-    this.addressArray.push(this.addAddressGroup());
-  }
-
-  removeAddress(index: number): void {
-    this.addressArray.removeAt(index);
-  }
-
-  addContact(index: number): void {
-    (<FormArray>(<FormGroup>this.addressArray.controls[index]).controls['evliationCases']).push(this.contactsGroup());
-  }
-
-  deletePhoneNumber(control: any, index: number) {
-    control.removeAt(index)
-  }
-  getControls() {
-    return (this.userForm.get('evliationCases') as FormArray).controls;
-  }
-  createTest(){
-    console.log(this.userForm.value);
-    this.teacherService.postAssignment(this.userForm.value).subscribe({
-      next: () => this.router.navigateByUrl('/teacher/')
-    })
-  }
+    console.log(JSON.stringify(coding));
     
+      this.teacherService.postAssignment
+  }
   
 }

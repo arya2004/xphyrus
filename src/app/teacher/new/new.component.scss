@@ -40,3 +40,8 @@ p {
   .mat-form-field.fill-container textarea {
     height: calc(100% - 25px);
   }
+
+  mat-form-field {
+    width: 40%;
+    margin-right: 8%;
+  }

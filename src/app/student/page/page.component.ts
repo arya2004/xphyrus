@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
+import { StudentService } from '../student.service';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 declare var monaco: any;
 
@@ -9,6 +12,9 @@ declare var monaco: any;
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent  {
+
+  constructor(private fb:FormBuilder, private studentService: StudentService,private router: Router) {}
+
   codeInput = 'Sample Code';
   editor: any;
   diffEditor: any;
@@ -80,9 +86,16 @@ export class PageComponent  {
     // let op = { identifier: id, range: range, text: text, forceMoveMarkers: true };
     // editor.executeEdits("my-source", [op]);
   }
+
+  codeId = this. fb.group({
+    code: ['']
+  })
   onSubmit()
   {
-    console.log("jello");
+   this.studentService.joinAssemsnet(this.codeId.value.code).subscribe({
+      next: () => this.router.navigateByUrl('/student'),
+      error: () => this.router.navigateByUrl('/student')
+   })
     
   }
 

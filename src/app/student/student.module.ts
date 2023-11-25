@@ -11,7 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,12 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
     MatCardModule,
     FormsModule, 
     ReactiveFormsModule,
+    AngularEditorModule,
     MonacoEditorModule.forRoot(),
+    MatDatepickerModule,
+    AngularEditorModule,
+    MatSelectModule,
+    MatIconModule
   ],
   exports:[
     StartComponent,
