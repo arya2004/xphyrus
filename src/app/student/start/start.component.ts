@@ -5,6 +5,7 @@ import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate'
 import { StudentService } from '../student.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
+import { ITestRun, TestRun } from 'src/app/shared/models/ITestRun';
 
 declare var monaco: any;
 @Component({
@@ -26,9 +27,7 @@ export class StartComponent implements OnInit {
   cssCode = `.my-class {
   color: red;
 }`;
-  jsCode = `function hello() {
-	 alert('Hello world!');
-}`;
+  jsCode = "function hello() {\n\t console.log(\"HEllo\")\n}\nhello()";
 
   originalModel: DiffEditorModel = {
     code: 'heLLo world!',
@@ -72,6 +71,7 @@ export class StartComponent implements OnInit {
 
   onInit(editor : any) {
     this.editor = editor;
+    
     console.log(editor);
     this.model = {
       value: this.jsonCode,
@@ -84,10 +84,14 @@ export class StartComponent implements OnInit {
     // let text = 'FOO';
     // let op = { identifier: id, range: range, text: text, forceMoveMarkers: true };
     // editor.executeEdits("my-source", [op]);
-    this.addLesson();
+    const lessonForm = this.fb.group({
+      input: ['', Validators.required],
+      output: ['', Validators.required]
+    });
+    this.cases.push(lessonForm);
   }
 
-  constructor(private fb:FormBuilder, private teacherService: StudentService) {}
+  constructor(private fb:FormBuilder, private studentService: StudentService) {}
 
   
 
@@ -112,7 +116,8 @@ export class StartComponent implements OnInit {
 
 
   above = this. fb.group({
-    title: ['']
+    input: [''],
+    output: ['']
   })
   form = this.fb.group({
 
@@ -124,27 +129,24 @@ export class StartComponent implements OnInit {
     return this.form.controls["cases"] as FormArray;
   }
 
-  addLesson() {
-    const lessonForm = this.fb.group({
-      input: ['', Validators.required],
-      output: ['', Validators.required]
-    });
-    this.cases.push(lessonForm);
-  }
+  responseOutput: object =  {};
 
-
-
-  onSubmit()
+  testRun()
   { 
-    const coding: IAssignment = new Assignment();
-    coding.title = this.above.value.title
-    coding.description = this.description
-    coding.startDate = this.range.value.start
-    coding.endDate = this.range.value.end
-    coding.evaluationCases = this.cases.value
+    const coding: ITestRun = new TestRun();
+    coding.source_code = this.code;
+    coding.language_id = 63;
+    coding.stdin = this.above.value.input
+    coding.exprected_output = this.above.value.output
  
     console.log(JSON.stringify(coding));
-    
+    this.studentService.testRun(coding).subscribe({
+      next: (data) => {this.responseOutput = data.result
+        console.log(data.result)
+      }
       
+    })
   }
+
+  
 }
