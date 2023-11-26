@@ -12,8 +12,8 @@ using Xphyrus.AssesmentAPI.Data;
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     [DbContext(typeof(ApplicatioDbContext))]
-    [Migration("20230919105952_dataSimplifications")]
-    partial class dataSimplifications
+    [Migration("20231126071718_qww")]
+    partial class qww
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,38 +25,30 @@ namespace Xphyrus.AssesmentAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Assesment", b =>
+            modelBuilder.Entity("CodingAssesment", b =>
                 {
-                    b.Property<string>("AssesmentId")
+                    b.Property<string>("CodingAssesmentId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodingsCodingId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsStrict")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("JoinCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AssesmentId");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("CodingsCodingId");
+                    b.HasKey("CodingAssesmentId");
 
                     b.ToTable("Assesments");
                 });
@@ -106,85 +98,41 @@ namespace Xphyrus.AssesmentAPI.Migrations
                     b.ToTable("AssesmentParticipants");
                 });
 
-            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Coding", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.EvaluationCase", b =>
                 {
-                    b.Property<string>("CodingId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Constrain1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Constrain2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Constrain3")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("InputFormat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Language")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OutputFormat")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Prompt")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CodingId");
-
-                    b.ToTable("Coding");
-                });
-
-            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.EvliationCase", b =>
-                {
-                    b.Property<string>("EvliationCaseId")
+                    b.Property<string>("EvaluationCaseId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CodingId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("InputCase")
+                    b.Property<string>("Input")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OutputCase")
+                    b.Property<string>("Output")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("EvliationCaseId");
+                    b.HasKey("EvaluationCaseId");
 
                     b.HasIndex("CodingId");
 
                     b.ToTable("EvliationCases");
                 });
 
-            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Assesment", b =>
+            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.EvaluationCase", b =>
                 {
-                    b.HasOne("Xphyrus.AssesmentAPI.Models.Coding", "Codings")
-                        .WithMany()
-                        .HasForeignKey("CodingsCodingId");
-
-                    b.Navigation("Codings");
-                });
-
-            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.EvliationCase", b =>
-                {
-                    b.HasOne("Xphyrus.AssesmentAPI.Models.Coding", null)
-                        .WithMany("EvliationCases")
+                    b.HasOne("CodingAssesment", "Coding")
+                        .WithMany("EvaluationCases")
                         .HasForeignKey("CodingId");
+
+                    b.Navigation("Coding");
                 });
 
-            modelBuilder.Entity("Xphyrus.AssesmentAPI.Models.Coding", b =>
+            modelBuilder.Entity("CodingAssesment", b =>
                 {
-                    b.Navigation("EvliationCases");
+                    b.Navigation("EvaluationCases");
                 });
 #pragma warning restore 612, 618
         }

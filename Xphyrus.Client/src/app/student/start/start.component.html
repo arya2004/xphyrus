@@ -24,8 +24,8 @@
 
 
 <div class="smolchild">
-  <button mat-raised-button (click)="onSubmit()" style="background-color: purple; color: white;">Test Run</button>
-  <button mat-raised-button (click)="onSubmit()" style="background-color: purple; color: white;">Submit</button>
+  <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Test Run</button>
+  <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Submit</button>
 </div>
 
     <div class='child'>
@@ -39,15 +39,18 @@
           <h1>Test Run: </h1>
           <mat-form-field appearance="fill">
             <textarea matInput
-                   formControlName="title"
+                   formControlName="input"
                    placeholder="Input"></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
           <textarea matInput
-                 formControlName="title"
+                 formControlName="output"
                  placeholder="OutPut"></textarea>
       </mat-form-field>
+
+      <br>
+      <p> {{responseOutput | json}} </p>
   </div>
         
     </div>

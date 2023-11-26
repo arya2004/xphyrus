@@ -5,7 +5,7 @@
 namespace Xphyrus.AssesmentAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Done : Migration
+    public partial class qww : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

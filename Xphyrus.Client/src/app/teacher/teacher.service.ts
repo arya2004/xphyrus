@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
 import { IResponse } from '../shared/models/IResponse';
+import { IAssignment } from '../shared/models/IAssesmentCreate';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class TeacherService {
 
   assignmnetUrl  = environment.assesmentApiUrl;
 
-  postAssignment(assignment: any)
+  postAssignment(assignment: IAssignment)
   {
     return this.http.post<IResponse<any>>(this.assignmnetUrl , assignment);
   }
@@ -26,6 +27,11 @@ export class TeacherService {
   detailAssesment(id: number)
   {
     return this.http.get<IResponse<any>>(this.assignmnetUrl+ `?assesmentCode=${id}`);
+  }
+
+  getCreated()
+  {
+    return this.http.get<IResponse<any>>(this.assignmnetUrl + "created")
   }
 
 }

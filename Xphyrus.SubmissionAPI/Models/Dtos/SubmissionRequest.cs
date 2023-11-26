@@ -11,6 +11,10 @@
         public int StudentId { get; set; }
         public int AssesmentId { get; set; }
 
+        public SubmissionRequest()
+        {
+            
+        }
         public SubmissionRequest(TestRunDto testRunDto)
         {
             this.source_code = testRunDto.source_code;

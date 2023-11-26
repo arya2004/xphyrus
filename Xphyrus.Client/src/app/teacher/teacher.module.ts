@@ -14,6 +14,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { MatSelectModule} from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../shared/shared.module';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -34,7 +36,10 @@ import { SharedModule } from '../shared/shared.module';
     AngularEditorModule,
     MatSelectModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    MatTableModule,
+    MatSortModule
+    
 
   ],
   exports:

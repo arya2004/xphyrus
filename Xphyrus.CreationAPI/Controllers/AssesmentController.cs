@@ -38,7 +38,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
         {
             try
             {
-                Assesment? assesment = _applicatioDbContext.Assesments.FirstOrDefault(u => u.Code == assesmentCode);
+                CodingAssesment? assesment = _applicatioDbContext.Assesments.FirstOrDefault(u => u.JoinCode == assesmentCode);
                 if (assesment == null)
                 {
                     _responseDto.IsSuccess = false;
@@ -53,6 +53,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
             }
             return _responseDto;
         }
+
         //invoked by auth service
         [HttpGet("CheckIfAssesmentExist/{assesmentCode}")]
         public async Task<ResponseDto> CheckIfAssesmentExist(string assesmentCode)
@@ -61,7 +62,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
 
             try
             {
-                Assesment? assesment = await _applicatioDbContext.Assesments.FirstOrDefaultAsync(u => u.Code == assesmentCode);
+                CodingAssesment? assesment = await _applicatioDbContext.Assesments.FirstOrDefaultAsync(u => u.JoinCode == assesmentCode);
                 if (assesment == null)
                 {
                     _responseDto.IsSuccess = false;
@@ -77,39 +78,42 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
         [HttpPost]
-       [Authorize]
-        public async Task<ResponseDto> CreateAssesments([FromBody] AssesmentDto assesment)
+      // [Authorize]
+        public async Task<ResponseDto> CreateAssesments([FromBody] CodingAssesmentDto assesment)
         {
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var email = "a@s.com";// HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             Console.WriteLine(email);
-            var adminId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var adminId = "93yrwuiuwuehr3w"; //HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             Console.WriteLine(email);
 
             //var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             //Console.WriteLine(email);
             try
             {
-                Assesment toSave = _mapper.Map<Assesment>(assesment);
+                CodingAssesment toSave = _mapper.Map<CodingAssesment>(assesment);
+                toSave.JoinCode = Guid.NewGuid().ToString();
                 await _applicatioDbContext.Assesments.AddAsync(toSave);
                 await _applicatioDbContext.SaveChangesAsync();
-                Assesment? assesFromDb = await _applicatioDbContext.Assesments.FirstOrDefaultAsync(u => u.Code == assesment.Code);
+                CodingAssesment? assesFromDb = await _applicatioDbContext.Assesments.FirstOrDefaultAsync(u => u.JoinCode == toSave.JoinCode);
                 if (assesFromDb == null)
-                {   
-                    _responseDto.IsSuccess=false;
+                {
+                    _responseDto.IsSuccess = false;
                     _responseDto.Message = "unble to find";
                     return _responseDto;
                 }
-                
+
                 AssesmentAdmins assesmentAdmin = new AssesmentAdmins()
                 {
-                    AssesmentId = assesFromDb.AssesmentId,
+                    AssesmentId = assesFromDb.CodingAssesmentId,
                     ApplicationUser = adminId,
                     HasResultDeclared = false
 
                 };
                 await _applicatioDbContext.AssesmentAdmins.AddAsync(assesmentAdmin);
                 await _applicatioDbContext.SaveChangesAsync();
-       
+                _responseDto.IsSuccess = true;
+                _responseDto.Message = "creatd";
+
 
 
             }
@@ -121,75 +125,75 @@ namespace Xphyrus.AssesmentAPI.Controllers
             return _responseDto;
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<ResponseDto>> DeleteAssesment(string assesmentId)
-        {
+        //[HttpDelete]
+        //public async Task<ActionResult<ResponseDto>> DeleteAssesment(string assesmentId)
+        //{
 
 
-            try
-            {
-                Assesment? assesment =  await _applicatioDbContext.Assesments.Include(a => a.Codings).Include(a => a.Codings).Include(a => a.Codings).Include(a => a.Codings).ThenInclude(a => a.EvliationCases).FirstOrDefaultAsync(u => u.AssesmentId == assesmentId);
-                if (assesment == null)
-                {
-                    _responseDto.Message = "cant find lol";
-                    _responseDto.IsSuccess = false;
-                    return _responseDto;
+        //    try
+        //    {
+        //        CodingAssesment? assesment =  await _applicatioDbContext.Assesments.Include(a => a.EvaluationCases).FirstOrDefaultAsync(u => u.CodingAssesmentId == assesmentId);
+        //        if (assesment == null)
+        //        {
+        //            _responseDto.Message = "cant find lol";
+        //            _responseDto.IsSuccess = false;
+        //            return _responseDto;
                     
-                }
+        //        }
                 
                 
-                AssesmentAdmins? assesmentAdmins = await _applicatioDbContext.AssesmentAdmins.Where(u => u.AssesmentId == assesmentId).FirstOrDefaultAsync();
+        //        AssesmentAdmins? assesmentAdmins = await _applicatioDbContext.AssesmentAdmins.Where(u => u.AssesmentId == assesmentId).FirstOrDefaultAsync();
 
-                IQueryable<AssesmentParticipant> lel = _applicatioDbContext.AssesmentParticipants;
-                var assesmentParticipants =  lel.Where(a => a.AssesmentId == assesmentId).ToList();
+        //        IQueryable<AssesmentParticipant> lel = _applicatioDbContext.AssesmentParticipants;
+        //        var assesmentParticipants =  lel.Where(a => a.AssesmentId == assesmentId).ToList();
 
-                if(assesment.Codings != null)
-                {
-                    _applicatioDbContext.Coding.RemoveRange(assesment.Codings);
-                }
+        //        if(assesment != null)
+        //        {
+        //           // _applicatioDbContext.Coding.Remove(assesment);
+        //        }
                
 
-                _applicatioDbContext.AssesmentParticipants.RemoveRange(assesmentParticipants);
-                if (assesmentAdmins != null)
-                {
-                    _applicatioDbContext.AssesmentAdmins.Remove(assesmentAdmins);
-                }
+        //        _applicatioDbContext.AssesmentParticipants.RemoveRange(assesmentParticipants);
+        //        if (assesmentAdmins != null)
+        //        {
+        //            _applicatioDbContext.AssesmentAdmins.Remove(assesmentAdmins);
+        //        }
                
-                _applicatioDbContext.Assesments.Remove(assesment);
-                await _applicatioDbContext.SaveChangesAsync();
+        //       // _applicatioDbContext.Assesments.Remove(assesment);
+        //        await _applicatioDbContext.SaveChangesAsync();
 
-            }
-            catch (Exception ex)
-            {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = ex.Message;
-            }
-            return _responseDto;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _responseDto.IsSuccess = false;
+        //        _responseDto.Message = ex.Message;
+        //    }
+        //    return _responseDto;
+        //}
 
-        [HttpPut]
-        public async Task<ActionResult<ResponseDto>> UpdateAssesment([FromBody] Assesment assesment)
-        {
+        //[HttpPut]
+        //public async Task<ActionResult<ResponseDto>> UpdateAssesment([FromBody] CodingAssesment assesment)
+        //{
 
-            try
-            {
-                _applicatioDbContext.Assesments.Update(assesment);
-               // await _applicatioDbContext.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = ex.Message;
-            }
-            return _responseDto;
+        //    try
+        //    {
+        //        //_applicatioDbContext.Assesments.Update(assesment);
+        //       // await _applicatioDbContext.SaveChangesAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _responseDto.IsSuccess = false;
+        //        _responseDto.Message = ex.Message;
+        //    }
+        //    return _responseDto;
 
-        }
+        //}
         [HttpGet("created")]
         //[Authorize(Roles ="ADMIN")]
         public async Task<ActionResult<ResponseDto>> GetAssesment()
         {
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var adminId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = "a@s.com"; ; //HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var adminId = "93yrwuiuwuehr3w";// HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if(email == null || adminId == null)
             {
@@ -200,7 +204,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
             {
                 IQueryable<AssesmentAdmins> adm = _applicatioDbContext.AssesmentAdmins.Where(a => a.ApplicationUser == adminId);
                 var primaryKeyValues = adm.Select(entity => entity.AssesmentId).ToArray();
-                IQueryable<Assesment> ass = _applicatioDbContext.Assesments.Where(entity => primaryKeyValues.Contains(entity.AssesmentId));
+                IQueryable<CodingAssesment> ass = _applicatioDbContext.Assesments.Where(entity => primaryKeyValues.Contains(entity.CodingAssesmentId))  ;
 
                 _responseDto.IsSuccess = true;
                 _responseDto.Result = ass;

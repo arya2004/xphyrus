@@ -13,7 +13,7 @@ import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate'
 })
 export class NewComponent implements OnInit {
 
-  constructor(private fb:FormBuilder, private teacherService: TeacherService) {}
+  constructor(private fb:FormBuilder, private teacherService: TeacherService, private router: Router) {}
 
   ngOnInit(): void {
     this.addLesson();
@@ -75,7 +75,9 @@ export class NewComponent implements OnInit {
  
     console.log(JSON.stringify(coding));
     
-      this.teacherService.postAssignment
+      this.teacherService.postAssignment(coding).subscribe({
+        next: () => this.router.navigateByUrl('/teacher')
+      })
   }
   
 }
