@@ -16,6 +16,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from '../shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import {Component} from '@angular/core';
 @NgModule({
   declarations: [
     DashboardComponent,

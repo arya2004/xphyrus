@@ -117,6 +117,10 @@ export class PageComponent  {
   }
 
 
+  goToProductDetails(id: string) {
+    this.router.navigate(['/student', id]);
+  }
+
  
 
 }

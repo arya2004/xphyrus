@@ -15,6 +15,7 @@ export class StudentService {
 
   assignmnetUrl  = environment.assesmentApiUrl;
   subURl = "https://localhost:7003/api/TestRun/Run"
+  doneURl = "https://localhost:7003/api/SubmissionAPI/Submit"
   studUrl = "https://localhost:7000/api/Participants/Joined"
   joimURl = "https://localhost:7000/api/Participants/Register"
 
@@ -47,11 +48,14 @@ export class StudentService {
   }
   submitRun(code: Submit)
   {
-    return this.http.post<IResponse<any>>(this.subURl, code);
+    return this.http.post<IResponse<any>>(this.doneURl, code);
   }
   getJoined()
   {
     return this.http.get<IResponse<any>>(this.studUrl)
   }
+  
+
+
   
 }

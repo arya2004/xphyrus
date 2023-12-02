@@ -13,6 +13,7 @@ export class TeacherService {
   constructor(private http: HttpClient, private router: Router) { }
 
   assignmnetUrl  = environment.assesmentApiUrl;
+  assUrl = "https://localhost:7000/api/Assesment"
 
   postAssignment(assignment: IAssignment)
   {
@@ -33,5 +34,12 @@ export class TeacherService {
   {
     return this.http.get<IResponse<any>>(this.assignmnetUrl + "created")
   }
+
+
+  loadDetailed(id: string)
+  {
+    return this.http.get<IResponse<any>>(this.assUrl+ "?assesmentCode=" + id )
+  }
+
 
 }
