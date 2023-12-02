@@ -15,7 +15,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-
+import { MatRadioModule } from '@angular/material/radio';
 @NgModule({
   declarations: [
   
@@ -36,7 +36,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatDatepickerModule,
     AngularEditorModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatRadioModule
   ],
   exports:[
     StartComponent,

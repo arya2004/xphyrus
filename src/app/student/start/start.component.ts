@@ -7,6 +7,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
 import { ITestRun, TestRun } from 'src/app/shared/models/ITestRun';
 
+
 declare var monaco: any;
 @Component({
   selector: 'app-start',
@@ -14,6 +15,10 @@ declare var monaco: any;
   styleUrls: ['./start.component.scss']
 })
 export class StartComponent implements OnInit {
+
+  id: string;
+  private sub: any;
+  constructor(private fb:FormBuilder, private studentService: StudentService,private route: ActivatedRoute) {}
 
   codeInput = 'Sample Code';
   editor: any;
@@ -53,6 +58,12 @@ export class StartComponent implements OnInit {
 
   ngOnInit() {
     this.updateOptions();
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['id']; // (+) converts string 'id' to a number
+        console.log(this.id);
+        
+      // In a real app: dispatch action to load the details here.
+   });
   }
 
   updateOptions() {
@@ -91,7 +102,7 @@ export class StartComponent implements OnInit {
     this.cases.push(lessonForm);
   }
 
-  constructor(private fb:FormBuilder, private studentService: StudentService) {}
+ 
 
   
 
@@ -131,11 +142,30 @@ export class StartComponent implements OnInit {
 
   responseOutput: object =  {};
 
+  favoriteSeason: string = 'C';
+  seasons: string[] = ['C', 'C++', 'Java', 'Python'];
+
+ 
+
+
   testRun()
   { 
     const coding: ITestRun = new TestRun();
     coding.source_code = this.code;
-    coding.language_id = 63;
+
+    if (this.favoriteSeason == "C") {
+      coding.language_id = 49;
+    }
+    if (this.favoriteSeason == "C++") {
+      coding.language_id = 53;
+    }
+    if (this.favoriteSeason == "Java") {
+      coding.language_id = 62;
+    }
+
+    if (this.favoriteSeason == "Python") {
+      coding.language_id = 71;
+    }
     coding.stdin = this.above.value.input
     coding.exprected_output = this.above.value.output
  
@@ -148,5 +178,36 @@ export class StartComponent implements OnInit {
     })
   }
 
+  onSubmit()
+  { 
+    const coding: ITestRun = new TestRun();
+    coding.source_code = this.code;
+
+    if (this.favoriteSeason == "C") {
+      coding.language_id = 49;
+    }
+    if (this.favoriteSeason == "C++") {
+      coding.language_id = 53;
+    }
+    if (this.favoriteSeason == "Java") {
+      coding.language_id = 62;
+    }
+
+    if (this.favoriteSeason == "Python") {
+      coding.language_id = 71;
+    }
+    coding.stdin = this.above.value.input
+    coding.exprected_output = this.above.value.output
+ 
+    console.log(JSON.stringify(coding));
+    this.studentService.testRun(coding).subscribe({
+      next: (data) => {this.responseOutput = data.result
+        console.log(data.result)
+      }
+      
+    })
+  }
+
+  
   
 }
