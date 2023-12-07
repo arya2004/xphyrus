@@ -4,6 +4,13 @@
 above loadballancer in different namespace
 authservice-cip:80  put this in appsett.prod.json for url
 
+# PS
+
+Will continue this project on personal level. Fork/Continuation of EDI 3
+Storage files on k8s are platform-sensitive. I have azure PVC/PV ones, but since my azure balance is over, will support the MikiKube ones.
+Will switch to RabbitMQ from Azure Serivce Bus. 
+Below is written by GPT, so ignore it, i guess :0
+
 # Microservice-based Online Assessment Platform
 
 This repository contains the source code and documentation for a Microservice-based Online Assessment (OA) platform built using ASP.NET Core for the backend and Angular for the frontend. This platform is designed to facilitate online assessments and examinations, offering a scalable and flexible solution for organizations to conduct assessments efficiently.
