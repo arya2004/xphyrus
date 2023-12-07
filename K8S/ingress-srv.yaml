@@ -21,6 +21,13 @@ spec:
             pathType: Prefix
             backend:
               service:
+                name: evalapi
+                port:
+                  number: 80
+          - path: /swagger
+            pathType: Prefix
+            backend:
+              service:
                 name: authapi
                 port:
                   number: 80
@@ -28,7 +35,35 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: sub-lb
+                name: subapi
+                port:
+                  number: 80
+          - path: /api/Assesment
+            pathType: Prefix
+            backend:
+              service:
+                name: assesmentapi
+                port:
+                  number: 80
+          - path: /api/EvaluationAPI
+            pathType: Prefix
+            backend:
+              service:
+                name: evalapi
+                port:
+                  number: 80
+          - path: /swagger/
+            pathType: Prefix
+            backend:
+              service:
+                name: assesmmentapi
+                port:
+                  number: 80
+          - path: /Participants
+            pathType: Prefix
+            backend:
+              service:
+                name: assesmentapi
                 port:
                   number: 80
 

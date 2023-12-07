@@ -27,20 +27,11 @@ namespace Xphyrus.EvaluationAPI.Migrations
                     b.Property<string>("SubmissionRequestId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("cpu_extra_time")
+                    b.Property<int>("AssesmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("cpu_time_limit")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
-
-                    b.Property<bool?>("enable_network")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("enable_per_process_and_thread_memory_limit")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("enable_per_process_and_thread_time_limit")
-                        .HasColumnType("bit");
 
                     b.Property<string>("expected_output")
                         .HasColumnType("nvarchar(max)");
@@ -48,29 +39,11 @@ namespace Xphyrus.EvaluationAPI.Migrations
                     b.Property<int?>("language_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("max_file_size")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("max_processes_and_or_threads")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("memory_limit")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("number_of_runs")
-                        .HasColumnType("int");
-
                     b.Property<string>("source_code")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("stack_limit")
-                        .HasColumnType("int");
-
                     b.Property<string>("stdin")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("wall_time_limit")
-                        .HasColumnType("int");
 
                     b.HasKey("SubmissionRequestId");
 

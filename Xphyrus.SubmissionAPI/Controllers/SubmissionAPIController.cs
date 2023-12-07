@@ -44,17 +44,19 @@ namespace Xphyrus.SubmissionAPI.Controllers
         }
         [Authorize]
         [HttpPost("Submit")]
-        public async Task<ActionResult<ResponseDto>> Submission([FromBody] temp t)
+        public async Task<ActionResult<ResponseDto>> Submission([FromBody] SubmissionDto submissionDto)
         {
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             var id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+           // t.SubmissionRequest.StudentId = Int32.Parse(id);
+          //  t.SubmissionRequest.AssesmentId = Int32.Parse(t.submission.AssignmentId);
 
             try
             {
-                _responseDto = await _assesmentService.MarkSubmission(t.submission);
+                _responseDto = await _assesmentService.MarkSubmission(submissionDto);
                 if(_responseDto.IsSuccess && _responseDto.Message == "")
                 {
-                  await _bus.PublishMessage(t.SubmissionRequest, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
+                  await _bus.PublishMessage(submissionDto, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
                 }
             }
             catch (Exception ex)

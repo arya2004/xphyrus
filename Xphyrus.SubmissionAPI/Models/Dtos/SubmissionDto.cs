@@ -5,7 +5,7 @@
         
         public string? source_code { get; set; }
         public int? language_id { get; set; }
-        public string? AssignmentId { get; set; }
-        public string? CodingId { get; set; }
+        public string? CodingAssignmentId { get; set; }
+       
     }
 }

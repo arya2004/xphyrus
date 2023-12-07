@@ -9,9 +9,8 @@ namespace Xphyrus.AssesmentAPI.Data
         public ApplicatioDbContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Coding> Coding { get; set; }
-        public DbSet<EvliationCase> EvliationCases { get; set; }
-        public DbSet<Assesment> Assesments { get; set; }
+        public DbSet<EvaluationCase> EvliationCases { get; set; }
+        public DbSet<CodingAssesment> Assesments { get; set; }
         public DbSet<AssesmentAdmins> AssesmentAdmins { get; set; }
         public DbSet<AssesmentParticipant> AssesmentParticipants { get; set; }
 

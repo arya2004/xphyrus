@@ -40,6 +40,21 @@ namespace Xphyrus.EvaluationAPI.Service
             }
         }
 
-       
+        public async Task Migrate()
+        {
+            try
+            {
+                await using var _db = new ApplicatioDbContext(_options);
+                if (_db.Database.GetPendingMigrations().Count() > 0)
+                {
+                    await _db.Database.MigrateAsync();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

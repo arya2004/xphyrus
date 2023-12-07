@@ -15,10 +15,10 @@ metadata:
     volume.beta.kubernetes.io/storage-class: azure-disk
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
-      storage: 8Gi
+      storage: 250Mi
  
 
 #storageClassName is cloud sensitive

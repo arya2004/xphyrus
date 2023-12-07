@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evalapidep
+  labels:
+    app: evalapi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: evalapi
+  template:
+    metadata:
+      name: evalapik8s
+      labels:
+        env: prod
+        app: evalapi
+        app.kubernetes.io/name: evalapi
+    spec:
+      containers:
+        - name: evalapi
+          image: zieglernattacatalyst/xphyrusevalapi
+          ports:
+            - name: eval-port
+              containerPort: 80
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://+:80
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: sub-lb
+# spec:
+#   selector:
+#     app.kubernetes.io/name: authapi
+#   ports:
+#     - name: auth-lb-port
+#       port: 8080
+#       targetPort: 80
+#       protocol: TCP
+#   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: evalapi
+spec:
+  type: ClusterIP
+  selector:
+    app: evalapi
+  ports:
+    - name: evalapi
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    
+  

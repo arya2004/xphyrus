@@ -49,13 +49,13 @@ namespace Xphyrus.AssesmentAPI.Controllers
         //check code
         //check if registers already
         //regisre
-        [Authorize]
+      //  [Authorize]
         
-        public async Task<ActionResult<ResponseDto>> RegisterForAssesment(string AssesmentCode)
+        public async Task<ActionResult<ResponseDto>> RegisterForAssesment([FromBody]string AssesmentCode)
         {
 
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var participantId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = "a@s.com";// HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var participantId = "93yrwuiuwuehr3w";// HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (email == null || participantId == null)
             {
                 _responseDto.IsSuccess = false;
@@ -64,7 +64,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
             }
 
 
-            Assesment? assesment = _applicationDbContext.Assesments.FirstOrDefault(u => u.Code == AssesmentCode);
+            CodingAssesment? assesment = _applicationDbContext.Assesments.FirstOrDefault(u => u.JoinCode == AssesmentCode);
             if (assesment == null)
             {   
                 _responseDto.IsSuccess = false;
@@ -74,7 +74,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
             AssesmentParticipant assesmentParticipant = new AssesmentParticipant()
             {
                 ApplicationUser = participantId,
-                AssesmentId = assesment.AssesmentId,
+                AssesmentId = assesment.CodingAssesmentId,
                 HasCompleted = false,
                 HasStarted = false,
             };
@@ -88,9 +88,9 @@ namespace Xphyrus.AssesmentAPI.Controllers
         }
         [HttpPost("Start")]
         public async Task<ActionResult<ResponseDto>> StartAssesment([FromBody] string AssesmentCode)
-        {   
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var participantId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        {
+            var email = "a@s.com";// HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var participantId = "93yrwuiuwuehr3w";// HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (email == null || participantId == null)
             {
                 _responseDto.IsSuccess = false;
@@ -113,7 +113,7 @@ namespace Xphyrus.AssesmentAPI.Controllers
                     assesmentParticipant.HasStarted = true;
                     _applicationDbContext.AssesmentParticipants.Update(assesmentParticipant);
                     await _applicationDbContext.SaveChangesAsync();
-                    Assesment? assesmnet = await _applicationDbContext.Assesments.Where(u => u.AssesmentId == assesmentParticipant.AssesmentId).Include(u => u.Codings).FirstOrDefaultAsync();
+                    CodingAssesment? assesmnet = await _applicationDbContext.Assesments.Where(u => u.CodingAssesmentId == assesmentParticipant.AssesmentId).FirstOrDefaultAsync();
                     _responseDto.IsSuccess = true;
                     _responseDto.Result = assesmnet;
                     return _responseDto;
@@ -164,5 +164,39 @@ namespace Xphyrus.AssesmentAPI.Controllers
             }
             return _responseDto;
         }
+
+        [HttpGet("Joined")]
+        //[Authorize(Roles ="ADMIN")]
+        public async Task<ActionResult<ResponseDto>> GetJoinedAssesment()
+        {
+            var email = "a@s.com"; ; //HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var adminId = "93yrwuiuwuehr3w";// HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (email == null || adminId == null)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = "invalid token";
+            }
+            try
+            {
+                IQueryable<AssesmentParticipant> adm = _applicationDbContext.AssesmentParticipants.Where(a => a.ApplicationUser == adminId);
+                var primaryKeyValues = adm.Select(entity => entity.AssesmentId).ToArray();
+                IQueryable<CodingAssesment> ass = _applicationDbContext.Assesments.Where(entity => primaryKeyValues.Contains(entity.CodingAssesmentId));
+
+                _responseDto.IsSuccess = true;
+                _responseDto.Result = ass;
+            }
+            catch (Exception ex)
+            {
+
+                _responseDto.IsSuccess = false;
+                _responseDto.Message = ex.Message;
+            }
+
+
+
+            return _responseDto;
+        }
+
     }
 }

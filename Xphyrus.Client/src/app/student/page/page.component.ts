@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
+import { StudentService } from '../student.service';
+import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
+import { IAssesmentHome } from 'src/app/shared/models/IAssesmentAdminHome';
 
 declare var monaco: any;
 
@@ -9,6 +13,9 @@ declare var monaco: any;
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent  {
+  myJoinedAssingments: IAssesmentHome[] = []
+  constructor(private fb:FormBuilder, private studentService: StudentService,private router: Router) {}
+
   codeInput = 'Sample Code';
   editor: any;
   diffEditor: any;
@@ -49,6 +56,7 @@ export class PageComponent  {
 
   ngOnInit() {
     this.updateOptions();
+    this.viewDashboard()
   }
 
   updateOptions() {
@@ -79,11 +87,40 @@ export class PageComponent  {
     // let text = 'FOO';
     // let op = { identifier: id, range: range, text: text, forceMoveMarkers: true };
     // editor.executeEdits("my-source", [op]);
+
+   
   }
+  viewDashboard(){
+    this.studentService.getJoined().subscribe({
+      next: res => {
+        this.myJoinedAssingments  = res.result
+        console.log(this.myJoinedAssingments);
+        
+      }
+    })
+  }
+
+  codeId = this. fb.group({
+    code: ['']
+  })
   onSubmit()
   {
-    console.log("jello");
+    console.log(this.codeId.value.code);
+    
+   this.studentService.joinAssemsnet(this.codeId.value.code).subscribe({
+      next: () => {
+        window.location.reload()
+      },
+      error: () => this.router.navigateByUrl('/')
+   })
     
   }
+
+
+  goToProductDetails(id: string) {
+    this.router.navigate(['/student', id]);
+  }
+
+ 
 
 }

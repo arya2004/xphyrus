@@ -1,96 +1,96 @@
 
-<div>
-    Showing product details for product: {{ id }}
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+  <div class='parent'>
+
+   
+    
+<div class="smolchild">
+  <h3> Title: {{id}} </h3>
+</div>
+
+
+<div class="smolchild">
+  <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Test Run</button>
+  <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Submit</button>
+
+  <label id="example-radio-group-label">Language</label>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    [(ngModel)]="favoriteSeason">
+    <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+      {{season}}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+
+
+    <div class='child'>
+      
+
+
+     
+        <div [innerHTML]="description"></div>
+        <div class="add-cases-form" [formGroup]="above" >
+
+          <h1>Test Run: </h1>
+          <mat-form-field appearance="fill">
+            <textarea matInput
+                   formControlName="input"
+                   placeholder="Input"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <textarea matInput
+                 formControlName="output"
+                 placeholder="OutPut"></textarea>
+      </mat-form-field>
+
+      <br>
+      <p> {{responseOutput | json}} </p>
+  </div>
+        
+    </div>
+    <div class='child'>
+      <button (click)="updateOptions()">Change Language</button>
+      <button (click)="code = ''; codeInput=''">Set Value To Empty String</button>
+      <button (click)="code = null; codeInput=null">Set Value To Null</button>
+      <button (click)="code = undefined; codeInput=undefined">Set Value To undefined</button>
+
+      
+      <div >
+          <ngx-monaco-editor class="template-editor"  [options]="options" [(ngModel)]="code" (onInit)="onInit($event)"></ngx-monaco-editor>
+      </div>
+      
+      <ngx-monaco-editor class="template-editor"  *ngIf="showMultiple" [options]="options" [(ngModel)]="code"></ngx-monaco-editor>
+      
+      <pre>{{code | json}}</pre></div>
+  
+
   </div>
 
-  <form class="example-form" [formGroup]="userForm">
-    <div>
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>Create NEw </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="primary-container">
-            <mat-form-field>
-              <input matInput placeholder="First Name" value="" formControlName="firstName">
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Last Name" value="" formControlName="lastName">
-            </mat-form-field>
-          </div>
-          <div class="primary-container">
-            <mat-form-field>
-              <input matInput placeholder="First Name" value="" formControlName="firstName">
-            </mat-form-field>
-    
-          </div>
-          <div formArrayName="address">
-            <div class="address-container" *ngFor="let group of addressArray.controls; let i = index;"
-              [formGroupName]="i">
-              <fieldset>
-                <legend>
-                  <h3>Address: {{i + 1}}</h3>
-                </legend>
-                <div style="height: 500px">
-                    <ngx-monaco-editor style="height: 100%" [options]="editorOptions" [(ngModel)]="code[i]"></ngx-monaco-editor>
-                    
-                    <pre>{{code[i] | json}}</pre>
-                </div>
-                <div>
-                  <mat-form-field>
-                    <input matInput placeholder="Street" value="" formControlName="street">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input matInput placeholder="City" value="" formControlName="city">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input matInput placeholder="State" value="" formControlName="state">
-                  </mat-form-field>
-                </div>
-                <form formArrayName="contacts">
-                  <div *ngFor="let subgroup of group.get('contacts')?.value.controls ;let idx = index;" [formGroupName]="idx">
-                  
-                    <mat-form-field>
-                      <input matInput placeholder="Contact Person" value="" formControlName="contactPerson">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput placeholder="Phone Number" value="" formControlName="phoneNumber">
-                    </mat-form-field>
-                  </div>
-                  <button mat-raised-button (click)="addContact(i)">Add more Contacts</button>
-                </form>
-              </fieldset>
-            </div>
-          </div>
-          <div class="form-row org-desc-parent-margin">
-            <button mat-raised-button (click)="addAddress()">Add more address</button>
-          </div>
-         
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </form>
-  <mat-card class="pre-code">
-    <mat-card-header>
-      <mat-card-title>Users Information</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <pre>{{userForm.value | json}}</pre>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="pre-code">
-    <mat-card-header>
-      <mat-card-title>Users Information is Valid</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <pre>{{userForm.valid | json}}</pre>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="pre-code">
-    <mat-card-header>
-      <mat-card-title>Users Information is Invalid</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <pre>{{userForm.invalid | json}}</pre>
-    </mat-card-content>
-  </mat-card>
+
+
+
+
+
+
+
+
+
+
+

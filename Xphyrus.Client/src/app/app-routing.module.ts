@@ -8,6 +8,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { StartComponent } from './student/start/start.component';
 import { PageComponent } from './student/page/page.component';
 
+
 const routes: Routes = [
   {path: '', component:HomeComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
