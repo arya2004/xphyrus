@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Xphyrus.MessageBus;
 using Xphyrus.SubmissionAPI.Models.Dtos;
 using Xphyrus.SubmissionAPI.Models.ResReq;
+using Xphyrus.SubmissionAPI.RabbitMQ;
 using Xphyrus.SubmissionAPI.Service.IService;
 
 namespace Xphyrus.SubmissionAPI.Controllers
@@ -14,12 +15,12 @@ namespace Xphyrus.SubmissionAPI.Controllers
     public class SubmissionAPIController : ControllerBase
     {   
         private readonly IJudgeService _judgeService;
-        private readonly IBus _bus;
+        private readonly IMQSender _bus;
         private readonly IConfiguration _configuration;
         private readonly IAuthService _authService;
         private readonly IAssesmentService _assesmentService;
         protected ResponseDto _responseDto;
-        public SubmissionAPIController(IJudgeService judgeService, IBus bus, IConfiguration configuration, IAuthService authService, IAssesmentService assesmentService)
+        public SubmissionAPIController(IJudgeService judgeService, IMQSender bus, IConfiguration configuration, IAuthService authService, IAssesmentService assesmentService)
         {
             _judgeService = judgeService;
             _bus = bus;
@@ -56,7 +57,7 @@ namespace Xphyrus.SubmissionAPI.Controllers
                 _responseDto = await _assesmentService.MarkSubmission(submissionDto);
                 if(_responseDto.IsSuccess && _responseDto.Message == "")
                 {
-                  await _bus.PublishMessage(submissionDto, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
+                   _bus.SendMessage(submissionDto.source_code, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
                 }
             }
             catch (Exception ex)
@@ -76,7 +77,7 @@ namespace Xphyrus.SubmissionAPI.Controllers
         {
             try
             {
-                await _bus.PublishMessage(request, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
+                 _bus.SendMessage(request.source_code, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
             }
             catch (Exception ex)
             {
