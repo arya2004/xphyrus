@@ -4,6 +4,8 @@
 above loadballancer in different namespace
 authservice-cip:80  put this in appsett.prod.json for url
 
+# minikube tunnel for starting local network
+
 # PS
 
 Will continue this project on personal level. Fork/Continuation of EDI 3

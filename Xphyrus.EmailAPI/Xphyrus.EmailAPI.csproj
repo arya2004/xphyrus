@@ -12,6 +12,7 @@
 	  <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.16.1" />
 	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
 	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+	  <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
 	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />

@@ -7,6 +7,7 @@ using System.Text;
 using Xphyrus.MessageBus;
 using Xphyrus.SubmissionAPI.Data;
 using Xphyrus.SubmissionAPI.Data.Initialize;
+using Xphyrus.SubmissionAPI.RabbitMQ;
 using Xphyrus.SubmissionAPI.Service;
 using Xphyrus.SubmissionAPI.Service.IService;
 using Xphyrus.SubmissionAPI.Utility;
@@ -33,8 +34,8 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IAssesmentService, AssesmentService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJudgeService, JudgeService>();
-builder.Services.AddScoped<IBus, Bus>();
-
+//builder.Services.AddScoped<IBus, Bus>();
+builder.Services.AddScoped<IMQSender, MQSender>();
 
 
 builder.Services.AddHttpContextAccessor();
