@@ -1,0 +1,64 @@
+p {
+    font-family: Lato;
+  }
+  
+  .primary-container {
+    margin: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .primary-container mat-form-field {
+    margin-right: 10px;
+  }
+  
+  .address-container {
+    margin-bottom: 15px;
+    padding: 5px;
+  }
+  
+  .address-container div mat-form-field {
+    margin-right: 10px;
+  }
+  
+  .address-container div {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .pre-code {
+    margin-top: 25px;
+  }
+
+  .parent {
+    border: 1px solid black;
+    margin: 1rem;
+    padding: 2rem 2rem;
+    height: 90%;
+   
+  }
+  .child {
+    display: inline-block;
+    border: 1px solid red;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    height: 100%;
+    width: 50%;
+    
+  }
+  .smolchild {
+    display: inline-block;
+    border: 1px solid red;
+    padding: 1rem 1rem;
+    vertical-align: middle;
+    height: 10%;
+    width: 50%;
+    
+  }
+
+  .template-editor {
+    height: 600px;
+}
+
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+}
