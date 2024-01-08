@@ -1,97 +1,65 @@
+<div class='parent'>
+
+
+
+  <div class="smolchild">
+    <h3> Title: {{id}} </h3>
+  </div>
+
+
+  <div class="smolchild">
+    <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Test Run</button>
+    <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Submit</button>
+
+    <label id="example-radio-group-label">Language</label>
+    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+      [(ngModel)]="favoriteSeason">
+      <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
+        {{season}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+
+  <div class='child'>
 
 
 
 
+    <div [innerHTML]="description"></div>
+    <div class="add-cases-form" [formGroup]="above">
 
+      <h1>Test Run: </h1>
+      <mat-form-field appearance="fill">
+        <textarea matInput formControlName="input" placeholder="Input"></textarea>
+      </mat-form-field>
 
+      <mat-form-field appearance="fill">
+        <textarea matInput formControlName="output" placeholder="OutPut"></textarea>
+      </mat-form-field>
 
-
-
-            
-
-<h1>editor</h1>
-
-
-
-
-  <div class='parent'>
-
-   
-    
-    <div class="smolchild">
-      <h3> Title: {{id}} </h3>
+      <br>
+      <p> {{responseOutput | json}} </p>
     </div>
-    
-    
-    <div class="smolchild">
-      <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Test Run</button>
-      <button mat-raised-button (click)="testRun()" style="background-color: purple; color: white;">Submit</button>
-    
-      <label id="example-radio-group-label">Language</label>
-      <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group"
-        [(ngModel)]="favoriteSeason">
-        <mat-radio-button class="example-radio-button" *ngFor="let season of seasons" [value]="season">
-          {{season}}
-        </mat-radio-button>
-      </mat-radio-group>
+
+  </div>
+  <div class='child'>
+    <button (click)="updateOptions()">Change Language</button>
+    <button (click)="code = ''; codeInput=''">Set Value To Empty String</button>
+    <button (click)="code = null; codeInput=null">Set Value To Null</button>
+    <button (click)="code = undefined; codeInput=undefined">Set Value To undefined</button>
+
+
+    <div>
+      <ngx-monaco-editor class="template-editor" [options]="options" [(ngModel)]="code"
+        (onInit)="onInit($event)"></ngx-monaco-editor>
     </div>
-    
-    
-        <div class='child'>
-          
-    
-    
-         
-            <div [innerHTML]="description"></div>
-            <div class="add-cases-form" [formGroup]="above" >
-    
-              <h1>Test Run: </h1>
-              <mat-form-field appearance="fill">
-                <textarea matInput
-                       formControlName="input"
-                       placeholder="Input"></textarea>
-            </mat-form-field>
-    
-            <mat-form-field appearance="fill">
-              <textarea matInput
-                     formControlName="output"
-                     placeholder="OutPut"></textarea>
-          </mat-form-field>
-    
-          <br>
-          <p> {{responseOutput | json}} </p>
-      </div>
-            
-        </div>
-        <div class='child'>
-          <button (click)="updateOptions()">Change Language</button>
-          <button (click)="code = ''; codeInput=''">Set Value To Empty String</button>
-          <button (click)="code = null; codeInput=null">Set Value To Null</button>
-          <button (click)="code = undefined; codeInput=undefined">Set Value To undefined</button>
-    
-          
-          <div >
-              <ngx-monaco-editor class="template-editor"  [options]="options" [(ngModel)]="code" (onInit)="onInit($event)"></ngx-monaco-editor>
-          </div>
-          
-          <ngx-monaco-editor class="template-editor"  *ngIf="showMultiple" [options]="options" [(ngModel)]="code"></ngx-monaco-editor>
-          
-          <pre>{{code | json}}</pre></div>
-      
-    
-      </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    <ngx-monaco-editor class="template-editor" *ngIf="showMultiple" [options]="options"
+      [(ngModel)]="code"></ngx-monaco-editor>
+
+    <pre>{{code | json}}</pre>
+  </div>
+
+
+</div>

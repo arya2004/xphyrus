@@ -9,8 +9,9 @@ import { EditorComponent } from './editor/editor.component';
 const routes: Routes = [
 
   {path: 'create', component: CreateComponent},
-  {path: 'editor', component: EditorComponent},
-  {path: ':id', component: DashboardComponent}
+
+  {path: ':id', component: DashboardComponent},
+  {path: ':id/editor', component: EditorComponent},
 
 ]
 
