@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CreateComponent } from './create/create.component';
-import { EditorComponent } from 'ngx-monaco-editor-v2';
+import { EditorComponent } from './editor/editor.component';
+
 
 const routes: Routes = [
 
   {path: 'create', component: CreateComponent},
-  {path: 'editor', component: EditorComponent},
-  {path: ':id', component: DashboardComponent}
+
+  {path: ':id', component: DashboardComponent},
+  {path: ':id/editor', component: EditorComponent},
 
 ]
 

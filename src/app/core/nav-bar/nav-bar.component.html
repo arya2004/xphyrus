@@ -1,55 +1,47 @@
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top" data-scrollto-offset="0">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top" data-scrollto-offset="0">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
 
-      <a routerLink="/" class="logo d-flex align-items-center scrollto me-auto me-lg-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1><span>.</span>xphyrus</h1>
-      </a>
+    <a routerLink="/" class="logo d-flex align-items-center scrollto me-auto me-lg-0">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <!-- <img src="assets/img/logo.png" alt=""> -->
+      <h1><span>.</span>xphyrus</h1>
+    </a>
 
-      <nav id="navbar" class="navbar">
-        <ul>
+    <nav id="navbar" class="navbar">
+      <ul>
 
-         
-          <li><button class="nav-link scrollto" routerLink="/teacher">T D</button></li>
-          <li><a class="nav-link scrollto" routerLink="/teacher/1456">T D</a></li>
-          <li><a class="nav-link scrollto" routerLink="/teacher/new">T N</a></li>
-    
-          
-          <li><a class="nav-link scrollto" routerLink="/student">s D</a></li>
-          <li><a class="nav-link scrollto" routerLink="/student/123">s S</a></li>
 
-       
-          
-          <li><a class="nav-link scrollto" routerLink="/classroom">c</a></li>
-          <li><a class="nav-link scrollto" routerLink="/classroom/create">c c</a></li>
-          <li><a class="nav-link scrollto" routerLink="/classroom/123">c d</a></li>
 
-          <li><a class="nav-link scrollto" routerLink="/classroom/123/assignment/345">a d</a></li>
-    
- 
-       
-    
-        
-        </ul>
-        <i class="bi bi-list mobile-nav-toggle d-none"></i>
-     
-      </nav><!-- .navbar -->
-      <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+
+
+        <li><a class="nav-link scrollto" routerLink="/classroom">classroom Dash</a></li>
+        <li><a class="nav-link scrollto" routerLink="/classroom/123">Classroom detail</a></li>
+
+        <li><a class="nav-link scrollto" routerLink="/classroom/123/assignment/345">assignment</a></li>
+        <li><a class="nav-link scrollto" routerLink="/classroom/123/assignment/create">assignment New</a></li>
+        <li><a class="nav-link scrollto" routerLink="/classroom/123/assignment/45345/editor">Editor</a></li>
+
+
+
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle d-none"></i>
+
+    </nav><!-- .navbar -->
+    <ng-container *ngIf="(accountService.currentUser$ | async) === null">
       <div>
         <a class="btn-getstarted scrollto mx-2" routerLink="/account/login">Login</a>
-        
+
         <a class="btn-getstarted scrollto mx-2" routerLink="/account/register">Register</a>
       </div>
     </ng-container>
     <ng-container *ngIf="accountService.currentUser$ | async as user">
       <div>
-        <div>{{user.email}} </div> 
-        
-        <a class="btn-getstarted scrollto mx-2" (click)="accountService.logout()" >Logout</a>
+        <div>{{user.email}} </div>
+
+        <a class="btn-getstarted scrollto mx-2" (click)="accountService.logout()">Logout</a>
       </div>
     </ng-container>
 
-    </div>
-  </header><!-- End Header -->
+  </div>
+</header><!-- End Header -->

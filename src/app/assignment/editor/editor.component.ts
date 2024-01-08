@@ -117,7 +117,7 @@ export class EditorComponent implements OnInit {
   });
 
 
-  description = "<font face=\"Arial\">sdf<u>sdf</u></font><p><font face=\"Arial\"><u>sdfsfd</u></font></p><p><font face=\"Arial\"><u><sup>jhjvhv</sup></u></font></p><h4><u><font face=\"Comic Sans MS\" size=\"3\"><sup>kjnkjnkj</sup></font></u></h4><h1><u><font face=\"Comic Sans MS\"><sup><font size=\"3\">kjbhvuvvvvvvvvvvv</font><font size=\"6\">jvvjv</font></sup></font></u></h1>";
+  description = "<p>Write a function to find the longest common prefix string amongst an array of strings.</p><p>If there is no common prefix, return an empty string&#160;<code>&#34;&#34;</code>.</p><p>&#160;</p><p><span class=\"example\">Example 1:</span></p><pre><span>Input:</span> strs = [&#34;flower&#34;,&#34;flow&#34;,&#34;flight&#34;]&#10;<span>Output:</span> &#34;fl&#34;&#10;</pre><p><span class=\"example\">Example 2:</span></p><pre><span>Input:</span> strs = [&#34;dog&#34;,&#34;racecar&#34;,&#34;car&#34;]&#10;<span>Output:</span> &#34;&#34;&#10;<span>Explanation:</span> There is no common prefix among the input strings.&#10;</pre><p>&#160;</p><p><span>Constraints:</span></p><ul><li><code>1 &lt;= strs.length &lt;= 200</code></li><li><code>0 &lt;= strs[i].length &lt;= 200</code></li><li><code>strs[i]</code>&#160;consists of only lowercase English letters.</li></ul>"  ;
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,

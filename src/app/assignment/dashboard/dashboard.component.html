@@ -1,113 +1,497 @@
-
-
-
 <section id="blog" class="blog">
-    <div class="container" data-aos="fade-up">
-  
-      <div class="row g-5">
-  
-        <div class="col-lg-12">
-  
-  
-  
-  
-  <h3> Test Detail:</h3>
-  
-  
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title>Title</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>This card indeterminates progress bar.</p>
-      <p [innerHTML]="description" ></p>
-    </mat-card-content>
-    <br>
-    <h1>Eval Cases</h1>
-  
-    <table mat-table [dataSource]="dataSourceTestCase" class="mat-elevation-z8 demo-table">
-      <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-        <th mat-header-cell *matHeaderCellDef>
-          {{column.header}}
-        </th>
-        <td mat-cell *matCellDef="let row">
-          {{column.cell(row)}}
-        </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsTestCase"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsTestCase;"></tr>
-    </table>
-  
-  
-  
-  </mat-card>
-  
-  
-  
-              
-    
-  <h1>Joined</h1>
-  
-  
-  
-     
-  
-  
-  
-    <!-- SOOOOOOOOOORRRRRRRRTTTTTTTTT -->
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
-         class="mat-elevation-z8">
-  
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-        No.
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-    </ng-container>
-  
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-        Email
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-  
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
-        Weight
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-    </ng-container>
-  
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
-        Symbol
-      </th>
-      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-    </ng-container>
-    
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  
-  
+  <div class="container">
+
+    <div class="row g-5">
+
+      <div class="col-lg-12">
+
+
+
+
+        <!-- ======= F.A.Q Section ======= -->
+        <section id="faq" class="faq">
+          <div class="container-fluid">
+
+            <div class="row gy-4">
+
+              <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
+
+                <div class="content px-xl-5">
+                  <h3> <strong>Assignment</strong> Reverse LinkedList</h3>
+                  <p [innerHTML]="description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Duis aute irure dolor in reprehenderit
+                  </p>
+                </div>
+
+                <div class="accordion accordion-flush px-xl-5" id="faqlist">
+
+
+
+
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </section><!-- End F.A.Q Section -->
+
+        <section id="faq" class="faq">
+          <div class="container-fluid">
+
+            <div class="row gy-4">
+
+              <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
+
+                <div class="content px-xl-5">
+                  <h3> <strong>Evaluation Cases</strong></h3>
+
+                </div>
+
+                <div class="accordion accordion-flush px-xl-5" id="faqlist">
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-1" [innerHTML]="testCases[0]">
+                      </button>
+                    </h3>
+                    <div id="faq-content-1" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                      <div class="accordion-body">
+                        Yes </div>
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-2" [innerHTML]="testCases[1]">
+                        <i class="bi bi-question-circle question-icon"></i>
+
+                      </button>
+                    </h3>
+                    <div id="faq-content-2" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                      <div class="accordion-body">
+                        Yes
+                      </div>
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-3" [innerHTML]="testCases[2]">
+
+                      </button>
+                    </h3>
+                    <div id="faq-content-3" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                      <div class="accordion-body">
+                        No
+                      </div>
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-4" [innerHTML]="testCases[3]">
+
+                      </button>
+                    </h3>
+                    <div id="faq-content-4" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                      <div class="accordion-body">
+                        <i class="bi bi-question-circle question-icon"></i>
+                        Yes
+                      </div>
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-5" [innerHTML]="testCases[4]">
+
+                      </button>
+                    </h3>
+                    <div id="faq-content-5" class="accordion-collapse collapse" data-bs-parent="#faqlist">
+                      <div class="accordion-body">
+                        No
+                      </div>
+                    </div>
+                  </div><!-- # Faq item-->
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </section><!-- End F.A.Q Section -->
+
+
+
+
+
+
+        <section id="faq" class="faq">
+          <div class="container-fluid">
+
+            <div class="row gy-4">
+
+              <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
+
+                <div class="content px-xl-5">
+                  <h3> <strong>Submissions</strong></h3>
+
+                </div>
+
+                <div class="accordion accordion-flush px-xl-5" id="faqlist">
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-0">
+                        <i class="bi bi-question-circle question-icon"></i>
+                        Ava Johnson
+                      </button>
+                    </h3>
+
+                    <div id="faq-content-0" class="sidebar sidebar-collapse collapse" data-bs-parent="#faqlist">
+
+
+                      <div class="sidebar-item recent-posts">
+
+
+                        <div class="mt-3">
+
+                          <div class="post-item mt-3">
+
+                            <div>
+                              <h4>1. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>2. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>3. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>4. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>5. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                        </div>
+
+                      </div><!-- End sidebar recent posts-->
+
+
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-2">
+                        <i class="bi bi-question-circle question-icon"></i>
+                        Benjamin Lee
+                      </button>
+                    </h3>
+                    <div id="faq-content-2" class="sidebar sidebar-collapse collapse" data-bs-parent="#faqlist">
+
+
+                      <div class="sidebar-item recent-posts">
+
+
+                        <div class="mt-3">
+
+                          <div class="post-item mt-3">
+
+                            <div>
+                              <h4>1. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>2. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>3. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>4. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>5. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                        </div>
+
+                      </div><!-- End sidebar recent posts-->
+
+
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-3">
+                        <i class="bi bi-question-circle question-icon"></i>
+                        Sophia Martinez
+                      </button>
+                    </h3>
+                    <div id="faq-content-3" class="sidebar sidebar-collapse collapse" data-bs-parent="#faqlist">
+
+
+                      <div class="sidebar-item recent-posts">
+
+                        <div class="mt-3">
+
+                          <div class="post-item mt-3">
+
+                            <div>
+                              <h4>1. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>2. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>3. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>4. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>5. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                        </div>
+
+                      </div><!-- End sidebar recent posts-->
+
+
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-4">
+                        <i class="bi bi-question-circle question-icon"></i>
+                        Oliver Wang
+                      </button>
+                    </h3>
+                    <div id="faq-content-4" class="sidebar sidebar-collapse collapse" data-bs-parent="#faqlist">
+
+
+                      <div class="sidebar-item recent-posts">
+
+
+                        <div class="mt-3">
+
+                          <div class="post-item mt-3">
+
+                            <div>
+                              <h4>1. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>2. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>3. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>4. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>5. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                        </div>
+
+                      </div><!-- End sidebar recent posts-->
+
+
+                    </div>
+                  </div><!-- # Faq item-->
+
+                  <div class="accordion-item">
+                    <h3 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-content-5">
+                        <i class="bi bi-question-circle question-icon"></i>
+                        Emily Rodriguez
+                      </button>
+                    </h3>
+                    <div id="faq-content-5" class="sidebar sidebar-collapse collapse" data-bs-parent="#faqlist">
+
+
+                      <div class="sidebar-item recent-posts">
+
+
+                        <div class="mt-3">
+
+                          <div class="post-item mt-3">
+
+                            <div>
+                              <h4>1. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>2. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>3. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>4. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                          <div class="post-item">
+
+                            <div>
+                              <h4>5. Status: <a href="blog-post.html">Accepted</a></h4>
+                              <time>Runtime Error</time>
+                            </div>
+                          </div><!-- End recent post item-->
+
+                        </div>
+
+                      </div><!-- End sidebar recent posts-->
+
+
+                    </div>
+                  </div><!-- # Faq item-->
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+          </div>
+        </section><!-- End F.A.Q Section -->
+
+      </div>
+
+      <div class="form-row org-desc-parent-margin">
+        <button mat-raised-button (click)="onSubmit()" style="background-color: purple; color: white;">Create</button>
+      </div>
+
+    </div>
+
   </div>
-  
-  <div class="form-row org-desc-parent-margin">
-    <button mat-raised-button (click)="onSubmit()" style="background-color: purple; color: white;">Create</button>
-  </div>
-  
-  </div>
-  
-  </div>
-  
-  </section><!-- End Blog Section -->
-  
-  
+
+</section><!-- End Blog Section -->
