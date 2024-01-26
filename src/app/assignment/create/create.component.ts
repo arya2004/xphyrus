@@ -5,7 +5,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
-import { TeacherService } from 'src/app/teacher/teacher.service';
+import { AssignmentService } from '../assignment.service';
+import { ClassroomService } from 'src/app/classroom/classroom.service';
+
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -14,7 +16,7 @@ import { TeacherService } from 'src/app/teacher/teacher.service';
 export class CreateComponent implements OnInit {
 
   
-  constructor(private fb:FormBuilder, private teacherService: TeacherService, private router: Router) {}
+  constructor(private fb:FormBuilder, private teacherService: ClassroomService, private router: Router) {}
 
   ngOnInit(): void {
     this.addLesson();

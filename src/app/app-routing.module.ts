@@ -5,17 +5,23 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 
 import { AuthGuard } from './core/guards/auth.guard';
-import { StartComponent } from './student/start/start.component';
-import { PageComponent } from './student/page/page.component';
+
+import { HasRoleGuard } from './core/guards/has-role.guard';
+
+import { NotFoundComponent } from './core/not-found/not-found.component';
+import { DashboardComponent } from './home/dashboard/dashboard.component';
 
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
+  {path: 'dashboard', component:DashboardComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
-  {path: 'teacher', loadChildren: () => import('./teacher/teacher.module').then(m => m.TeacherModule)},
-  {path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule)},
   {path: 'classroom', loadChildren: () => import('./classroom/classroom.module').then(m => m.ClassroomModule)},
-
+  {path: 'problems', loadChildren: () => import('./problems/problems.module').then(m => m.ProblemsModule)},
+  {path: 'blogs', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule)},
+  {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./classroom/classroom.module').then(m => m.ClassroomModule)},
+  {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./classroom/classroom.module').then(m => m.ClassroomModule)},
+  { path: '**', component: NotFoundComponent }
 
 
 ];

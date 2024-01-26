@@ -1,354 +1,637 @@
-<section id="blog" class="blog">
-  <div class="container">
+<main id="main" class="main">
 
-    <div class="row g-5">
+  <div class="pagetitle">
+    <h1>Classroom</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
 
-      <div class="col-lg-8">
+  <section class="section dashboard">
+    <div class="row">
 
-        <div class="row gy-4 posts-list">
+      <!-- Left side columns -->
+      <div class="col-lg-9">
+        <div class="row">
 
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
 
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
 
-
-
-          <!-- ======= Blog Details Section ======= -->
-
-
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Innovations</a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
                 </ul>
               </div>
 
-              <div class="content">
-                <p>
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
 
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Mastery Lab </a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
-                </ul>
-              </div>
-
-              <div class="content">
-                <p>
-
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Wizards Workshop </a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
-                </ul>
-              </div>
-
-              <div class="content">
-                <p>
-
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Frontier Explorers </a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
-                </ul>
-              </div>
-
-              <div class="content">
-                <p>
-
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Mavericks Seminar</a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
-                </ul>
-              </div>
-
-              <div class="content">
-                <p>
-
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Summit Hub </a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
-                </ul>
-              </div>
-
-              <div class="content">
-                <p>
-
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-          <div class="col-lg-6">
-            <article class="d-flex flex-column">
-
-
-              <h2 class="title">
-                <a href="blog-details.html"> Cloud Nexus Bootcamp</a>
-              </h2>
-
-              <div class="meta-top">
-                <ul>
-                  <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-details.html">John
-                      Doe</a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-clipboard2-data"></i> <a
-                      href="blog-details.html"><time>3 Assignment</time></a></li>
-                  <li class="d-flex align-items-center"><i class="bi bi-people"></i> <a href="blog-details.html">12
-                      Enrolled</a></li>
-                </ul>
-              </div>
-
-              <div class="content">
-                <p>
-
-                </p>
-              </div>
-
-              <div class="read-more mt-auto align-self-end">
-                <a href="blog-details.html" [routerLink]="['/classroom', 123]">View</a>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-
-
-        </div><!-- End blog posts list -->
-
-
-
-
-        <div class="blog-pagination">
-          <ul class="justify-content-center">
-            <li><a href="#">1</a></li>
-            <li class="active"><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-          </ul>
-        </div><!-- End blog pagination -->
-
-
-
-
-      </div>
-      <div class="col-lg-4">
-
-        <div class="sidebar">
-
-          <div class="sidebar-item search-form">
-            <h3 class="sidebar-title">Control Panel</h3>
-
-
-          </div><!-- End sidebar search formn-->
-
-
-
-
-          <div class="comments">
-            <div class="reply-form">
-
-              <h4>Join class</h4>
-
-              <form action="">
-                <div class="row">
-                  <div class="col-md-12 form-group">
-                    <input name="name" type="text" class="form-control" placeholder="Class code">
                   </div>
                 </div>
-
-                <button type="submit" class="btn btn-primary">Join Classroom</button>
-
-              </form>
+              </div>
 
             </div>
+          </div><!-- End Sales Card -->
 
+          
 
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
 
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
 
-          </div><!-- End blog comments -->
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
 
-          <div class="comments">
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
 
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
 
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
 
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
 
-
-            <div class="reply-form">
-
-              <h4>Create class</h4>
-
-              <form action="">
-
-                <div class="row">
-                  <div class="col form-group">
-                    <input name="website" type="text" class="form-control" placeholder="Class">
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col form-group">
-                    <input name="website" type="text" class="form-control" placeholder="Section">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col form-group">
-                    <input name="website" type="text" class="form-control" placeholder="Subject">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col form-group">
-                    <input name="website" type="text" class="form-control" placeholder="Room">
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Create Classroom</button>
-
-              </form>
+              </div>
 
             </div>
-
-          </div><!-- End blog comments -->
-
+          </div><!-- End Sales Card -->
 
 
-        </div><!-- End Blog Sidebar -->
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
 
-      </div>
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
 
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="btn btn-primary mx-3" [routerLink]="['/classroom', 123]" >View</a>
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Cloud Computing</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-person"></i></span> <span class="text-muted small pt-2 ps-1">John Doe</span>
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-clipboard2-data"></i>12</span> 
+
+                  </div>
+                  <div class="ps-3">
+                    
+                    <span class="text-success small pt-1 fw-bold">  <i class="bi bi-people"></i>12</span>
+
+                  </div>
+                </div>
+              </div>
+              
+
+            </div>
+          </div><!-- End Sales Card -->
+
+     
+     
+
+        </div>
+      </div><!-- End Left side columns -->
+
+      <!-- Right side columns -->
+      <div class="col-lg-3">
+
+        <!-- Recent Activity -->
+        <div class="card">
+          
+
+          <div class="card-body">
+            <h5 class="card-title">Join <span>| Today</span></h5>
+
+            <div class="row mb-3">
+              <form class="">
+              <div class="col-sm-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                  <label for="floatingInput">Classroom Code</label>
+                </div>
+     
+                    <button type="submit" class="btn btn-primary">Join</button>
+             
+      
+              </div>
+              </form>
+            </div>
+
+          </div>
+        
+
+          <div class="card-body pb-0">
+            <h5 class="card-title">Create  <span>| Today</span></h5>
+
+
+  
+                <!-- Floating Labels Form -->
+                <form class="row g-3">
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+                      <label for="floatingName">Class</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+                      <label for="floatingName">Section</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="floatingName" placeholder="Your Name">
+                      <label for="floatingName">Subject</label>
+                    </div>
+                  </div>   
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <textarea class="form-control" placeholder="Address" id="floatingTextarea" style="height: 100px;"></textarea>
+                      <label for="floatingTextarea">Description</label>
+                    </div>
+                  </div>
+     
+                  
+              
+                    <div class="form-floating ">
+                      <select class="form-select" id="floatingSelect" aria-label="State">
+                        <option selected>New York</option>
+                        <option value="1">Oregon</option>
+                        <option value="2">DC</option>
+                      </select>
+                      <label for="floatingSelect">State</label>
+                    </div>
+               
+                 
+                
+                 
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-primary m-3">Create Classroom</button>
+                    <button type="reset" class="btn btn-secondary m-3">Reset</button>
+                  </div>
+                </form><!-- End floating Labels Form -->
+  
+           
+
+          </div>
+        </div><!-- End News & Updates -->
+
+      </div><!-- End Right side columns -->
 
     </div>
+  </section>
 
-  </div>
-</section><!-- End Blog Section -->
+</main><!-- End #main -->
