@@ -6,8 +6,9 @@ import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate'
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 import { ITestRun, TestRun } from 'src/app/shared/models/ITestRun';
-import { StudentService } from 'src/app/student/student.service';
+
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
+import { AssignmentService } from '../assignment.service';
 
 
 
@@ -23,7 +24,7 @@ export class EditorComponent implements OnInit {
  
   id: string;
   private sub: any;
-  constructor(private fb:FormBuilder, private studentService: StudentService,private route: ActivatedRoute) {}
+  constructor(private fb:FormBuilder, private studentService: AssignmentService,private route: ActivatedRoute) {}
 
   codeInput = 'Sample Code';
   editor: any;

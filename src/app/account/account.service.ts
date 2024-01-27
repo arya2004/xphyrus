@@ -5,6 +5,7 @@ import { IUser } from '../shared/models/IUser';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IResponse } from '../shared/models/IResponse';
+import { IToken } from '../shared/models/IToken';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,17 @@ export class AccountService {
   baseUrl = environment.authApiUrl;
   private currentUserSource = new ReplaySubject<IUser | null>(1);
   currentUser$ = this.currentUserSource.asObservable();
-    
-  constructor(private http: HttpClient, private router: Router) { }
+  Token!: IToken;
+
+  
+  constructor(private http: HttpClient, private router: Router)
+  {
+    const t = localStorage.getItem('token');
+    if (t) {
+      this. Token = this.getUser(localStorage.getItem('token')!);
+    }
+   
+  }
 
   login(values: any){
     return this.http.post<IResponse<IUser>>(this.baseUrl + 'login', values).pipe(
@@ -23,15 +33,16 @@ export class AccountService {
         localStorage.removeItem('token');
         localStorage.setItem('token', user.result.token);
         this.currentUserSource.next(user.result);
-        
+        this.Token = this.getUser(user.result.token);
       })
     )
   }
 
-  register(values: any){
-    return this.http.post<IResponse<any>>(this.baseUrl + 'register', values).pipe(
+  register(values: any) {
+    return this.http.post<IUser>(this.baseUrl + 'register', values).pipe(
       map(user => {
-        this.router.navigateByUrl('/account/login');
+        localStorage.setItem('token', user.token);
+        this.currentUserSource.next(user);
       })
     )
   }
@@ -72,6 +83,10 @@ export class AccountService {
         }
       })
     )
+  }
+
+  private getUser(token: string) : IToken{
+    return JSON.parse(atob(token.split('.')[1])) as IToken;
   }
 
 }
