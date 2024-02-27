@@ -24,8 +24,8 @@ export class DetailComponent implements OnInit {
 
 
 
-  classroomId: number = 123; // Replace with your dynamic value
+  syndicateId: number = 123; // Replace with your dynamic value
 assignmentId: number = 456; // Replace with your dynamic value
-classroomPath: string = `/classroom/${this.classroomId}/assignment/${this.assignmentId}`;
+syndicatePath: string = `/syndicate/${this.syndicateId}/assignment/${this.assignmentId}`;
 
 }

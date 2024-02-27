@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { DetailComponent } from './detail/detail.component';
-import { ClassroomRoutingModule } from './classroom-routing.module';
+import { SyndicateRoutingModule } from './syndicate-routing.module';
 
 
 
@@ -15,7 +15,7 @@ import { ClassroomRoutingModule } from './classroom-routing.module';
   ],
   imports: [
     CommonModule,
-    ClassroomRoutingModule
+    SyndicateRoutingModule
   ]
 })
-export class ClassroomModule { }
+export class SyndicateModule { }

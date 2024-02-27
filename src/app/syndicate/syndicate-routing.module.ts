@@ -23,4 +23,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class ClassroomRoutingModule { }
+export class SyndicateRoutingModule { }

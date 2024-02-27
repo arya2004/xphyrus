@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
 import { AssignmentService } from '../assignment.service';
-import { ClassroomService } from 'src/app/classroom/classroom.service';
+import { SyndicateService } from 'src/app/syndicate/syndicate.service';
 
 @Component({
   selector: 'app-create',
@@ -16,7 +16,7 @@ import { ClassroomService } from 'src/app/classroom/classroom.service';
 export class CreateComponent implements OnInit {
 
   
-  constructor(private fb:FormBuilder, private teacherService: ClassroomService, private router: Router) {}
+  constructor(private fb:FormBuilder, private teacherService: SyndicateService, private router: Router) {}
 
   ngOnInit(): void {
     this.addLesson();
