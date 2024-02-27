@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
-export class ClassroomService {
+export class SyndicateService {
 
   constructor(private http: HttpClient, private router: Router) { }
 

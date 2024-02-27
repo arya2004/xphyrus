@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ProblemsService } from './problems.service';
+import { SyndicateService } from './syndicate.service';
 
-describe('ProblemsService', () => {
-  let service: ProblemsService;
+describe('SyndicateService', () => {
+  let service: SyndicateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ProblemsService);
+    service = TestBed.inject(SyndicateService);
   });
 
   it('should be created', () => {

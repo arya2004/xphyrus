@@ -1,180 +1,649 @@
-
 <main id="main" class="main">
-
   <div class="pagetitle">
     <h1>Assignment</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item">Classroom</li>
+        <li class="breadcrumb-item">Syndicate</li>
         <li class="breadcrumb-item active">Assignment</li>
       </ol>
     </nav>
-  </div><!-- End Page Title -->
+  </div>
+  <!-- End Page Title -->
 
   <section class="section">
     <div class="row">
       <div class="col-lg-12">
-
-        
-
         <div class="card">
           <div class="card-body pt-3">
-          
             <!-- Bordered Tabs -->
-            <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+            <ul
+              class="nav nav-tabs nav-tabs-bordered"
+              id="borderedTab"
+              role="tablist"
+            >
               <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Assignment</button>
+                <button
+                  class="nav-link active"
+                  id="home-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#bordered-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="home"
+                  aria-selected="true"
+                >
+                  Assignment
+                </button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Evaluation Cases</button>
+                <button
+                  class="nav-link"
+                  id="profile-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#bordered-profile"
+                  type="button"
+                  role="tab"
+                  aria-controls="profile"
+                  aria-selected="false"
+                >
+                  Evaluation Cases
+                </button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Submissions</button>
+                <button
+                  class="nav-link"
+                  id="contact-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#bordered-contact"
+                  type="button"
+                  role="tab"
+                  aria-controls="contact"
+                  aria-selected="false"
+                >
+                  Submissions
+                </button>
               </li>
             </ul>
             <div class="tab-content pt-2" id="borderedTabContent">
-              <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
-               
-               
-             
-            <div class="row gy-4">
+              <div
+                class="tab-pane fade show active"
+                id="bordered-home"
+                role="tabpanel"
+                aria-labelledby="home-tab"
+              >
+                <div class="row gy-4">
+                  <div
+                    class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch order-2 order-lg-1"
+                  >
+                    <div class="content px-xl-5">
+                      <h3>Reverse LinkedList</h3>
+                      <p [innerHTML]="description"></p>
+                    </div>
 
-              <div class="col-lg-12 d-flex flex-column justify-content-center align-items-stretch  order-2 order-lg-1">
-
-                <div class="content px-xl-5">
-                  <h3>Reverse LinkedList</h3>
-                  <p [innerHTML]="description"></p>
+                    <div
+                      class="accordion accordion-flush px-xl-5"
+                      id="faqlist"
+                    ></div>
+                  </div>
                 </div>
-
-                <div class="accordion accordion-flush px-xl-5" id="faqlist">
-
-
-
-
-
-                </div>
-
               </div>
-
-
-            </div>
-              
-              
-              
-              
-              </div>
-              <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
-               
-                 
+              <div
+                class="tab-pane fade"
+                id="bordered-profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+              >
                 <h5 class="card-title">Cases</h5>
-      
+
                 <!-- Default Accordion -->
                 <div class="accordion" id="accordionExample">
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
-                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" [innerHTML]="testCases[0]">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                        [innerHTML]="testCases[0]"
+                      >
                         Accordion Item #1
                       </button>
                     </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
                       <div class="accordion-body">No</div>
                     </div>
                   </div>
                   <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" [innerHTML]="testCases[1]">
-                        Accordion Item #2
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                        [innerHTML]="testCases[0]"
+                      >
+                        Accordion Item #1
                       </button>
                     </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                      <div class="accordion-body" >Yes </div>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">No</div>
                     </div>
                   </div>
                   <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingThree">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" [innerHTML]="testCases[2]">
-                        Accordion Item #3
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne"
+                        [innerHTML]="testCases[0]"
+                      >
+                        Accordion Item #1
                       </button>
                     </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                      <div class="accordion-body" >Yes</div>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">No</div>
                     </div>
                   </div>
-                </div><!-- End Default Accordion Example -->
-  
-           
-             
-              
-              
-              
-              
-              
-              
+                </div>
+                <!-- End Default Accordion Example -->
               </div>
-              <div class="tab-pane fade" id="bordered-contact" role="tabpanel" aria-labelledby="contact-tab">
-                
-             
-             
-             
-                    <h5 class="card-title">Submission</h5>
-      
-                    <!-- Default Accordion -->
-                    <div class="accordion" id="accordionExample">
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Accordion Item #1
-                          </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            Accordion Item #2
-                          </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            Accordion Item #3
-                          </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                          </div>
-                        </div>
-                      </div>
-                    </div><!-- End Default Accordion Example -->
-      
-               
-             
-             
-             
-              </div>
-            </div><!-- End Bordered Tabs -->
+              <div
+                class="tab-pane fade"
+                id="bordered-contact"
+                role="tabpanel"
+                aria-labelledby="contact-tab"
+              >
+                <h5 class="card-title">Submission</h5>
 
+                <!-- Default Accordion -->
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="false"
+                        aria-controls="collapseOne"
+                      >
+                        temp@gmail.com
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">stdout</th>
+                              <th scope="col">time</th>
+                              <th scope="col">memory</th>
+                              <th scope="col">stderr</th>
+                              <th scope="col">compile_output</th>
+                              <th scope="col">message</th>
+                              <th scope="col">status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="false"
+                        aria-controls="collapseOne"
+                      >
+                        temp@gmail.com
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">stdout</th>
+                              <th scope="col">time</th>
+                              <th scope="col">memory</th>
+                              <th scope="col">stderr</th>
+                              <th scope="col">compile_output</th>
+                              <th scope="col">message</th>
+                              <th scope="col">status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="false"
+                        aria-controls="collapseOne"
+                      >
+                        temp@gmail.com
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">stdout</th>
+                              <th scope="col">time</th>
+                              <th scope="col">memory</th>
+                              <th scope="col">stderr</th>
+                              <th scope="col">compile_output</th>
+                              <th scope="col">message</th>
+                              <th scope="col">status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="false"
+                        aria-controls="collapseOne"
+                      >
+                        temp@gmail.com
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">stdout</th>
+                              <th scope="col">time</th>
+                              <th scope="col">memory</th>
+                              <th scope="col">stderr</th>
+                              <th scope="col">compile_output</th>
+                              <th scope="col">message</th>
+                              <th scope="col">status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne"
+                        aria-expanded="false"
+                        aria-controls="collapseOne"
+                      >
+                        temp@gmail.com
+                      </button>
+                    </h2>
+                    <div
+                      id="collapseOne"
+                      class="accordion-collapse collapse show"
+                      aria-labelledby="headingOne"
+                      data-bs-parent="#accordionExample"
+                    >
+                      <div class="accordion-body">
+                        <!-- Table with stripped rows -->
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">stdout</th>
+                              <th scope="col">time</th>
+                              <th scope="col">memory</th>
+                              <th scope="col">stderr</th>
+                              <th scope="col">compile_output</th>
+                              <th scope="col">message</th>
+                              <th scope="col">status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">4</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">5</th>
+                              <td>hello, Judge0\n</td>
+                              <td>0.001</td>
+                              <td>1528</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>null</td>
+                              <td>Accepted</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <!-- End Table with stripped rows -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Default Accordion Example -->
+              </div>
+            </div>
+            <!-- End Bordered Tabs -->
           </div>
         </div>
-
-       
       </div>
-
-
     </div>
   </section>
-
-</main><!-- End #main -->
-
+</main>
+<!-- End #main -->

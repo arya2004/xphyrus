@@ -9,7 +9,7 @@ import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate'
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 
-import { ClassroomService } from 'src/app/classroom/classroom.service';
+import { SyndicateService } from 'src/app/syndicate/syndicate.service';
 
 
 
@@ -69,7 +69,7 @@ export class DashboardComponent{
   
   id: string;
   private sub: any;
-  constructor(private fb:FormBuilder, private teacherService: ClassroomService,private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(private fb:FormBuilder, private teacherService: SyndicateService,private _liveAnnouncer: LiveAnnouncer) {}
 
   lel: string = "1 2 3 4 5 <br>45 6";
   testCases: string[] = [
