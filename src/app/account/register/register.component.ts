@@ -18,7 +18,11 @@ export class RegisterComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(this.complexPasswd)]],
-      role: ['', Validators.required]
+      website: [''],
+      employeeCount: [''],
+      about: [''],
+      LinkedIn: [''],
+      Twitter: ['']
     })
 
     onSubmit(){

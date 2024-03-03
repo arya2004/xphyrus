@@ -148,10 +148,61 @@ export class EditorComponent implements OnInit {
 
   responseOutput: object =  {};
 
-  favoriteSeason: string = 'C';
-  seasons: string[] = ['C', 'C++', 'Java', 'Python'];
+  languageForm: FormGroup = this.fb.group({
+    selectedLanguage: ['', Validators.required]
+  });
 
- 
+  
+  languages = [
+    { "id": 45, "name": "Assembly", "version": "NASM 2.14.02" },
+    { "id": 46, "name": "Bash", "version": "5.0.0" },
+    { "id": 47, "name": "Basic", "version": "FBC 1.07.1" },
+    { "id": 75, "name": "C", "version": "Clang 7.0.1" },
+    { "id": 76, "name": "C++", "version": "Clang 7.0.1" },
+    { "id": 48, "name": "C", "version": "GCC 7.4.0" },
+    { "id": 52, "name": "C++", "version": "GCC 7.4.0" },
+    { "id": 49, "name": "C", "version": "GCC 8.3.0" },
+    { "id": 53, "name": "C++", "version": "GCC 8.3.0" },
+    { "id": 50, "name": "C", "version": "GCC 9.2.0" },
+    { "id": 54, "name": "C++", "version": "GCC 9.2.0" },
+    { "id": 86, "name": "Clojure", "version": "1.10.1" },
+    { "id": 51, "name": "C#", "version": "Mono 6.6.0.161" },
+    { "id": 77, "name": "COBOL", "version": "GnuCOBOL 2.2" },
+    { "id": 55, "name": "Common Lisp", "version": "SBCL 2.0.0" },
+    { "id": 56, "name": "D", "version": "DMD 2.089.1" },
+    { "id": 57, "name": "Elixir", "version": "1.9.4" },
+    { "id": 58, "name": "Erlang", "version": "OTP 22.2" },
+    { "id": 44, "name": "Executable", "version": "" },
+    { "id": 87, "name": "F#", "version": ".NET Core SDK 3.1.202" },
+    { "id": 59, "name": "Fortran", "version": "GFortran 9.2.0" },
+    { "id": 60, "name": "Go", "version": "1.13.5" },
+    { "id": 88, "name": "Groovy", "version": "3.0.3" },
+    { "id": 61, "name": "Haskell", "version": "GHC 8.8.1" },
+    { "id": 62, "name": "Java", "version": "OpenJDK 13.0.1" },
+    { "id": 63, "name": "JavaScript", "version": "Node.js 12.14.0" },
+    { "id": 78, "name": "Kotlin", "version": "1.3.70" },
+    { "id": 64, "name": "Lua", "version": "5.3.5" },
+    { "id": 89, "name": "Multi-file program", "version": "" },
+    { "id": 79, "name": "Objective-C", "version": "Clang 7.0.1" },
+    { "id": 65, "name": "OCaml", "version": "4.09.0" },
+    { "id": 66, "name": "Octave", "version": "5.1.0" },
+    { "id": 67, "name": "Pascal", "version": "FPC 3.0.4" },
+    { "id": 85, "name": "Perl", "version": "5.28.1" },
+    { "id": 68, "name": "PHP", "version": "7.4.1" },
+    { "id": 43, "name": "Plain Text", "version": "" },
+    { "id": 69, "name": "Prolog", "version": "GNU Prolog 1.4.5" },
+    { "id": 70, "name": "Python", "version": "2.7.17" },
+    { "id": 71, "name": "Python", "version": "3.8.1" },
+    { "id": 80, "name": "R", "version": "4.0.0" },
+    { "id": 72, "name": "Ruby", "version": "2.7.0" },
+    { "id": 73, "name": "Rust", "version": "1.40.0" },
+    { "id": 81, "name": "Scala", "version": "2.13.2" },
+    { "id": 82, "name": "SQL", "version": "SQLite 3.27.2" },
+    { "id": 83, "name": "Swift", "version": "5.2.3" },
+    { "id": 74, "name": "TypeScript", "version": "3.7.4" },
+    { "id": 84, "name": "Visual Basic.Net", "version": "vbnc 0.0.0.5943" }
+];
+
 
 
   testRun()
@@ -159,19 +210,13 @@ export class EditorComponent implements OnInit {
     const coding: ITestRun = new TestRun();
     coding.source_code = this.code;
 
-    if (this.favoriteSeason == "C") {
-      coding.language_id = 49;
-    }
-    if (this.favoriteSeason == "C++") {
-      coding.language_id = 53;
-    }
-    if (this.favoriteSeason == "Java") {
-      coding.language_id = 62;
+    if (this.languageForm.valid) {
+      const selectedLanguageId = this.languageForm.value.selectedLanguage;
+      const selectedLanguage = this.languages.find(lang => lang.id === selectedLanguageId);
+      console.log("Selected language:", selectedLanguage);
+      // Here you can do whatever you want with the selected language
     }
 
-    if (this.favoriteSeason == "Python") {
-      coding.language_id = 71;
-    }
     coding.stdin = this.above.value.input
     coding.exprected_output = this.above.value.output
  
@@ -188,20 +233,8 @@ export class EditorComponent implements OnInit {
   { 
     const coding: ITestRun = new TestRun();
     coding.source_code = this.code;
-
-    if (this.favoriteSeason == "C") {
-      coding.language_id = 49;
-    }
-    if (this.favoriteSeason == "C++") {
-      coding.language_id = 53;
-    }
-    if (this.favoriteSeason == "Java") {
-      coding.language_id = 62;
-    }
-
-    if (this.favoriteSeason == "Python") {
-      coding.language_id = 71;
-    }
+    console.log(this.languageForm.value);
+ 
     coding.stdin = this.above.value.input
     coding.exprected_output = this.above.value.output
  
@@ -213,5 +246,21 @@ export class EditorComponent implements OnInit {
       
     })
   }
+
+
+
+  
+  onTestRun() {
+    const coding: ITestRun = new TestRun();
+    coding.source_code = this.code;
+    console.log(this.languageForm.value);
+ 
+    coding.stdin = this.above.value.input
+    coding.exprected_output = this.above.value.output
+ 
+    console.log(JSON.stringify(coding));
+    }
+  
+  
 
 }

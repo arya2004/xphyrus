@@ -10,58 +10,50 @@
     </div>
 
     <div class="smolchild">
-      <button
-        class="mx-3 px-3"
-        mat-raised-button
-        (click)="testRun()"
-        style="background-color: purple; color: white"
-      >
-        Test Run
-      </button>
-      <button
-        class="mx-3 px-3"
-        mat-raised-button
-        (click)="testRun()"
-        style="background-color: purple; color: white"
-      >
-        Submit
-      </button>
 
-      <label id="example-radio-Syndicate-label">Language</label>
-      <mat-radio-Syndicate
-        aria-labelledby="example-radio-Syndicate-label"
-        class="example-radio-Syndicate"
-        [(ngModel)]="favoriteSeason"
-      >
-        <mat-radio-button
-          class="example-radio-button"
-          *ngFor="let season of seasons"
-          [value]="season"
-        >
-          {{ season }}
-        </mat-radio-button>
-      </mat-radio-Syndicate>
+      <form [formGroup]="languageForm" class="form-inline">
+        <div class="col-sr-6">
+        <select formControlName="selectedLanguage" id="languageSelect" class="form-control mr-2">
+          <option value="">Select Language</option>
+          <option *ngFor="let language of languages" [value]="language.id">{{ language.name }} ({{language.version}})</option>
+        </select>
+      </div>
+      <div class="mx-2">
+        <button type="button" class="btn btn-primary mr-2" (click)="onSubmit()">Submit</button>
+      </div>
+      <div class="mx-2">
+        <button type="button" class="btn btn-secondary" (click)="onTestRun()">Test Run</button>
+      </div>
+      </form>
+
+     
+
+     
+     
+     
+      
     </div>
 
     <div class="child">
       <div [innerHTML]="description"></div>
       <div class="add-cases-form" [formGroup]="above">
         <h1>Test Run:</h1>
-        <mat-form-field appearance="fill">
-          <textarea
-            matInput
-            formControlName="input"
-            placeholder="Input"
-          ></textarea>
-        </mat-form-field>
+      
+         
+          <div class="row mb-3">
+            <div class="col-sm-12">
+              <textarea  formControlName="input"
+              placeholder="Input" class="form-control" style="height: 100px"></textarea>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-12">
+              <textarea     formControlName="output"
+              placeholder="OutPut" class="form-control" style="height: 100px"></textarea>
+            </div>
+          </div>
+       
 
-        <mat-form-field appearance="fill">
-          <textarea
-            matInput
-            formControlName="output"
-            placeholder="OutPut"
-          ></textarea>
-        </mat-form-field>
 
         <br />
         <p>{{ responseOutput | json }}</p>
