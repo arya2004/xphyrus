@@ -38,6 +38,26 @@ namespace Xphyrus.AuthAPI.Controllers
         
         }
 
+        //[Authorize]
+        [HttpGet("GetCurrentUser")]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = _jwtService.GenerateToken(user, roles),
+                Displlayname = user.DisplayName
+
+            };
+        }
+
+
 
         [HttpPost("register")]
         public async Task<ActionResult<ResponseDto>> Register([FromBody] RegisterRequestDto registerRequestDto)
