@@ -1,4 +1,4 @@
-﻿namespace Xphyrus.SubmissionAPI.Models
+﻿namespace Xphyrus.EvaluationAPI.Models
 {
     public class CodingAssessmentSubmission
     {
@@ -15,6 +15,6 @@
         public DateTime CreatedON { get; set; } = DateTime.UtcNow;
 
         public Guid? AssessmentId { get; set; }
-    
+
     }
 }

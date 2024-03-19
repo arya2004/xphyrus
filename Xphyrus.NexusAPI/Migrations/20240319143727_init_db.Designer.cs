@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xphyrus.NexusAPI.Data;
 
@@ -11,9 +12,11 @@ using Xphyrus.NexusAPI.Data;
 namespace Xphyrus.NexusAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicatioDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240319143727_init_db")]
+    partial class init_db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,25 +24,6 @@ namespace Xphyrus.NexusAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Xphyrus.NexusAPI.Models.Admin", b =>
-                {
-                    b.Property<Guid>("AdminId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("NexusId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("AdminId");
-
-                    b.HasIndex("NexusId");
-
-                    b.ToTable("Admins");
-                });
 
             modelBuilder.Entity("Xphyrus.NexusAPI.Models.CodingAssessment", b =>
                 {
@@ -108,17 +92,6 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.ToTable("TestCases");
                 });
 
-            modelBuilder.Entity("Xphyrus.NexusAPI.Models.Admin", b =>
-                {
-                    b.HasOne("Xphyrus.NexusAPI.Models.Nexus", "Nexus")
-                        .WithMany("Admins")
-                        .HasForeignKey("NexusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Nexus");
-                });
-
             modelBuilder.Entity("Xphyrus.NexusAPI.Models.CodingAssessment", b =>
                 {
                     b.HasOne("Xphyrus.NexusAPI.Models.Nexus", "Nexus")
@@ -146,8 +119,6 @@ namespace Xphyrus.NexusAPI.Migrations
 
             modelBuilder.Entity("Xphyrus.NexusAPI.Models.Nexus", b =>
                 {
-                    b.Navigation("Admins");
-
                     b.Navigation("CodingAssessments");
                 });
 #pragma warning restore 612, 618

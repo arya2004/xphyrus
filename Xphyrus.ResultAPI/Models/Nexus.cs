@@ -1,4 +1,4 @@
-﻿namespace Xphyrus.NexusAPI.Models
+﻿namespace Xphyrus.ResultAPI.Models
 {
     public class Nexus
     {
@@ -7,9 +7,9 @@
         public string? Description { get; set; }
 
         public Guid Creator { get; set; }
-        public ICollection<Admin>? Admins { get; set; }
+        public ICollection<Guid>? Admins { get; set; }
         public DateTime CreationDate { get; set; }
      
-        public ICollection<CodingAssessment>? CodingAssessments { get; set; }
+        public ICollection<CodingAssessment> CodingAssessments { get; set; }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-using Xphyrus.NexusAPI.Models;
 
-namespace Xphyrus.NexusAPI.Data
+using Xphyrus.ResultAPI.Models;
+
+namespace Xphyrus.ResultAPI.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicatioDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicatioDbContext(DbContextOptions options) : base(options)
         {
         }
     
@@ -15,7 +16,6 @@ namespace Xphyrus.NexusAPI.Data
         public DbSet<Nexus> Nexus{ get; set; }
         public DbSet<CodingAssessment>  CodingAssessments { get; set; }
         public DbSet<TestCase> TestCases { get; set; }
-        public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

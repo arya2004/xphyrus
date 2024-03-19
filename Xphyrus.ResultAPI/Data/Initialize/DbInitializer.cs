@@ -2,16 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Xphyrus.NexusAPI.Data.Initialize
+namespace Xphyrus.ResultAPI.Data.Initialize
 {
     public class DbInitializer : IDbInitializer
     {
 
-        private readonly ApplicationDbContext _db;
+        private readonly ApplicatioDbContext _db;
 
         public DbInitializer(
 
-            ApplicationDbContext db)
+            ApplicatioDbContext db)
         {
             _db = db;
         }

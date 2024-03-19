@@ -9,12 +9,13 @@ using System.Net;
 
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using Xphyrus.NexusAPI.Data;
-using Xphyrus.NexusAPI.Models.ResReq;
-using Xphyrus.NexusAPI.Service.IService;
-using Xphyrus.NexusAPI.Models.Dto;
 
-namespace Xphyrus.NexusAPI.Controllers
+using Xphyrus.ResultAPI.Data;
+
+using Xphyrus.ResultAPI.Models.ResReq;
+using Xphyrus.ResultAPI.Service.IService;
+
+namespace Xphyrus.ResultAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

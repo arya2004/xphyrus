@@ -22,7 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 //    return ConnectionMultiplexer.Connect(options);
 //});
 
-builder.Services.AddDbContext<ApplicatioDbContext>(
+builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
