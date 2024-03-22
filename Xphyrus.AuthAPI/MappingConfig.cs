@@ -10,7 +10,7 @@ namespace Xphyrus.AuthAPI
         {
             var mappingCOnfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<AssesmentAdminDto, AssesmentAdmins>().ReverseMap();
+                //config.CreateMap<AssesmentAdminDto, AssesmentAdmins>().ReverseMap();
             });
                 return mappingCOnfig;
         }
