@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.AuthAPI", "Xphyrus.AuthAPI\Xphyrus.AuthAPI.csproj", "{63B8A180-071D-4A31-88A3-8B3889E5A00E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NexusService", "NexusService\NexusService.csproj", "{63B8A180-071D-4A31-88A3-8B3889E5A00E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.SubmissionAPI", "Xphyrus.SubmissionAPI\Xphyrus.SubmissionAPI.csproj", "{44EB117B-90FF-4336-ABD9-2DE3289F21F7}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.EvaluationAPI", "Xp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.EmailAPI", "Xphyrus.EmailAPI\Xphyrus.EmailAPI.csproj", "{924C5990-214E-4E73-8075-B9A820FD30AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xphyrus.ResultAPI", "Xphyrus.ResultAPI\Xphyrus.ResultAPI.csproj", "{7BB949C8-7090-44B1-99A6-75787D32EE91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xphyrus.ResultAPI", "Xphyrus.ResultAPI\Xphyrus.ResultAPI.csproj", "{7BB949C8-7090-44B1-99A6-75787D32EE91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
