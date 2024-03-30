@@ -10,16 +10,17 @@ import { HasRoleGuard } from './core/guards/has-role.guard';
 
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { DashboardComponent } from './syndicate/dashboard/dashboard.component';
+import { EditorComponent } from './assignment/editor/editor.component';
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
-  {path: 'dashboard', component: DashboardComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
+  
   {path: 'Syndicate', loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
   {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
   {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
-  { path: '**', component: NotFoundComponent }
-
+  { path: '**', component: NotFoundComponent },
+  
 
 ];
 

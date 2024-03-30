@@ -28,13 +28,22 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "/assets/monaco/" }
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "/assets/monaco/"
+              }
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.min.js",
+              "node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -71,10 +80,10 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options":{
-              "sslCert": "ssl/localhost.pem",
-              "sslKey": "ssl/localhost-key.pem",
-              "ssl": true
+          "options": {
+            "sslCert": "ssl/localhost.pem",
+            "sslKey": "ssl/localhost-key.pem",
+            "ssl": true
           },
           "configurations": {
             "production": {
@@ -95,7 +104,6 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-           
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -114,7 +122,6 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/js/main.js"
-
             ]
           }
         }
@@ -124,11 +131,12 @@
   "apps": [
     {
       "assets": [
-      { "glob": "**/*", "input": "node_modules/monaco-editor", "output": "/assets/monaco/" }
+        {
+          "glob": "**/*",
+          "input": "node_modules/monaco-editor",
+          "output": "/assets/monaco/"
+        }
       ]
-    
     }
   ]
-
-  
 }

@@ -41,5 +41,39 @@ export class SyndicateService {
     return this.http.get<IResponse<any>>(this.assUrl+ "?assesmentCode=" + id )
   }
 
+ 
+  ApiUri  = "https://localhost:7130/api/Company/GetAll";
+
+  postCompany(company: any)
+  {
+    return this.http.post<any>(this.ApiUri , company);
+  }
+
+  GetCompany()
+  {
+    console.log(this.ApiUri);
+    
+    
+    return this.http.get<any>(this.ApiUri );
+   
+  }
+  
+  GetOneCompany(id: number)
+  {
+    return this.http.get<any>(this.ApiUri + "GetOne" + `?id=${id}`);
+  }
+
+  UpdateCompany(company: any)
+  {
+    return this.http.put<any>("https://localhost:7130/api/Company", company);
+  }
+
+  DeleteCompany(name: number)
+  {
+    return this.http.delete<any>(this.ApiUri + `?id=${name}`);
+  }
+
+
+
 
 }

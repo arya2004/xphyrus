@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { DetailComponent } from './detail/detail.component';
 import { SyndicateRoutingModule } from './syndicate-routing.module';
+import { DataTablesModule } from 'angular-datatables';
 
 
 
@@ -15,7 +16,8 @@ import { SyndicateRoutingModule } from './syndicate-routing.module';
   ],
   imports: [
     CommonModule,
-    SyndicateRoutingModule
+    SyndicateRoutingModule,
+    DataTablesModule
   ]
 })
 export class SyndicateModule { }

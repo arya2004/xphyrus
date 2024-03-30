@@ -8,8 +8,11 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {path: '', component: DashboardComponent},
   {path: ':id', component: DetailComponent},
+  
+  {path: ':id/assessment', loadChildren: () => import('../assignment/assignment.module').then(m => m.AssignmentModule)},
 
-  {path: ':id/assignment', loadChildren: () => import('../assignment/assignment.module').then(m => m.AssignmentModule)},
+
+  
 ]
 
 

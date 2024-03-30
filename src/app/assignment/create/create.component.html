@@ -36,20 +36,7 @@
                   Description
                 </button>
               </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="profile-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#bordered-profile"
-                  type="button"
-                  role="tab"
-                  aria-controls="profile"
-                  aria-selected="false"
-                >
-                  Problem Statement
-                </button>
-              </li>
+              
               <li class="nav-item" role="presentation">
                 <button
                   class="nav-link"
@@ -64,20 +51,7 @@
                   Evaluation Cases
                 </button>
               </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="preview-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#preview"
-                  type="button"
-                  role="tab"
-                  aria-controls="contact"
-                  aria-selected="false"
-                >
-                  Preview
-                </button>
-              </li>
+              
             </ul>
             <div class="tab-content pt-2" id="borderedTabContent">
               <div
@@ -139,50 +113,23 @@
                         </div>
                       </div>
 
-                      <div class="row mb-3">
-                        <div class="col-sm-12">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="gridCheck1"
-                            />
-                            <label class="form-check-label" for="gridCheck1">
-                              Make Public
-                            </label>
-                          </div>
-                        </div>
-                      </div>
+                   
                     </form>
-                    <!-- End General Form Elements -->
 
-                    <div
-                      class="accordion accordion-flush px-xl-5"
-                      id="faqlist"
-                    ></div>
+                    <angular-editor
+                    [placeholder]="'Enter text here...'"
+                    [config]="config"
+                    [(ngModel)]="description"
+                  ></angular-editor>
+                    <!-- End General Form Elements -->
+                    <div class="border border-dark" style="margin: 20px">
+                      <div [innerHTML]="description"></div>
+                    </div>
+                    
                   </div>
                 </div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="bordered-profile"
-                role="tabpanel"
-                aria-labelledby="profile-tab"
-              >
-                <h5 class="card-title">Problem Statement</h5>
-
-                <angular-editor
-                  [placeholder]="'Enter text here...'"
-                  [config]="config"
-                  [(ngModel)]="description"
-                ></angular-editor>
-
-                <h5 class="card-title">Preview</h5>
-
-                <div class="border border-dark" style="margin: 20px">
-                  <div [innerHTML]="description"></div>
-                </div>
-              </div>
+             
               <div
                 class="tab-pane fade"
                 id="bordered-contact"
@@ -246,49 +193,7 @@
                   </div>
                 </div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="preview"
-                role="tabpanel"
-                aria-labelledby="preview"
-              >
-                <h5 class="card-title">Preview</h5>
-
-                <div class="add-cases-form" [formGroup]="form">
-                  <ng-container formArrayName="cases">
-                    <ng-container
-                      *ngFor="
-                        let lessonForm of $any(cases).controls;
-                        let i = index
-                      "
-                    >
-                      <div class="lesson-form-row" [formGroup]="lessonForm">
-                        <mat-form-field appearance="fill">
-                          <textarea
-                            matInput
-                            formControlName="input"
-                            placeholder="Input Case"
-                          ></textarea>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                          <textarea
-                            matInput
-                            formControlName="output"
-                            placeholder="Expected Output"
-                          ></textarea>
-                        </mat-form-field>
-                        <mat-icon class="delete-btn" (click)="deleteLesson(i)">
-                          delete_forever</mat-icon
-                        >
-                      </div>
-                    </ng-container>
-                  </ng-container>
-
-                  <button mat-mini-fab (click)="addLesson()">
-                    <mat-icon class="add-course-btn">add</mat-icon>
-                  </button>
-                </div>
-              </div>
+           
             </div>
             <!-- End Bordered Tabs -->
           </div>

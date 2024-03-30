@@ -1,6 +1,6 @@
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Syndicate</h1>
+    <h1>Nexus</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -10,623 +10,60 @@
   </div>
   <!-- End Page Title -->
   <div class="pagetitle">
-    <h1>Founder</h1>
+    <h1>My Nexus</h1>
   </div>
-
 
   <section class="section dashboard">
     <div class="row">
-      <!-- Left side columns -->
-      <div class="col-lg-9">
-        <div class="row">
-          <!-- Sales Card -->
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
+      <div class="col-lg-9" style="overflow-x: auto">
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
+          class="table table-striped"
+        >
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Creator</th>
+              <th scope="col">Creation Date</th>
+              <th scope="col">Assessments</th>
+
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of company">
+              <td scope="row">{{ c.companyId }}</td>
+              <td>{{ c.companyCode }}</td>
+              <td>{{ c.name }}</td>
+              <td>{{ c.directorName }}</td>
+              <td>{{ c.directorEmployeeCode }}</td>
+              <td>{{ c.directorMobile }}</td>
+
+              <td>
+                <a routerLink="/company/{{ c.companyId }}">
+                  <button type="button" class="btn btn-secondary">View</button>
+                </a>
+              </td>
+              <td>
+                <!-- Disabled Backdrop Modal -->
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="deleteCompany(c.companyId)"
                 >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-          <hr>
-          <div class="pagetitle">
-            <h1>Co-founder</h1>
-          </div>
-
-          <!-- Sales Card -->
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <!-- Sales Card -->
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-          <hr>
-          <div class="pagetitle">
-            <h1>Archieved</h1>
-          </div>
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-
-          <div class="col-xxl-4 col-md-6">
-            <div class="card info-card sales-card">
-              <div class="filter">
-                <a
-                  class="btn btn-primary mx-3"
-                  [routerLink]="['/syndicate', 123]"
-                  >View</a
-                >
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filter</h6>
-                  </li>
-
-                  <li><a class="dropdown-item" href="#">Today</a></li>
-                  <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
-                </ul>
-              </div>
-
-              <div class="card-body">
-                <h5 class="card-title">Cloud Computing</h5>
-
-                <div class="d-flex align-items-center">
-                  <div
-                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
-                  >
-                    <i class="bi bi-cart"></i>
-                  </div>
-
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-person"></i
-                    ></span>
-                    <span class="text-muted small pt-2 ps-1">John Doe</span>
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-clipboard2-data"></i>12</span
-                    >
-                  </div>
-                  <div class="ps-3">
-                    <span class="text-success small pt-1 fw-bold">
-                      <i class="bi bi-people"></i>12</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End Sales Card -->
-        </div>
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <!-- End Left side columns -->
 
-      <!-- Right side columns -->
       <div class="col-lg-3">
         <!-- Recent Activity -->
         <div class="card">
@@ -643,7 +80,7 @@
                       id="floatingInput"
                       placeholder="name@example.com"
                     />
-                    <label for="floatingInput">Syndicate Code</label>
+                    <label for="floatingInput">Nexus Code</label>
                   </div>
 
                   <button type="submit" class="btn btn-primary">Join</button>
@@ -668,7 +105,7 @@
                   <label for="floatingName">Name</label>
                 </div>
               </div>
-           
+
               <div class="col-12">
                 <div class="form-floating">
                   <textarea
@@ -681,7 +118,6 @@
                 </div>
               </div>
 
-              
               <div class="text-center">
                 <button type="submit" class="btn btn-primary m-3">
                   Create Syndicate
@@ -696,8 +132,6 @@
         </div>
         <!-- End News & Updates -->
       </div>
-      <!-- End Right side columns -->
     </div>
   </section>
 </main>
-<!-- End #main -->
