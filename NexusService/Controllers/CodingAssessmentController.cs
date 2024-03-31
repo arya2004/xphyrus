@@ -44,7 +44,7 @@ namespace Xphyrus.NexusService.Controllers
             //    return _responseDto;
             //}
 
-            List<Nexus> companies = _ApplicationDbContext.Nexus.ToList();
+            List<CodingAssessment> companies = _ApplicationDbContext.CodingAssessments.ToList();
             _responseDto.Result = companies;
             _responseDto.IsSuccess = true;
             return _responseDto;
@@ -84,7 +84,7 @@ namespace Xphyrus.NexusService.Controllers
 
         [HttpGet("GetOne")]
 
-        public async Task<ActionResult<ResponseDto>> Get(Guid id)
+        public async Task<ActionResult<ResponseDto>> Get(string id)
         {
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
@@ -101,7 +101,7 @@ namespace Xphyrus.NexusService.Controllers
             //    return _responseDto;
             //}
 
-            CodingAssessment? assessment= await _ApplicationDbContext.CodingAssessments.FirstOrDefaultAsync(_ => _.CodingAssessmentId== id);
+            CodingAssessment? assessment= await _ApplicationDbContext.CodingAssessments.FirstOrDefaultAsync(_ => _.CodingAssessmentId== new Guid(id));
             _responseDto.Result = assessment;
             _responseDto.IsSuccess = true;
             return Ok(_responseDto);
