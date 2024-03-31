@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NexusService.Models.Dto;
 using System.Security.Claims;
 using Xphyrus.NexusService.Data;
 using Xphyrus.NexusService.Models;
@@ -47,6 +48,69 @@ namespace Xphyrus.NexusService.Controllers
             return _responseDto;
         }
 
+        [HttpGet("GetMy")]
+        public ActionResult<ResponseDto> GetMy()
+        {
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
+            //if (roles == null || roles.Count == 0 || email == null)
+            //{
+            //    _responseDto.Message = "invalid token";
+            //    _responseDto.IsSuccess = false;
+            //    return _responseDto;
+            //}
+            //if (!roles.Contains("ADMIN"))
+            //{
+            //    _responseDto.Message = "unauthorized";
+            //    _responseDto.IsSuccess = false;
+            //    return _responseDto;
+            //}
+
+            List<Nexus> companies = _ApplicationDbContext.Nexus.Where(_ => _.Creator.ToString() == userId ).ToList();
+            _responseDto.Result = companies;
+            _responseDto.IsSuccess = true;
+            return _responseDto;
+        }
+
+        [HttpPost("Join")]
+        public async Task<ActionResult<ResponseDto>> Join(string nexusCode)
+        {
+            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
+            //if (roles == null || roles.Count == 0 || email == null)
+            //{
+            //    _responseDto.Message = "invalid token";
+            //    _responseDto.IsSuccess = false;
+            //    return _responseDto;
+            //}
+            //if (!roles.Contains("ADMIN"))
+            //{
+            //    _responseDto.Message = "unauthorized";
+            //    _responseDto.IsSuccess = false;
+            //    return _responseDto;
+            //}
+
+            Nexus? companies = await _ApplicationDbContext.Nexus.FirstOrDefaultAsync(_ => _.NexusId.ToString() == nexusCode);
+            if(companies == null)
+            {
+                _responseDto.IsSuccess = false;
+                return _responseDto;
+            }
+            var user = await _ApplicationDbContext.Users.FirstOrDefaultAsync(_ => _.Id.ToString() == userId);
+            if(user == null)
+            {
+                _responseDto.IsSuccess = false;
+                return _responseDto;
+            }
+            companies.ApplicationUsers.Add(user);
+            await _ApplicationDbContext.SaveChangesAsync();
+            _responseDto.Result = companies;
+            _responseDto.IsSuccess = true;
+            return _responseDto;
+        }
+
 
 
 
@@ -80,7 +144,7 @@ namespace Xphyrus.NexusService.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDto>> Create([FromBody] Nexus company)
+        public async Task<ActionResult<ResponseDto>> Create([FromBody] NexusDto company)
         {
 
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
