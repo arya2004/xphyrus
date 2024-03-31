@@ -1,0 +1,139 @@
+<app-nav-bar></app-nav-bar>
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Nexus</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- End Page Title -->
+    <div class="pagetitle">
+      <h1>My Nexus</h1>
+    </div>
+  
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-9" style="overflow-x: auto">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="table table-striped"
+          >
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Creator</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Assessments</th>
+  
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of company">
+                <td scope="row">{{ c.companyId }}</td>
+                <td>{{ c.companyCode }}</td>
+                <td>{{ c.name }}</td>
+                <td>{{ c.directorName }}</td>
+                <td>{{ c.directorEmployeeCode }}</td>
+                <td>{{ c.directorMobile }}</td>
+  
+                <td>
+                  <a routerLink="/company/{{ c.companyId }}">
+                    <button type="button" class="btn btn-secondary">View</button>
+                  </a>
+                </td>
+                <td>
+                  <!-- Disabled Backdrop Modal -->
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    (click)="deleteCompany(c.companyId)"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <div class="col-lg-3">
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Join <span>| Existing</span></h5>
+  
+              <div class="row mb-3">
+                <form class="">
+                  <div class="col-sm-12">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="floatingInput"
+                        placeholder="name@example.com"
+                      />
+                      <label for="floatingInput">Nexus Code</label>
+                    </div>
+  
+                    <button type="submit" class="btn btn-primary">Join</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+  
+            <div class="card-body pb-0">
+              <h5 class="card-title">Create <span>| New</span></h5>
+  
+              <!-- Floating Labels Form -->
+              <form class="row g-3">
+                <div class="col-md-12">
+                  <div class="form-floating">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="floatingName"
+                      placeholder="Your Name"
+                    />
+                    <label for="floatingName">Name</label>
+                  </div>
+                </div>
+  
+                <div class="col-12">
+                  <div class="form-floating">
+                    <textarea
+                      class="form-control"
+                      placeholder="Address"
+                      id="floatingTextarea"
+                      style="height: 100px"
+                    ></textarea>
+                    <label for="floatingTextarea">Description</label>
+                  </div>
+                </div>
+  
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary m-3">
+                    Create Syndicate
+                  </button>
+                  <button type="reset" class="btn btn-secondary m-3">
+                    Reset
+                  </button>
+                </div>
+              </form>
+              <!-- End floating Labels Form -->
+            </div>
+          </div>
+          <!-- End News & Updates -->
+        </div>
+      </div>
+    </section>
+  </main>
+  

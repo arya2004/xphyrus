@@ -1,22 +1,20 @@
-
-import { Component, OnInit, assertPlatform } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { NexusService } from 'src/app/nexus/nexus.service';
 import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
-import { AssignmentService } from '../assignment.service';
-import { SyndicateService } from 'src/app/syndicate/syndicate.service';
+
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent {
 
   
-  constructor(private fb:FormBuilder, private teacherService: SyndicateService, private router: Router) {}
+  constructor(private fb:FormBuilder, private teacherService: NexusService, private router: Router) {}
 
   ngOnInit(): void {
     this.addLesson();
@@ -83,6 +81,5 @@ export class CreateComponent implements OnInit {
       })
   }
   
-
 
 }

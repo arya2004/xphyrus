@@ -19,7 +19,8 @@ import { ProfileComponent } from './profile/profile.component';
     CommonModule,
     AccountRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+ 
   ]
 })
 export class AccountModule { }

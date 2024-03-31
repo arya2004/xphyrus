@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { IResponse } from '../shared/models/IResponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.development';
-import { Submit } from '../shared/models/ISubmit';
+import { IResponse } from '../shared/models/IResponse';
 import { TestRun } from '../shared/models/ITestRun';
+import { Submit } from '../shared/models/ISubmit';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AssignmentService {
+export class AssessmentService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -55,6 +55,4 @@ export class AssignmentService {
     return this.http.get<IResponse<any>>(this.studUrl)
   }
   
-
-
 }

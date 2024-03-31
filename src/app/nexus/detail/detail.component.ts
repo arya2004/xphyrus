@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { SyndicateService } from '../syndicate.service';
 import { ICompany } from 'src/app/shared/models/ICompany';
+import { NexusService } from '../nexus.service';
+
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent {
   id: string;
   private sub: any;
-  constructor(private route: ActivatedRoute,public companyService: SyndicateService) { }
+  constructor(private route: ActivatedRoute,public companyService: NexusService) { }
   
 
 
@@ -43,7 +44,7 @@ company: ICompany[]  = [] ;
 
   getAllCompany()
   {
-    this.companyService.GetCompany().subscribe({
+    this.companyService.GetNexus().subscribe({
       next: res => {
       this.company = res.result;
       this.dtTrigger.next(null);
@@ -52,5 +53,4 @@ company: ICompany[]  = [] ;
     error: err => console.log(err)
   });
   }
-
 }

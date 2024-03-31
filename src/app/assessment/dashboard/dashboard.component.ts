@@ -1,17 +1,12 @@
-import { AfterViewInit, Component, OnInit, VERSION, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import {MatTableDataSource} from '@angular/material/table';
-
-import { ActivatedRoute } from '@angular/router';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
-
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { Component, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { NexusService } from 'src/app/nexus/nexus.service';
 
-import { SyndicateService } from 'src/app/syndicate/syndicate.service';
-
-
+import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
 
 
 declare var monaco: any;
@@ -65,11 +60,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent{
-  
+export class DashboardComponent {
   id: string;
   private sub: any;
-  constructor(private fb:FormBuilder, private teacherService: SyndicateService,private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(private fb:FormBuilder, private teacherService: NexusService,private _liveAnnouncer: LiveAnnouncer) {}
 
   lel: string = "1 2 3 4 5 <br>45 6";
   testCases: string[] = [
@@ -188,5 +182,4 @@ export class DashboardComponent{
   ];
   dataSourceTestCase = TEST_CASES;
   displayedColumnsTestCase = this.columns.map(c => c.columnDef);
-  
 }

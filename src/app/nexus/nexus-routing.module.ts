@@ -2,18 +2,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { EditorComponent } from './editor/editor.component';
-import { CreateComponent } from './create/create.component';
+import { DetailComponent } from './detail/detail.component';
 
 
 const routes: Routes = [
-  {path: 'new', component: CreateComponent},
+  {path: '', component: DashboardComponent},
+  {path: ':id', component: DetailComponent},
   
-  {path: ':id', component: DashboardComponent},
- 
-  {path: ':id/editor', component: CreateComponent},
+  {path: ':id/assignment', loadChildren: () => import('../assessment/assessment.module').then(m => m.AssessmentModule)},
 
 
+  
 ]
 
 @NgModule({
@@ -26,4 +25,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class AssignmentRoutingModule { }
+export class NexusRoutingModule { }

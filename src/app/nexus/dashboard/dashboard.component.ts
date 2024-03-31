@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { SyndicateService } from '../syndicate.service';
+import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ICompany } from 'src/app/shared/models/ICompany';
+import { NexusService } from '../nexus.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   company: ICompany[]  = [] ;
-  constructor(public companyService: SyndicateService) { }
+  constructor(public companyService: NexusService) { }
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   getAllCompany()
   {
-    this.companyService.GetCompany().subscribe({
+    this.companyService.GetNexus().subscribe({
       next: res => {
       this.company = res.result;
       this.dtTrigger.next(null);
@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit {
   deleteCompany(id: number)
   {
     console.log(id);
-    this.companyService.DeleteCompany(id).subscribe({
+    this.companyService.DeleteNexus(id).subscribe({
       next: res => {
         console.log(res);
         window.location.reload();

@@ -1,0 +1,301 @@
+<app-nav-bar></app-nav-bar>
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Cloud COmputing</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Syndicate</li>
+          <li class="breadcrumb-item active">Cloud COmputing</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- End Page Title -->
+  
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul
+                class="nav nav-tabs nav-tabs-bordered"
+                id="borderedTab"
+                role="tablist"
+              >
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link active"
+                    id="home-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#bordered-home"
+                    type="button"
+                    role="tab"
+                    aria-controls="home"
+                    aria-selected="true"
+                  >
+                    Stream
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button
+                    class="nav-link"
+                    id="profile-tab"
+                    data-bs-toggle="tab"
+                    data-bs-target="#bordered-profile"
+                    type="button"
+                    role="tab"
+                    aria-controls="profile"
+                    aria-selected="false"
+                  >
+                    Co-founders
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2" id="borderedTabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="bordered-home"
+                  role="tabpanel"
+                  aria-labelledby="home-tab"
+                >
+                  <div class="row align-items-top pb-3">
+                    <div class="col-lg-12 pt-3" style="overflow-x: auto">
+                      <table
+                        datatable
+                        [dtOptions]="dtOptions"
+                        [dtTrigger]="dtTrigger"
+                        class="table table-striped"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Creator</th>
+                            <th scope="col">Creation Date</th>
+                            <th scope="col">Assessments</th>
+  
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let c of company">
+                            <td scope="row">{{ c.companyId }}</td>
+                            <td>{{ c.companyCode }}</td>
+                            <td>{{ c.name }}</td>
+                            <td>{{ c.directorName }}</td>
+                            <td>{{ c.directorEmployeeCode }}</td>
+                            <td>{{ c.directorMobile }}</td>
+  
+                            <td>
+                              <a routerLink="/company/{{ c.companyId }}">
+                                <button type="button" class="btn btn-secondary">
+                                  View
+                                </button>
+                              </a>
+                            </td>
+                            <td>
+                              <!-- Disabled Backdrop Modal -->
+                              <button type="button" class="btn btn-danger">
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade"
+                  id="bordered-profile"
+                  role="tabpanel"
+                  aria-labelledby="profile-tab"
+                >
+                  <h5 class="card-title">Table with stripped rows</h5>
+  
+                  <div class="col-lg-12" style="overflow-x: auto">
+  
+          
+                    <table
+                    datatable
+                    [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger"
+                    class="table table-striped"
+                  >
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Creator</th>
+                        <th scope="col">Creation Date</th>
+                        <th scope="col">Assessments</th>
+                      
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let c of company">
+                        <td scope="row">{{ c.companyId }}</td>
+                        <td>{{ c.companyCode }}</td>
+                        <td>{{ c.name }}</td>
+                        <td>{{ c.directorName }}</td>
+                        <td>{{ c.directorEmployeeCode }}</td>
+                        <td>{{ c.directorMobile }}</td>
+                      
+                        <td>
+                          <a routerLink="/company/{{ c.companyId }}">
+                            <button type="button" class="btn btn-secondary">
+                              View
+                            </button>
+                          </a>
+                        </td>
+                        <td>
+                          <!-- Disabled Backdrop Modal -->
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                    </div>
+                  <!-- End Table with stripped rows -->
+                </div>
+              </div>
+              <!-- End Bordered Tabs -->
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Cloud Computing</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Founder</h6>
+              <p>Xphyrus.co</p>
+  
+              <h6 class="card-subtitle mb-2 text-muted">Description</h6>
+              <p>
+                This is an examle page with no contrnt. You can use it as a
+                starter for your custom pages.
+              </p>
+  
+              <h6 class="card-subtitle mb-2 text-muted">Date</h6>
+              <p>12/23/20043</p>
+  
+              <h6 class="card-subtitle mb-2 text-muted">Is Active</h6>
+              <p>False</p>
+  
+              <h6 class="card-subtitle mb-2 text-muted">Code</h6>
+              <p>cEjYa</p>
+            </div>
+          </div>
+          <section class="section dashboard">
+            <div class="row">
+              <!-- Left side columns -->
+              <div class="col-lg-8">
+                <div class="row"></div>
+              </div>
+              <!-- End Left side columns -->
+  
+              <!-- Right side columns -->
+  
+              <!-- Recent Activity -->
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Upcoming</h5>
+  
+                  <div class="activity">
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">32 min</div>
+                      <i
+                        class="bi bi-circle-fill activity-badge text-success align-self-start"
+                      ></i>
+                      <div class="activity-content">
+                        Quia quae rerum
+                        <a href="#" class="fw-bold text-dark"
+                          >explicabo officiis</a
+                        >
+                        beatae
+                      </div>
+                    </div>
+                    <!-- End activity item-->
+  
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">56 min</div>
+                      <i
+                        class="bi bi-circle-fill activity-badge text-danger align-self-start"
+                      ></i>
+                      <div class="activity-content">
+                        Voluptatem blanditiis blanditiis eveniet
+                      </div>
+                    </div>
+                    <!-- End activity item-->
+  
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">2 hrs</div>
+                      <i
+                        class="bi bi-circle-fill activity-badge text-primary align-self-start"
+                      ></i>
+                      <div class="activity-content">
+                        Voluptates corrupti molestias voluptatem
+                      </div>
+                    </div>
+                    <!-- End activity item-->
+  
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">1 day</div>
+                      <i
+                        class="bi bi-circle-fill activity-badge text-info align-self-start"
+                      ></i>
+                      <div class="activity-content">
+                        Tempore autem saepe
+                        <a href="#" class="fw-bold text-dark"
+                          >occaecati voluptatem</a
+                        >
+                        tempore
+                      </div>
+                    </div>
+                    <!-- End activity item-->
+  
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">2 days</div>
+                      <i
+                        class="bi bi-circle-fill activity-badge text-warning align-self-start"
+                      ></i>
+                      <div class="activity-content">
+                        Est sit eum reiciendis exercitationem
+                      </div>
+                    </div>
+                    <!-- End activity item-->
+  
+                    <div class="activity-item d-flex">
+                      <div class="activite-label">4 weeks</div>
+                      <i
+                        class="bi bi-circle-fill activity-badge text-muted align-self-start"
+                      ></i>
+                      <div class="activity-content">
+                        Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
+                      </div>
+                    </div>
+                    <!-- End activity item-->
+                  </div>
+                </div>
+              </div>
+              <!-- End Recent Activity -->
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- End #main -->
+  

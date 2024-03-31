@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AssignmentService } from './assignment.service';
+import { NexusService } from './nexus.service';
 
-describe('AssignmentService', () => {
-  let service: AssignmentService;
+describe('NexusService', () => {
+  let service: NexusService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(AssignmentService);
+    service = TestBed.inject(NexusService);
   });
 
   it('should be created', () => {

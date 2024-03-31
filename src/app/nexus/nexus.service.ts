@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
-import { IResponse } from '../shared/models/IResponse';
-import { IAssignment } from '../shared/models/IAssesmentCreate';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { IAssignment } from '../shared/models/IAssesmentCreate';
+import { IResponse } from '../shared/models/IResponse';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SyndicateService {
+export class NexusService {
 
+  
   constructor(private http: HttpClient, private router: Router) { }
+
+  ApiUri  = "https://localhost:5000/api/Nexus/";
+
 
   assignmnetUrl  = environment.assesmentApiUrl;
   assUrl = "https://localhost:7000/api/Assesment"
@@ -41,15 +45,12 @@ export class SyndicateService {
     return this.http.get<IResponse<any>>(this.assUrl+ "?assesmentCode=" + id )
   }
 
- 
-  ApiUri  = "https://localhost:7130/api/Company/GetAll";
-
-  postCompany(company: any)
+  postNexus(nexus: any)
   {
-    return this.http.post<any>(this.ApiUri , company);
+    return this.http.post<any>(this.ApiUri , nexus);
   }
 
-  GetCompany()
+  GetNexus()
   {
     console.log(this.ApiUri);
     
@@ -58,22 +59,18 @@ export class SyndicateService {
    
   }
   
-  GetOneCompany(id: number)
+  GetOneNexus(id: number)
   {
     return this.http.get<any>(this.ApiUri + "GetOne" + `?id=${id}`);
   }
 
-  UpdateCompany(company: any)
+  UpdateNexus(nexus: any)
   {
-    return this.http.put<any>("https://localhost:7130/api/Company", company);
+    return this.http.put<any>("https://localhost:5000/api/Nexus/", nexus);
   }
 
-  DeleteCompany(name: number)
+  DeleteNexus(name: number)
   {
     return this.http.delete<any>(this.ApiUri + `?id=${name}`);
   }
-
-
-
-
 }

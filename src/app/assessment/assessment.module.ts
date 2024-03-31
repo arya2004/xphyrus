@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CreateComponent } from './create/create.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AssignmentRoutingModule } from './assignment-routing.module';
+import { AssessmentRoutingModule } from './assessment-routing.module';
+
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
@@ -13,21 +16,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
-import { CreateComponent } from './create/create.component';
-import { EditorComponent } from './editor/editor.component';
+
+
 import { SharedModule } from '../shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { CoreModule } from '../core/core.module';
+
 
 @NgModule({
   declarations: [
-    DashboardComponent,
     CreateComponent,
-    EditorComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,
-    AssignmentRoutingModule,
+    AssessmentRoutingModule,
     MatButtonModule, 
     MatCheckboxModule,
     MatInputModule,
@@ -41,7 +45,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSelectModule,
     MatIconModule,
     MatRadioModule,
-   
+   CoreModule,
    
    
     
@@ -53,4 +57,4 @@ import { MatSortModule } from '@angular/material/sort';
     MatSortModule
   ]
 })
-export class AssignmentModule { }
+export class AssessmentModule { }
