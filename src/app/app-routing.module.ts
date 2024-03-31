@@ -15,7 +15,7 @@ import { EditorComponent } from './assignment/editor/editor.component';
 const routes: Routes = [
   {path: '', component:HomeComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
-  
+  {path: 'a', loadChildren: () => import('./examinee/examinee.module').then(m => m.ExamineeModule)},
   {path: 'Syndicate', loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
   {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
   {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
