@@ -13,6 +13,7 @@ namespace Xphyrus.NexusService
             {
                 //config.CreateMap<AssesmentAdminDto, AssesmentAdmins>().ReverseMap();
                 config.CreateMap<NexusDto, Nexus>().ReverseMap();
+                config.CreateMap<CreateCodingAssessmentDto, CodingAssessment>().ReverseMap();
             });
                 return mappingCOnfig;
         }

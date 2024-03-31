@@ -149,6 +149,7 @@ namespace Xphyrus.NexusService.Controllers
 
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             //if (roles == null || roles.Count == 0 || email == null)
             //{
             //    _responseDto.Message = "invalid token";
@@ -162,7 +163,8 @@ namespace Xphyrus.NexusService.Controllers
             //    return _responseDto;
             //}
 
-            Nexus companyToSave = _mapper.Map<Nexus>(company);
+            Nexus companyToSave = _mapper.Map<Nexus >(company);
+            companyToSave.Creator = new Guid(userId);
             try
             {
                 _ApplicationDbContext.Nexus.Add(companyToSave);

@@ -11,8 +11,10 @@ namespace Xphyrus.NexusService.Models
         public string? Title { get; set; }
 
         public string? Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        public ICollection<TestCase> TestCases { get; set; }
+        public ICollection<TestCase>? TestCases { get; set; }
 
         public Nexus? Nexus { get; set; }
     }

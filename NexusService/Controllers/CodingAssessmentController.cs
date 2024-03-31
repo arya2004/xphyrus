@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NexusService.Models.Dto;
 using System.Security.Claims;
 using Xphyrus.NexusService.Data;
 using Xphyrus.NexusService.Models;
@@ -50,7 +51,7 @@ namespace Xphyrus.NexusService.Controllers
         }
 
         [HttpGet("GetAllForNexus")]
-        public ActionResult<ResponseDto> GetAllForNexus(Guid NexusId)
+        public ActionResult<ResponseDto> GetAllForNexus(string NexusId)
         {
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
@@ -67,7 +68,9 @@ namespace Xphyrus.NexusService.Controllers
             //    return _responseDto;
             //}
 
-            List<CodingAssessment> assessments= _ApplicationDbContext.CodingAssessments.Where(_ => _.Nexus.NexusId == NexusId).Include(_ => _.TestCases).ToList();
+            Guid nId = new Guid(NexusId);
+
+            List<CodingAssessment> assessments= _ApplicationDbContext.CodingAssessments.Where(_ => _.Nexus.NexusId == nId).ToList();
             _responseDto.Result = assessments;
             _responseDto.IsSuccess = true;
             return _responseDto;
@@ -108,7 +111,7 @@ namespace Xphyrus.NexusService.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDto>> Create([FromBody] Nexus company)
+        public async Task<ActionResult<ResponseDto>> Create([FromBody] CreateCodingAssessmentDto company)
         {
 
             var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
@@ -126,10 +129,12 @@ namespace Xphyrus.NexusService.Controllers
             //    return _responseDto;
             //}
 
-            Nexus companyToSave = _mapper.Map<Nexus>(company);
+            CodingAssessment companyToSave = _mapper.Map<CodingAssessment>(company);
             try
-            {
-                _ApplicationDbContext.Nexus.Add(companyToSave);
+            {   
+                Nexus? n = await _ApplicationDbContext.Nexus.FirstOrDefaultAsync(_ => _.NexusId ==  new Guid(company.AssociatedNexusId));
+                companyToSave.Nexus = n;
+                _ApplicationDbContext.CodingAssessments.Add(companyToSave);
                 await _ApplicationDbContext.SaveChangesAsync();
                 _responseDto.Message = "Added Successfully";
                 _responseDto.IsSuccess = true;
