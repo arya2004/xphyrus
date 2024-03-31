@@ -9,18 +9,17 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { HasRoleGuard } from './core/guards/has-role.guard';
 
 import { NotFoundComponent } from './core/not-found/not-found.component';
-import { DashboardComponent } from './home/dashboard/dashboard.component';
 
 
 const routes: Routes = [
   {path: '', component:HomeComponent},
-  {path: 'dashboard', component:DashboardComponent},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
-  {path: 'Syndicate', loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
-  {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
-  {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./syndicate/syndicate.module').then(m => m.SyndicateModule)},
-  { path: '**', component: NotFoundComponent }
-
+  {path: 'a', loadChildren: () => import('./examinee/examinee.module').then(m => m.ExamineeModule)},
+  {path: 'Syndicate', loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},
+  {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},
+  {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},
+  { path: '**', component: NotFoundComponent },
+  
 
 ];
 

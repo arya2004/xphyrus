@@ -6,20 +6,23 @@ import { AccountRoutingModule } from './account-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
-
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    
   ],
   imports: [
     CommonModule,
     AccountRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    CoreModule
+ 
   ]
 })
 export class AccountModule { }

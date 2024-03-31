@@ -25,3 +25,19 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+# PS
+
+Change last line of `node_modules/angular-datatables/src/angular_datatables.directive.d.ts` to 
+``` 
+    static ɵdir: i0.ɵɵDirectiveDeclaration<DataTableDirective, "[datatable]",
+    never,
+    { dtOptions: 'dtOptions', dtTrigger: 'dtTrigger' },
+    never,
+    never,
+    never,
+    false,
+    never>;
+    
+```
