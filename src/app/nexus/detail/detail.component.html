@@ -11,7 +11,13 @@
       </nav>
     </div>
     <!-- End Page Title -->
-  
+    <h5 class="card-title">
+      <a routerLink="/Syndicate/{{id}}/assignment/create">
+        <button type="button" class="btn btn-primary">
+          New Assessment
+        </button>
+      </a>
+    </h5>
     <section class="section">
       <div class="row">
         <div class="col-lg-8">
@@ -71,26 +77,25 @@
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Creator</th>
-                            <th scope="col">Creation Date</th>
-                            <th scope="col">Assessments</th>
+                            
+                            <th scope="col">Start Date</th>
+                            <th scope="col">ENd date</th>
+                          
   
                             <th scope="col"></th>
                             <th scope="col"></th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let c of company">
-                            <td scope="row">{{ c.companyId }}</td>
-                            <td>{{ c.companyCode }}</td>
-                            <td>{{ c.name }}</td>
-                            <td>{{ c.directorName }}</td>
-                            <td>{{ c.directorEmployeeCode }}</td>
-                            <td>{{ c.directorMobile }}</td>
-  
+                          <tr *ngFor="let c of assessment">
+                            <td scope="row">{{ c.codingAssessmentId}}</td>
+                            <td>{{ c.title }}</td>
+                     
+                            <td>{{ c.startDate }}</td>
+                            <td>{{ c.endDate }}</td>
+                             
                             <td>
-                              <a routerLink="/company/{{ c.companyId }}">
+                              <a routerLink="/Syndicate/{{id}}/assignment/{{ c.codingAssessmentId }}">
                                 <button type="button" class="btn btn-secondary">
                                   View
                                 </button>
@@ -204,93 +209,7 @@
               <div class="col-lg-8">
                 <div class="row"></div>
               </div>
-              <!-- End Left side columns -->
-  
-              <!-- Right side columns -->
-  
-              <!-- Recent Activity -->
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Upcoming</h5>
-  
-                  <div class="activity">
-                    <div class="activity-item d-flex">
-                      <div class="activite-label">32 min</div>
-                      <i
-                        class="bi bi-circle-fill activity-badge text-success align-self-start"
-                      ></i>
-                      <div class="activity-content">
-                        Quia quae rerum
-                        <a href="#" class="fw-bold text-dark"
-                          >explicabo officiis</a
-                        >
-                        beatae
-                      </div>
-                    </div>
-                    <!-- End activity item-->
-  
-                    <div class="activity-item d-flex">
-                      <div class="activite-label">56 min</div>
-                      <i
-                        class="bi bi-circle-fill activity-badge text-danger align-self-start"
-                      ></i>
-                      <div class="activity-content">
-                        Voluptatem blanditiis blanditiis eveniet
-                      </div>
-                    </div>
-                    <!-- End activity item-->
-  
-                    <div class="activity-item d-flex">
-                      <div class="activite-label">2 hrs</div>
-                      <i
-                        class="bi bi-circle-fill activity-badge text-primary align-self-start"
-                      ></i>
-                      <div class="activity-content">
-                        Voluptates corrupti molestias voluptatem
-                      </div>
-                    </div>
-                    <!-- End activity item-->
-  
-                    <div class="activity-item d-flex">
-                      <div class="activite-label">1 day</div>
-                      <i
-                        class="bi bi-circle-fill activity-badge text-info align-self-start"
-                      ></i>
-                      <div class="activity-content">
-                        Tempore autem saepe
-                        <a href="#" class="fw-bold text-dark"
-                          >occaecati voluptatem</a
-                        >
-                        tempore
-                      </div>
-                    </div>
-                    <!-- End activity item-->
-  
-                    <div class="activity-item d-flex">
-                      <div class="activite-label">2 days</div>
-                      <i
-                        class="bi bi-circle-fill activity-badge text-warning align-self-start"
-                      ></i>
-                      <div class="activity-content">
-                        Est sit eum reiciendis exercitationem
-                      </div>
-                    </div>
-                    <!-- End activity item-->
-  
-                    <div class="activity-item d-flex">
-                      <div class="activite-label">4 weeks</div>
-                      <i
-                        class="bi bi-circle-fill activity-badge text-muted align-self-start"
-                      ></i>
-                      <div class="activity-content">
-                        Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                      </div>
-                    </div>
-                    <!-- End activity item-->
-                  </div>
-                </div>
-              </div>
-              <!-- End Recent Activity -->
+            
             </div>
           </section>
         </div>

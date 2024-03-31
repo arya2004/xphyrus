@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ICompany } from 'src/app/shared/models/ICompany';
 import { NexusService } from '../nexus.service';
+import { IAssessmentIndex } from 'src/app/shared/models/IAssessment';
 
 
 @Component({
@@ -27,30 +28,32 @@ export class DetailComponent {
     this.dtOptions = {
       pagingType: 'full_numbers'
     };
-    this.getAllCompany();
-    console.log(this.company)
-   
+
+
+    this.getAllAss()
+    console.log(this.assessment);
+    
   }
 
 
 
-  syndicateId: number = 123; // Replace with your dynamic value
-assignmentId: number = 456; // Replace with your dynamic value
-syndicatePath: string = `/syndicate/${this.syndicateId}/assignment/${this.assignmentId}`;
 company: ICompany[]  = [] ;
+assessment: IAssessmentIndex[] = [];
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
-  getAllCompany()
+  getAllAss()
   {
-    this.companyService.GetNexus().subscribe({
+    this.companyService.getAssociatedAssessment(this.id).subscribe({
       next: res => {
-      this.company = res.result;
+      this.assessment = res.result;
       this.dtTrigger.next(null);
     },
   
     error: err => console.log(err)
   });
   }
+
+
 }

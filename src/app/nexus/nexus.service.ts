@@ -49,13 +49,18 @@ export class NexusService {
   {
     return this.http.post<any>(this.ApiUri , nexus);
   }
+  
+  getAssociatedAssessment(nexusId:string)
+  {
+    return this.http.get<IResponse<any>>("https://localhost:5000/api/CodingAssessment/GetAllForNexus"+ `?NexusId=${nexusId}`)
+  }
 
   GetNexus()
   {
     console.log(this.ApiUri);
     
     
-    return this.http.get<any>(this.ApiUri );
+    return this.http.get<any>(this.ApiUri+ "GetMy");
    
   }
   
@@ -69,7 +74,7 @@ export class NexusService {
     return this.http.put<any>("https://localhost:5000/api/Nexus/", nexus);
   }
 
-  DeleteNexus(name: number)
+  DeleteNexus(name: string)
   {
     return this.http.delete<any>(this.ApiUri + `?id=${name}`);
   }

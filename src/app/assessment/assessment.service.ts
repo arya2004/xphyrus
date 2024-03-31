@@ -54,5 +54,16 @@ export class AssessmentService {
   {
     return this.http.get<IResponse<any>>(this.studUrl)
   }
-  
+  postNexus(nexus: any)
+  {
+    return this.http.post<any>("https://localhost:5000/api/CodingAssessment" , nexus);
+  }
+
+  getOneAssessment(nexus: any)
+  {
+    return this.http.get<IResponse<any>>(`https://localhost:5000/api/CodingAssessment/GetOne?id=${nexus}`);
+    //https://localhost:5000/api/CodingAssessment/GetOne?id=42fe021b-8ae2-4c1c-aa0c-fe7c31446d84
+  }
+    
+
 }

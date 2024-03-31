@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ICompany } from 'src/app/shared/models/ICompany';
 import { NexusService } from '../nexus.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { INexusDashboard } from 'src/app/shared/models/INexus';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +13,8 @@ import { NexusService } from '../nexus.service';
 })
 export class DashboardComponent {
   company: ICompany[]  = [] ;
-  constructor(public companyService: NexusService) { }
+  nexus: INexusDashboard[] = [];
+  constructor(public companyService: NexusService, private fb:FormBuilder, private router: Router) { }
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
   ngOnInit(): void {
@@ -26,7 +30,7 @@ export class DashboardComponent {
   {
     this.companyService.GetNexus().subscribe({
       next: res => {
-      this.company = res.result;
+      this.nexus = res.result;
       this.dtTrigger.next(null);
     },
   
@@ -35,7 +39,7 @@ export class DashboardComponent {
   }
 
 
-  deleteCompany(id: number)
+  deleteCompany(id: string)
   {
     console.log(id);
     this.companyService.DeleteNexus(id).subscribe({
@@ -46,4 +50,19 @@ export class DashboardComponent {
       error: err => console.log(err)
     });
   }
+
+ 
+    newNexusForm = this.fb.group({
+      name: ['', Validators.required],
+      description: ['', [Validators.required]],
+     
+    })
+
+    onNewNexusCreate(){
+      console.log(this.newNexusForm.value);
+      
+      this.companyService.postNexus(this.newNexusForm.value).subscribe({
+        next: () => this.router.navigateByUrl('/Syndicate')
+      })
+    }
 }

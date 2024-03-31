@@ -6,6 +6,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { ProfileComponent } from './profile/profile.component';
     AccountRoutingModule,
     SharedModule,
     FormsModule,
+    CoreModule
  
   ]
 })

@@ -13,7 +13,7 @@
     <div class="pagetitle">
       <h1>My Nexus</h1>
     </div>
-  
+   
     <section class="section dashboard">
       <div class="row">
         <div class="col-lg-9" style="overflow-x: auto">
@@ -30,23 +30,23 @@
                 <th scope="col">Description</th>
                 <th scope="col">Creator</th>
                 <th scope="col">Creation Date</th>
-                <th scope="col">Assessments</th>
+              
   
                 <th scope="col"></th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let c of company">
-                <td scope="row">{{ c.companyId }}</td>
-                <td>{{ c.companyCode }}</td>
+              <tr *ngFor="let c of nexus">
+                <td scope="row">{{ c.nexusId }}</td>
                 <td>{{ c.name }}</td>
-                <td>{{ c.directorName }}</td>
-                <td>{{ c.directorEmployeeCode }}</td>
-                <td>{{ c.directorMobile }}</td>
+                <td>{{ c.description }}</td>
+                <td>{{ c.creator }}</td>
+                <td>{{ c.creationDate }}</td>
+              
   
                 <td>
-                  <a routerLink="/company/{{ c.companyId }}">
+                  <a routerLink="/Syndicate/{{ c.nexusId }}">
                     <button type="button" class="btn btn-secondary">View</button>
                   </a>
                 </td>
@@ -55,7 +55,7 @@
                   <button
                     type="button"
                     class="btn btn-danger"
-                    (click)="deleteCompany(c.companyId)"
+                    (click)="deleteCompany(c.nexusId)"
                   >
                     Delete
                   </button>
@@ -94,10 +94,11 @@
               <h5 class="card-title">Create <span>| New</span></h5>
   
               <!-- Floating Labels Form -->
-              <form class="row g-3">
+              <form class="row g-3" [formGroup]="newNexusForm"  (ngSubmit)="onNewNexusCreate()">
                 <div class="col-md-12">
                   <div class="form-floating">
                     <input
+                    formControlName="name"
                       type="text"
                       class="form-control"
                       id="floatingName"
@@ -110,6 +111,7 @@
                 <div class="col-12">
                   <div class="form-floating">
                     <textarea
+                    formControlName="description"
                       class="form-control"
                       placeholder="Address"
                       id="floatingTextarea"

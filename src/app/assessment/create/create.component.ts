@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NexusService } from 'src/app/nexus/nexus.service';
 import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
+import { AssessmentService } from '../assessment.service';
 
 
 @Component({
@@ -12,18 +13,18 @@ import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate'
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent {
+  id!: string;
+  private sub: any;
 
-  
-  constructor(private fb:FormBuilder, private teacherService: NexusService, private router: Router) {}
+  constructor(private fb:FormBuilder, private teacherService: AssessmentService, private router: Router, private route: ActivatedRoute ) {}
 
   ngOnInit(): void {
-    this.addLesson();
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['id']; // (+) converts string 'id' to a number
+        console.log(this.id);
+      });
+      console.log(this.id);
   }
-
-  range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
 
 
   description = "";
@@ -40,46 +41,31 @@ export class CreateComponent {
   };
 
 
-  above = this. fb.group({
-    title: ['']
-  })
-  form = this.fb.group({
+  selectedOption: string = "student";
+  complexPasswd = "(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"
 
-    cases: this.fb.array([])
-  });
-
-
-  get cases() {
-    return this.form.controls["cases"] as FormArray;
-  }
-
-  addLesson() {
-    const lessonForm = this.fb.group({
-      input: ['', Validators.required],
-      output: ['', Validators.required]
+  registerForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      associatedNexusId: [this.id]
     });
-    this.cases.push(lessonForm);
-  }
 
-  deleteLesson(lessonIndex: number) {
-    this.cases.removeAt(lessonIndex);
-  }
+  onSubmit(){
+    this.registerForm.value.startDate = new Date(this.registerForm.value.startDate).toISOString();
+    this.registerForm.value.endDate = new Date(this.registerForm.value.endDate).toISOString();
+    this.registerForm.value.associatedNexusId = this.id;
+    console.log(this.registerForm.value);
 
-  onSubmit()
-  { 
-    const coding: IAssignment = new Assignment();
-    coding.title = this.above.value.title
-    coding.description = this.description
-    coding.startDate = this.range.value.start
-    coding.endDate = this.range.value.end
-    coding.evaluationCases = this.cases.value
- 
-    console.log(JSON.stringify(coding));
     
-      this.teacherService.postAssignment(coding).subscribe({
-        next: () => this.router.navigateByUrl('/teacher')
-      })
+    this.teacherService.postNexus(this.registerForm.value).subscribe({
+      next: () => this.router.navigateByUrl('/Syndicate')
+    })
   }
+
+  
+  
   
 
 }
