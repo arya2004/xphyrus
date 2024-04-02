@@ -12,8 +12,10 @@ namespace Xphyrus.ResultAPI.Models
         public string? Title { get; set; }
 
         public string? Description { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
-        public ICollection<TestCase> TestCases { get; set; }
+        public ICollection<TestCase>? TestCases { get; set; }
 
         public Nexus? Nexus { get; set; }
     }
@@ -26,7 +28,6 @@ namespace Xphyrus.ResultAPI.Models
         public string? OutputCase { get; set; }
         public CodingAssessment CodingAssessment { get; set; } = null!;
     }
-
 }
 
   

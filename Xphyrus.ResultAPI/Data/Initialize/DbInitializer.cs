@@ -7,11 +7,11 @@ namespace Xphyrus.ResultAPI.Data.Initialize
     public class DbInitializer : IDbInitializer
     {
 
-        private readonly ApplicatioDbContext _db;
+        private readonly ApplicationDbContext _db;
 
         public DbInitializer(
 
-            ApplicatioDbContext db)
+            ApplicationDbContext db)
         {
             _db = db;
         }

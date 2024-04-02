@@ -6,10 +6,10 @@
         public string? Name { get; set; }
         public string? Description { get; set; }
 
-        public Guid Creator { get; set; }
-        public ICollection<Guid>? Admins { get; set; }
-        public DateTime CreationDate { get; set; }
-     
-        public ICollection<CodingAssessment> CodingAssessments { get; set; }
+        public Guid? Creator { get; set; }
+        public List<ApplicationUser>? ApplicationUsers { get; }
+        public DateTime CreationDate { get; set; } = DateTime.Now;
+
+        public ICollection<CodingAssessment>? CodingAssessments { get; set; }
     }
 }

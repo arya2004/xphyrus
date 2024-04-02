@@ -6,9 +6,9 @@ using Xphyrus.ResultAPI.Models;
 
 namespace Xphyrus.ResultAPI.Data
 {
-    public class ApplicatioDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public ApplicatioDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
     
