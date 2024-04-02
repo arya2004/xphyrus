@@ -1,92 +1,182 @@
 <main>
-    <!-- 
-    <div class="pagetitle">
-      <h1>Syndicate {{id}} </h1>
-   
-    </div> -->
-    <div class="parent">
-      <div class="smolchild">
-        <h3>Title: {{ id }}</h3>
-      </div>
-  
-      <div class="smolchild">
-  
-        <form [formGroup]="languageForm" class="form-inline">
-          <div class="col-sr-6">
-          <select formControlName="selectedLanguage" id="languageSelect" class="form-control mr-2">
+  <div class="parent">
+    <div class="smolchild">
+      <h3>Title: {{ title }}</h3>
+      <h3>{{ id }}</h3>
+
+      
+    </div>
+
+    <div class="smolchild">
+      <div class="form-inline">
+        <div class="col-sr-6">
+          <form [formGroup]="languageForm" >
+          <select
+            formControlName="selectedLanguage"
+            id="languageSelect"
+            class="form-control mr-2"
+          >
             <option value="">Select Language</option>
-            <option *ngFor="let language of languages" [value]="language.id">{{ language.name }} ({{language.version}})</option>
+            <option *ngFor="let language of languages" [value]="language.id">
+              {{ language.name }} ({{ language.version }})
+            </option>
           </select>
-        </div>
-        <div class="mx-2">
-          <button type="button" class="btn btn-primary mr-2" (click)="onSubmit()">Submit</button>
-        </div>
-        <div class="mx-2">
-          <button type="button" class="btn btn-secondary" (click)="onTestRun()">Test Run</button>
-        </div>
         </form>
-  
-       
-  
-       
-       
-       
-        
-      </div>
-  
-      <div class="child">
-        <div [innerHTML]="description"></div>
-        <div class="add-cases-form" [formGroup]="above">
-          <h1>Test Run:</h1>
-        
-           
-            <div class="row mb-3">
-              <div class="col-sm-12">
-                <textarea  formControlName="input"
-                placeholder="Input" class="form-control" style="height: 100px"></textarea>
-              </div>
-            </div>
-            <div class="row mb-3">
-              <div class="col-sm-12">
-                <textarea     formControlName="output"
-                placeholder="OutPut" class="form-control" style="height: 100px"></textarea>
-              </div>
-            </div>
-         
-  
-  
-          <br />
-          <p>{{ responseOutput | json }}</p>
         </div>
-      </div>
-      <div class="child">
-        <button (click)="updateOptions()">Change Language</button>
-        <button (click)="code = ''; codeInput = ''">
-          Set Value To Empty String
-        </button>
-        <button (click)="code = null; codeInput = null">Set Value To Null</button>
-        <button (click)="code = undefined; codeInput = undefined">
-          Set Value To undefined
-        </button>
-  
-        <div>
-          <ngx-monaco-editor
-            class="template-editor"
-            [options]="options"
-            [(ngModel)]="code"
-            (onInit)="onInit($event)"
-          ></ngx-monaco-editor>
+        <div class="mx-2">
+          <button
+            type="button"
+            class="btn btn-primary mr-2"
+            (click)="onSubmit()"
+          >
+            Submit
+          </button>
         </div>
-  
-        <ngx-monaco-editor
-          class="template-editor"
-          *ngIf="showMultiple"
-          [options]="options"
-          [(ngModel)]="code"
-        ></ngx-monaco-editor>
-  
-        <pre>{{ code | json }}</pre>
+        <div class="mx-2">
+          <button type="button" class="btn btn-secondary" (click)="onTestRun()">
+            Test Run
+          </button>
+        </div>
       </div>
     </div>
-  </main>
-  
+
+    <div class="child">
+      <div [innerHTML]="description"></div>
+      <div class="add-cases-form" [formGroup]="above">
+        <h1>Test Run:</h1>
+
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <textarea
+              formControlName="input"
+              placeholder="Input"
+              class="form-control"
+              style="height: 100px"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <textarea
+              formControlName="output"
+              placeholder="OutPut"
+              class="form-control"
+              style="height: 100px"
+            ></textarea>
+          </div>
+        </div>
+
+        <br />
+        <p>{{ responseOutput | json }}</p>
+      </div>
+    </div>
+    <div class="child">
+      <button (click)="updateOptions()">Change Language</button>
+      <button (click)="code = ''; codeInput = ''">
+        Set Value To Empty String
+      </button>
+      <button (click)="code = null; codeInput = null">Set Value To Null</button>
+      <button (click)="code = undefined; codeInput = undefined">
+        Set Value To undefined
+      </button>
+
+      <div>
+        <ngx-monaco-editor
+          class="template-editor"
+          [options]="options"
+          [(ngModel)]="code"
+          (onInit)="onInit($event)"
+        ></ngx-monaco-editor>
+      </div>
+
+      <ngx-monaco-editor
+        class="template-editor"
+        *ngIf="showMultiple"
+        [options]="options"
+        [(ngModel)]="code"
+      ></ngx-monaco-editor>
+
+      <pre>{{ code | json }}</pre>
+    </div>
+
+    <form
+      [formGroup]="submissionForm"
+      (ngSubmit)="onCodeSubmit()"
+      class="row g-3 needs-validation"
+    >
+      <div class="col-12">
+        <label for="yourName" class="form-label">Your Name</label>
+        <input
+          formControlName="name"
+          type="text"
+          name="name"
+          class="form-control"
+          id="yourName"
+          required
+        />
+        <div class="invalid-feedback">Please, enter your name!</div>
+      </div>
+
+      <div class="col-12">
+        <label for="yourEmail" class="form-label">Your Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          name="email"
+          class="form-control"
+          id="yourEmail"
+          required
+        />
+        <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+      </div>
+
+      <label for="basic-url" class="form-label">LinkedIn</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3"
+          >https://www.linkedin.com/</span
+        >
+        <input
+          formControlName="linkedin"
+          type="text"
+          class="form-control"
+          id="basic-url"
+          aria-describedby="basic-addon3"
+        />
+      </div>
+
+      <label for="basic-url" class="form-label">Twitter</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3"
+          >https://twitter.com/</span
+        >
+        <input
+          formControlName="twitter"
+          type="text"
+          class="form-control"
+          id="basic-url"
+          aria-describedby="basic-addon3"
+        />
+      </div>
+
+      <div class="col-12">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            name="terms"
+            type="checkbox"
+            value=""
+            id="acceptTerms"
+            required
+          />
+          <label class="form-check-label" for="acceptTerms"
+            >I agree and accept the <a href="#">terms and conditions</a></label
+          >
+          <div class="invalid-feedback">You must agree before submitting.</div>
+        </div>
+      </div>
+      <div class="col-12">
+        <button class="btn btn-primary w-100" type="submit">Start</button>
+      </div>
+    </form>
+  </div>
+</main>

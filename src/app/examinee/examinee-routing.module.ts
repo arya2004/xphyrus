@@ -8,9 +8,13 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
 const routes: Routes = [
  
   
-  {path: ':id', component: ProfileComponent},
+  // {path: ':id', component: ProfileComponent},
  
-  {path: ':id/editor', component: CodeEditorComponent},
+  // {path: ':id/editor', component: CodeEditorComponent},
+
+
+ 
+  {path: ':id', component: CodeEditorComponent},
 
 
 ]

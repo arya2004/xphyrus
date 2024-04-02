@@ -88,7 +88,7 @@
                         </thead>
                         <tbody>
                           <tr *ngFor="let c of assessment">
-                            <td scope="row">{{ c.codingAssessmentId}}</td>
+                            <td scope="row"><a href="/a/{{ c.codingAssessmentId}}">/a/{{ c.codingAssessmentId}}</a> </td>
                             <td>{{ c.title }}</td>
                      
                             <td>{{ c.startDate }}</td>

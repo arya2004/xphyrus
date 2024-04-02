@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
 import { ExamineeService } from '../examinee.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ITestRun, TestRun } from 'src/app/shared/models/ITestRun';
+import { Examinee, IExaminee } from 'src/app/shared/models/IExaminee';
 
 
 declare var monaco: any;
@@ -18,8 +19,20 @@ declare var monaco: any;
 export class CodeEditorComponent {
 
   id: string;
+  title: string;
   private sub: any;
-  constructor(private fb:FormBuilder, private studentService: ExamineeService,private route: ActivatedRoute) {}
+  constructor(private fb:FormBuilder, private studentService: ExamineeService,private route: ActivatedRoute, private router: Router) {}
+
+
+  
+  submissionForm = this.fb.group({
+    name: ['', Validators.required],
+    linkedin: [''],
+    twitter: [''],
+    email: ['', [Validators.required, Validators.email]],
+    language: ['']
+  });
+
 
   codeInput = 'Sample Code';
   editor: any;
@@ -65,6 +78,19 @@ export class CodeEditorComponent {
         
       // In a real app: dispatch action to load the details here.
    });
+
+   this.studentService.getOneAssessment(this.id).subscribe({
+    next: (data) => {
+      this.title = data.result.title;
+      this.description = data.result.description;
+      console.log(data)
+    
+   },
+   error: (err) => {
+      console.log(err)
+   }
+  })
+
   }
 
   updateOptions() {
@@ -96,50 +122,28 @@ export class CodeEditorComponent {
     // let text = 'FOO';
     // let op = { identifier: id, range: range, text: text, forceMoveMarkers: true };
     // editor.executeEdits("my-source", [op]);
-    const lessonForm = this.fb.group({
-      input: ['', Validators.required],
-      output: ['', Validators.required]
-    });
-    this.cases.push(lessonForm);
+    
+
   }
 
  
 
   
 
-  range = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
+
 
 
   description = "<p>Write a function to find the longest common prefix string amongst an array of strings.</p><p>If there is no common prefix, return an empty string&#160;<code>&#34;&#34;</code>.</p><p>&#160;</p><p><span class=\"example\">Example 1:</span></p><pre><span>Input:</span> strs = [&#34;flower&#34;,&#34;flow&#34;,&#34;flight&#34;]&#10;<span>Output:</span> &#34;fl&#34;&#10;</pre><p><span class=\"example\">Example 2:</span></p><pre><span>Input:</span> strs = [&#34;dog&#34;,&#34;racecar&#34;,&#34;car&#34;]&#10;<span>Output:</span> &#34;&#34;&#10;<span>Explanation:</span> There is no common prefix among the input strings.&#10;</pre><p>&#160;</p><p><span>Constraints:</span></p><ul><li><code>1 &lt;= strs.length &lt;= 200</code></li><li><code>0 &lt;= strs[i].length &lt;= 200</code></li><li><code>strs[i]</code>&#160;consists of only lowercase English letters.</li></ul>"  ;
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-   
-  };
+  
 
 
   above = this. fb.group({
     input: [''],
     output: ['']
   })
-  form = this.fb.group({
-
-    cases: this.fb.array([])
-  });
 
 
-  get cases() {
-    return this.form.controls["cases"] as FormArray;
-  }
+ 
 
   responseOutput: object =  {};
 
@@ -255,7 +259,34 @@ export class CodeEditorComponent {
  
     console.log(JSON.stringify(coding));
     }
-  
+
+
+    onCodeSubmit(){
+      const coding: IExaminee = new Examinee();
+      coding.source_code = this.code;
+      coding.email = this.submissionForm.value.email;
+      coding.linkedin = this.submissionForm.value.linkedin;
+      coding.name = this.submissionForm.value.name;
+      coding.twitter = this.submissionForm.value.twitter;
+      coding.language = this.languageForm.value.selectedLanguage;
+
+      //console.log(coding);
+   
+      // coding.stdin = this.above.value.input
+      // coding.exprected_output = this.above.value.output
+   
+      console.log(JSON.stringify(coding));
+      this.studentService.submitRun(coding).subscribe({
+        next: (data) => {
+          this.router.navigateByUrl('')
+        },
+        error: (err) => {
+          console.log(err)
+          this.router.navigateByUrl('')
+        }
+        
+      })
+    }
   
 
 }
