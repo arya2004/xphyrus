@@ -28,7 +28,7 @@ export class ExamineeService {
   }
   submitRun(code:any)
   {
-    return this.http.post<IResponse<any>>(this.doneURl, code);
+    return this.http.post<IResponse<any>>("https://localhost:7003/api/Submission/Submit", code);
   }
 
 

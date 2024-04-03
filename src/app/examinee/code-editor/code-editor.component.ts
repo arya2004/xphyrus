@@ -265,10 +265,11 @@ export class CodeEditorComponent {
       const coding: IExaminee = new Examinee();
       coding.source_code = this.code;
       coding.email = this.submissionForm.value.email;
-      coding.linkedin = this.submissionForm.value.linkedin;
+      coding.linkedIn = this.submissionForm.value.linkedin;
       coding.name = this.submissionForm.value.name;
       coding.twitter = this.submissionForm.value.twitter;
       coding.language = this.languageForm.value.selectedLanguage;
+      coding.input = this.above.value.input;
 
       //console.log(coding);
    

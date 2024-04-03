@@ -42,7 +42,7 @@
 
     <div class="child">
       <div [innerHTML]="description"></div>
-      <div class="add-cases-form" [formGroup]="above">
+      <form class="add-cases-form" [formGroup]="above">
         <h1>Test Run:</h1>
 
         <div class="row mb-3">
@@ -68,7 +68,7 @@
 
         <br />
         <p>{{ responseOutput | json }}</p>
-      </div>
+      </form>
     </div>
     <div class="child">
       <button (click)="updateOptions()">Change Language</button>
