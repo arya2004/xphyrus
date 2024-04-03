@@ -9,9 +9,7 @@ namespace AssessmentAPI
         {
             var mappingCOnfig = new MapperConfiguration(config =>
             {
-                //config.CreateMap<AssesmentDto, Assesment>().ReverseMap();
-                // config.CreateMap<CodingDto, Coding>().ReverseMap();
-                //config.CreateMap<EvaluationCaseDto, TestCase>().ReverseMap();
+               
                 //config.CreateMap<CodingAssesmentDto, CodingAssesment>().ReverseMap();
 
             });

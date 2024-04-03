@@ -17,17 +17,15 @@ namespace SubmissionAPI.Controllers
         private readonly IJudgeService _judgeService;
         private readonly IMQSender _bus;
         private readonly IConfiguration _configuration;
-        private readonly IAuthService _authService;
-        private readonly IAssesmentService _assesmentService;
+    
         protected ResponseDto _responseDto;
-        public SubmissionAPIController(IJudgeService judgeService, IMQSender bus, IConfiguration configuration, IAuthService authService, IAssesmentService assesmentService)
+        public SubmissionAPIController(IJudgeService judgeService, IMQSender bus, IConfiguration configuration)
         {
             _judgeService = judgeService;
             _bus = bus;
             _configuration = configuration;
             _responseDto = new ResponseDto();
-            _authService = authService;
-            _assesmentService = assesmentService;
+          
 
         }
 
@@ -54,11 +52,9 @@ namespace SubmissionAPI.Controllers
 
             try
             {
-                _responseDto = await _assesmentService.MarkSubmission(submissionDto);
-                if (_responseDto.IsSuccess && _responseDto.Message == "")
-                {
+             
                     _bus.SendMessage(submissionDto.source_code, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
-                }
+              
             }
             catch (Exception ex)
             {

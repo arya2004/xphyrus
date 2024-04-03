@@ -33,8 +33,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackendApiAuthHttpClientHandler>();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>(); 
-builder.Services.AddScoped<IAssesmentService, AssesmentService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.AddScoped<IJudgeService, JudgeService>();
 //builder.Services.AddScoped<IBus, Bus>();
 builder.Services.AddScoped<IMQSender, MQSender>();

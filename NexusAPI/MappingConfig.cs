@@ -10,7 +10,7 @@ namespace Xphyrus.NexusService
         {
             var mappingCOnfig = new MapperConfiguration(config =>
             {
-                //config.CreateMap<AssesmentAdminDto, AssesmentAdmins>().ReverseMap();
+               
                 config.CreateMap<NexusDto, Nexus>().ReverseMap();
                 config.CreateMap<CreateCodingAssessmentDto, CodingAssessment>().ReverseMap();
             });
