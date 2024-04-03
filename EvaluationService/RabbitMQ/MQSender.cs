@@ -1,11 +1,12 @@
 ﻿
 
+using EvaluationService.Models;
+using EvaluationService.RabbitMQ;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using SubmissionAPI.Models;
 using System.Text;
 
-namespace SubmissionAPI.RabbitMQ
+namespace EvaluationService.RabbitMQ
 {
 
     public class MQSender : IMQSender
@@ -20,7 +21,7 @@ namespace SubmissionAPI.RabbitMQ
             _username = "guest";
             _password = "guest";
         }
-        public void SendMessage(CodingAssessmentSubmission Message, string QueueName)
+        public void SendMessage(EmailLogger Message, string QueueName)
         {
             if (ConnectionExist())
             {

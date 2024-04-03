@@ -1,5 +1,6 @@
 using EmailService.Extension;
 using EmailService.MessageBrokerListner;
+using EmailService.RabbitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -17,7 +18,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
     return ConnectionMultiplexer.Connect(options);
 });
 
-builder.Services.AddSingleton<IAzureServiceBus,  AzureServiceBus>();
+//builder.Services.AddSingleton<IAzureServiceBus,  AzureServiceBus>();
 
 //builder.Services.AddDbContext<ApplicatioDbContext>(
 //    options =>
@@ -26,7 +27,7 @@ builder.Services.AddSingleton<IAzureServiceBus,  AzureServiceBus>();
 //    });
 
 
-
+builder.Services.AddHostedService<MQConsumer>();
 builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
 
 
@@ -99,5 +100,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-app.USeAzureServiceBusConsumer();
+//app.USeAzureServiceBusConsumer();
 app.Run();

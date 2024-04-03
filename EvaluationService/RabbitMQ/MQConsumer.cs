@@ -1,5 +1,6 @@
 ﻿
 using EvaluationService.Models;
+using EvaluationService.RabbitMQ;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -14,10 +15,12 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
         private readonly ResultService _resultService;
         private IConnection _connection;
         private IModel _channel;
-        public MQConsumer(IConfiguration configuration, ResultService resultService)
+        private readonly IMQSender _bus;
+        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus)
         {
             _configuration = configuration;
             _resultService = resultService;
+            _bus = bus;
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",
@@ -36,9 +39,15 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             consumer.Received += (sh, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                String msg = JsonConvert.DeserializeObject<string>(content);
+                CodingAssessmentSubmission? msg = JsonConvert.DeserializeObject<CodingAssessmentSubmission>(content);
 
-                HandleAsync(msg).GetAwaiter().GetResult();
+                EmailLogger emailLogger = new EmailLogger();
+                
+                emailLogger.To.Add(msg.Email);
+                emailLogger.Subject = "SUbmission Noted";
+                emailLogger.Body = msg.Email;
+
+                HandleAsync(emailLogger).GetAwaiter().GetResult();
 
                 _channel.BasicAck(ea.DeliveryTag, false);
 
@@ -47,14 +56,28 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             return Task.CompletedTask;
         }
 
-        private async Task HandleAsync(string msg)
+        private async Task HandleAsync(EmailLogger msg)
         {
-            SubmissionRequest a = new SubmissionRequest();
-            a.source_code = msg;
-            a.stdin = msg;
-            a.language_id = 5;
-            
-            _resultService.AddResult(a).GetAwaiter().GetResult();
+            //SubmissionRequest a = new SubmissionRequest();
+            //a.source_code = msg;
+            //a.stdin = msg;
+            //a.language_id = 5;
+
+
+            try
+            {
+
+                _bus.SendMessage(msg, _configuration.GetValue<string>("TopicAndQueueName:EmailLogging"));
+             
+
+            }
+            catch (Exception ex)
+            {
+
+       
+            }
+
+           // _resultService.AddResult(a).GetAwaiter().GetResult();
         }
     }
 }

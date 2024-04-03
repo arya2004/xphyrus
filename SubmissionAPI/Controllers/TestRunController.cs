@@ -17,17 +17,15 @@ namespace SubmissionAPI.Controllers
         private readonly IJudgeService _judgeService;
     
         private readonly IConfiguration _configuration;
-        private readonly IAuthService _authService;
-        private readonly IAssesmentService _assesmentService;
+ 
         protected ResponseDto _responseDto;
-        public TestRunController(IJudgeService judgeService,  IConfiguration configuration, IAuthService authService, IAssesmentService assesmentService)
+        public TestRunController(IJudgeService judgeService,  IConfiguration configuration)
         {
             _judgeService = judgeService;
            
             _configuration = configuration;
             _responseDto = new ResponseDto();
-            _authService = authService;
-            _assesmentService = assesmentService;
+       
 
         }
 

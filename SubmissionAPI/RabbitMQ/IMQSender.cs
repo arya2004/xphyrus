@@ -1,7 +1,9 @@
-﻿namespace SubmissionAPI.RabbitMQ
+﻿using SubmissionAPI.Models;
+
+namespace SubmissionAPI.RabbitMQ
 {
     public interface IMQSender
     {
-        void SendMessage(string Message, string QueueName);
+        void SendMessage(CodingAssessmentSubmission Message, string QueueName);
     }
 }

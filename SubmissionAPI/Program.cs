@@ -11,7 +11,7 @@ using SubmissionAPI.Service.IService;
 using System.Text;
 using Xphyrus.MessageBus;
 
-using Xphyrus.SubmissionAPI.Service;
+
 using Xphyrus.SubmissionAPI.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
