@@ -28,12 +28,12 @@ namespace EvaluationService.Controllers
         {
             return await _judgeService.GetResponse(id);
         }
-        [HttpPost]
+        //[HttpPost]
 
-        public async Task<ActionResult<object>> PostSubmission([FromBody] SubmissionRequest request)
-        {
-            return await _judgeService.SubmitPost(request);
-        }
+        //public async Task<ActionResult<object>> PostSubmission([FromBody] SubmissionRequest request)
+        //{
+        //    return await _judgeService.SubmitPost(request);
+        //}
 
 
 

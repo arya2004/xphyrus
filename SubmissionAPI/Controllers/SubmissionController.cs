@@ -38,10 +38,6 @@ namespace SubmissionAPI.Controllers
         }
         [HttpPost]
 
-        public async Task<ActionResult<object>> PostSubmission([FromBody] SubmissionRequest request)
-        {
-            return await _judgeService.SubmitPost(request);
-        }
         
         [HttpPost("Submit")]
         public async Task<ActionResult<ResponseDto>> Submission([FromBody] CodingAssessmentSubmission submissionDto)

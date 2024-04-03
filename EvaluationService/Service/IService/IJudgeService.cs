@@ -7,7 +7,7 @@ namespace EvaluationService.Service.IService
 {
     public interface IJudgeService
     {
-        Task<object> SubmitPost(Models.Dtos.SubmissionRequest request);
+        Task<TokenResponse> SubmitPost(JudgeRequest request);
         Task<SubmissionStatusResponse> GetResponse(TokenResponse response);
     }
 }

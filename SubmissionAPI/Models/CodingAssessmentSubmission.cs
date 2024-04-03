@@ -4,17 +4,17 @@
     {
 
         public Guid CodingAssessmentSubmissionId { get; set; } = Guid.NewGuid();
-        public string? SourceCode { get; set; }
-        public int? LanguageId { get; set; }
-
+        public string? Source_code { get; set; }
         public string? Email { get; set; }
-        public string? FullName { get; set; }
-        public string? College { get; set; }
+        public string? LinkedIn { get; set; }
+        public string? Name { get; set; }
+        public string? Twitter { get; set; }
+        public string? Language { get; set; }
 
 
-        public DateTime CreatedON { get; set; } = DateTime.UtcNow;
+        //Dev oonly
+        public string? Input { get; set; }
 
-        public Guid? AssessmentId { get; set; }
-    
+
     }
 }

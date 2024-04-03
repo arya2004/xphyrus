@@ -1,6 +1,10 @@
 ﻿
+using Azure.Core;
 using EvaluationService.Models;
+using EvaluationService.Models.Dtos;
 using EvaluationService.RabbitMQ;
+using EvaluationService.Service;
+using EvaluationService.Service.IService;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -16,11 +20,15 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
         private IConnection _connection;
         private IModel _channel;
         private readonly IMQSender _bus;
-        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus)
+     
+        private readonly IHttpClientFactory _httpClientFactory;
+        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus, IHttpClientFactory httpClientFactory)
         {
             _configuration = configuration;
             _resultService = resultService;
             _bus = bus;
+         
+            _httpClientFactory = httpClientFactory;
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",
@@ -30,6 +38,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(_configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"), false, false, false, null);
+            _httpClientFactory = httpClientFactory;
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -41,13 +50,9 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
                 CodingAssessmentSubmission? msg = JsonConvert.DeserializeObject<CodingAssessmentSubmission>(content);
 
-                EmailLogger emailLogger = new EmailLogger();
                 
-                emailLogger.To.Add(msg.Email);
-                emailLogger.Subject = "SUbmission Noted";
-                emailLogger.Body = msg.Email;
 
-                HandleAsync(emailLogger).GetAwaiter().GetResult();
+                HandleAsync(msg).GetAwaiter().GetResult();
 
                 _channel.BasicAck(ea.DeliveryTag, false);
 
@@ -56,18 +61,44 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             return Task.CompletedTask;
         }
 
-        private async Task HandleAsync(EmailLogger msg)
+        private async Task HandleAsync(CodingAssessmentSubmission msg)
         {
-            //SubmissionRequest a = new SubmissionRequest();
-            //a.source_code = msg;
-            //a.stdin = msg;
-            //a.language_id = 5;
+           
+            JudgeRequest request = new JudgeRequest();
+            request.source_code = msg.Source_code;
+            request.language_id = Int32.Parse(msg.Language);
+            request.stdin = msg.Input;
+            //request.expected_output = "Hello, ArReva";
 
+            // TokenResponse res = await _judgeService.SubmitPost(submissionRequest);
+            
+            var httpClient = _httpClientFactory.CreateClient();
+            var uri = new Uri("http://localhost:2358/submissions/");
+            var json = JsonConvert.SerializeObject(request);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync(uri, content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            TokenResponse? res = JsonConvert.DeserializeObject<TokenResponse>(responseBody);
+
+
+            Thread.Sleep(10000);
+            // SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(res);
+
+            var client = _httpClientFactory.CreateClient("Judge0");
+            var resp = await client.GetAsync($"/submissions/" + res.token.ToString());
+            var apiContent = await resp.Content.ReadAsStringAsync();
+            var ress = JsonConvert.DeserializeObject<SubmissionStatusResponse>(apiContent);
+
+            EmailLogger emailLogger = new EmailLogger();
+
+            emailLogger.To.Add(msg.Email);
+            emailLogger.Subject = "Your Result";
+            emailLogger.Body = ress.stdout.ToString() + "\n\n\n" + request.source_code.ToString();
 
             try
             {
 
-                _bus.SendMessage(msg, _configuration.GetValue<string>("TopicAndQueueName:EmailLogging"));
+                _bus.SendMessage(emailLogger, _configuration.GetValue<string>("TopicAndQueueName:EmailLogging"));
              
 
             }

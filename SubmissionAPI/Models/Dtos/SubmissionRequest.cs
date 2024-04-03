@@ -1,4 +1,6 @@
-﻿namespace SubmissionAPI.Models.Dtos
+﻿using SubmissionAPI.Models.Dtos;
+
+namespace Xphyrus.SubmissionAPI.Models.Dtos
 {
     public class SubmissionRequest
     {

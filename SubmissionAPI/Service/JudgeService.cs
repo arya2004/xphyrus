@@ -6,7 +6,7 @@ using SubmissionAPI.Service.IService;
 using System;
 using System.Security.Policy;
 using System.Text;
-
+using Xphyrus.SubmissionAPI.Models.Dtos;
 
 namespace SubmissionAPI.Service
 {

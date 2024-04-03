@@ -42,12 +42,12 @@ namespace SubmissionAPI.Controllers
             //    return _responseDto;
             //}
 
-            SubmissionRequest submissionRequest = new SubmissionRequest(testRunDto);
-            TokenResponse res = await _judgeService.SubmitPost(submissionRequest);
-            Thread.Sleep(1000);
-            SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(res);
+            //SubmissionRequest submissionRequest = new SubmissionRequest(testRunDto);
+            //TokenResponse res = await _judgeService.SubmitPost(submissionRequest);
+            //Thread.Sleep(1000);
+            //SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(res);
 
-            _responseDto.Result = statusResponse;
+            //_responseDto.Result = statusResponse;
             _responseDto.IsSuccess = true;
             return _responseDto;
         }
