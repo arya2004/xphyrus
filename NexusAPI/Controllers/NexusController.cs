@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NexusAPI.Data;
+
 using NexusAPI.Dto;
 using NexusAPI.Models;
-using NexusAPI.Service;
+
 using NexusAPI.Service.IService;
-using NuGet.Common;
-using System.Security.Claims;
+
 
 
 namespace NexusAPI.Controllers

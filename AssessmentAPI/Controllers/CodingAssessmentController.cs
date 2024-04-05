@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using AssessmentAPI.Models;
 using AssessmentAPI.Dto;
+using AssessmentAPI.Service.IService;
 
 namespace AssessmentAPI.Controllers
 {
@@ -14,44 +15,24 @@ namespace AssessmentAPI.Controllers
     [ApiController]
     public class CodingAssessmentController : ControllerBase
     {
-        private readonly ApplicationDbContext _ApplicationDbContext;
+
         private ResponseDto _responseDto;
         private IMapper _mapper;
-
-        public CodingAssessmentController(ApplicationDbContext ApplicationDbContext, IMapper mapper)
+        private readonly ICodingAssessmentService _codingAssessmentService;
+        public CodingAssessmentController(ICodingAssessmentService codingAssessmentService, IMapper mapper)
         {
-            _ApplicationDbContext = ApplicationDbContext;
+           _codingAssessmentService = codingAssessmentService;
             _responseDto = new ResponseDto();
             _mapper = mapper;
         }
-
-
-
-
-
-
-
 
 
         [HttpGet("GetOne")]
 
         public async Task<ActionResult<ResponseDto>> Get(string id)
         {
-            try
-            {
-                CodingAssessment? assessment = await _ApplicationDbContext.CodingAssessments.FirstOrDefaultAsync(_ => _.CodingAssessmentId == new Guid(id));
-                _responseDto.Result = assessment;
-                _responseDto.IsSuccess = true;
-            }
-            catch (Exception ex)
-            {
-
-                _responseDto.IsSuccess = false;
-                _responseDto.Message = ex.Message;
-            }
-
-
-            return Ok(_responseDto);
+            _responseDto = await _codingAssessmentService.Get(HttpContext, new Guid(id));
+            return _responseDto;
 
         }
 

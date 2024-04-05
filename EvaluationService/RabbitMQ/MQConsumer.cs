@@ -22,15 +22,15 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
         private readonly IMQSender _bus;
         private IJudgeService _judgeService;
      
-        private readonly IHttpClientFactory _httpClientFactory;
-        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus, IHttpClientFactory httpClientFactory, IJudgeService judgeService)
+
+        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus, IJudgeService judgeService)
         {
             _configuration = configuration;
             _resultService = resultService;
             _bus = bus;
             _judgeService = judgeService;
          
-            _httpClientFactory = httpClientFactory;
+
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",
@@ -40,7 +40,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(_configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"), false, false, false, null);
-            _httpClientFactory = httpClientFactory;
+
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -72,30 +72,19 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             request.stdin = msg.Input;
             //request.expected_output = "Hello, ArReva";
 
-            // TokenResponse tkres = await _judgeService.SubmitPost(request);
-            
-            var httpClient = _httpClientFactory.CreateClient();
-            var uri = new Uri("http://localhost:2358/submissions/");
-            var json = JsonConvert.SerializeObject(request);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await httpClient.PostAsync(uri, content);
-            var responseBody = await response.Content.ReadAsStringAsync();
-            TokenResponse? res = JsonConvert.DeserializeObject<TokenResponse>(responseBody);
+            TokenResponse tkres = await _judgeService.SubmitPost(request);
+
 
 
             Thread.Sleep(10000);
-            //SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(tkres);
+            SubmissionStatusResponse ress = await _judgeService.GetResponse(tkres);
 
-            var client = _httpClientFactory.CreateClient("Judge0");
-            var resp = await client.GetAsync($"/submissions/" + res.token.ToString());
-            var apiContent = await resp.Content.ReadAsStringAsync();
-            SubmissionStatusResponse? ress = JsonConvert.DeserializeObject<SubmissionStatusResponse>(apiContent);
 
             EmailLogger emailLogger = new EmailLogger();
 
             emailLogger.To.Add(msg.Email);
             emailLogger.Subject = "Your Result";
-            emailLogger.Body = ress.stdout.ToString() + "\n\n\n" + request.source_code.ToString();
+            emailLogger.Body = BuildMailBody(msg, ress);
 
             try
             {
@@ -112,6 +101,46 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             }
 
             
+        }
+
+        private string BuildMailBody(CodingAssessmentSubmission submission, SubmissionStatusResponse response)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine("🌟🚀 Hello " + submission.Name + ", 🚀🌟");
+            sb.AppendLine();
+            sb.AppendLine("Thank you for your submission. 🙌");
+            sb.AppendLine("Here is the status of your coding assessment:");
+            sb.AppendLine("------------------------------------------------------");
+            sb.AppendLine("📝 Coding Assessment Submission Details:");
+            sb.AppendLine($"   - Submission ID: {submission.CodingAssessmentSubmissionId}");
+            sb.AppendLine($"   - Source Code: {submission.Source_code}");
+            sb.AppendLine($"   - Email: {submission.Email}");
+            sb.AppendLine($"   - LinkedIn: {submission.LinkedIn}");
+            sb.AppendLine($"   - Name: {submission.Name}");
+            sb.AppendLine($"   - Twitter: {submission.Twitter}");
+            sb.AppendLine($"   - Language: {submission.Language}");
+            sb.AppendLine($"   - Input (Dev only): {submission.Input}");
+            sb.AppendLine();
+            sb.AppendLine("🔍 Submission Status Details:");
+            sb.AppendLine($"   - Stdout: {response.stdout}");
+            sb.AppendLine($"   - Execution Time: {response.time}");
+            sb.AppendLine($"   - Memory Used: {response.memory}");
+            sb.AppendLine($"   - Stderr: {response.stderr}");
+            sb.AppendLine($"   - Token: {response.token}");
+            sb.AppendLine($"   - Compile Output: {response.compile_output}");
+            sb.AppendLine($"   - Message: {response.message}");
+            sb.AppendLine($"   - Status ID: {response.status.id}");
+            sb.AppendLine($"   - Status Description: {response.status.description}");
+            sb.AppendLine("------------------------------------------------------");
+            sb.AppendLine();
+            sb.AppendLine("If you have any questions or concerns, please reach out to us. 📧");
+            sb.AppendLine();
+            sb.AppendLine("Best regards,");
+            sb.AppendLine("Xphyrus 🌌");
+
+            return sb.ToString();
+
         }
     }
 }

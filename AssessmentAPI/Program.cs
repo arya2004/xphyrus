@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NexusAPI.Service;
 using StackExchange.Redis;
 using System.Text;
 using System.Threading.Tasks.Dataflow;
-
+using AssessmentAPI.Service.IService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,7 @@ IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
+builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
 builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();
