@@ -89,7 +89,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             var client = _httpClientFactory.CreateClient("Judge0");
             var resp = await client.GetAsync($"/submissions/" + res.token.ToString());
             var apiContent = await resp.Content.ReadAsStringAsync();
-            var ress = JsonConvert.DeserializeObject<SubmissionStatusResponse>(apiContent);
+            SubmissionStatusResponse? ress = JsonConvert.DeserializeObject<SubmissionStatusResponse>(apiContent);
 
             EmailLogger emailLogger = new EmailLogger();
 
@@ -101,16 +101,17 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             {
 
                 _bus.SendMessage(emailLogger, _configuration.GetValue<string>("TopicAndQueueName:EmailLogging"));
-             
+                _resultService.AddResult(msg, ress).GetAwaiter().GetResult();
+
 
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message.ToString());
        
             }
 
-           // _resultService.AddResult(a).GetAwaiter().GetResult();
+            
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace EvaluationService.Models
+﻿using EvaluationService.Dtos;
+
+namespace EvaluationService.Models
 {
     public class CodingAssessmentResult
     {
@@ -18,8 +20,30 @@
         public string? Message { get; set; }
         public string? Description { get; set; }
 
-        //Dev oonly
-        public string? Input { get; set; }
+        public Guid AssessmentId { get; set; }
+
+
+
+        public CodingAssessmentResult()
+        {
+            
+        }
+
+        public CodingAssessmentResult(CodingAssessmentSubmission codingAssessmentSubmission, SubmissionStatusResponse submissionStatusResponse)
+        {
+            Source_code = codingAssessmentSubmission.Source_code;
+            Email = codingAssessmentSubmission.Email;
+            LinkedIn = codingAssessmentSubmission.LinkedIn;
+            Name = codingAssessmentSubmission.Name;
+            Twitter = codingAssessmentSubmission.Twitter;
+            Language = codingAssessmentSubmission.Language;
+
+            Time = submissionStatusResponse.time;
+            Memory = submissionStatusResponse.memory;
+            Message = submissionStatusResponse.message;
+            Description = submissionStatusResponse.status.description;
+
+        }
 
 
     }

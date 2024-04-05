@@ -21,12 +21,14 @@ namespace NexusAPI.Controllers
         private ResponseDto _responseDto;
         private IMapper _mapper;
         private readonly IAuthorizationService _authorizationService;
-        public CodingAssessmentController(ApplicationDbContext ApplicationDbContext, IMapper mapper, AuthorizationService authorizationService)
+        private readonly ICodingAssessmentService _codingAssessmentService;
+        public CodingAssessmentController(ICodingAssessmentService codingAssessment,  ApplicationDbContext ApplicationDbContext, IMapper mapper, IAuthorizationService authorizationService)
         {
             _ApplicationDbContext = ApplicationDbContext;
             _responseDto = new ResponseDto();
             _mapper = mapper;
             _authorizationService = authorizationService;
+            _codingAssessmentService = codingAssessment;
         }
         [HttpGet("GetAll")]
         public ActionResult<ResponseDto> GetAll()
@@ -42,16 +44,12 @@ namespace NexusAPI.Controllers
         }
 
         [HttpGet("GetAllForNexus")]
-        public ActionResult<ResponseDto> GetAllForNexus(string NexusId)
+        public async Task<ActionResult<ResponseDto>> GetAllForNexus(string NexusId)
         {
             _responseDto = _authorizationService.VerifyToken(this.HttpContext);
             if (!_responseDto.IsSuccess) return _responseDto;
 
-            Guid nId = new Guid(NexusId);
-
-            List<CodingAssessment> assessments = _ApplicationDbContext.CodingAssessments.Where(_ => _.Nexus.NexusId == nId).ToList();
-            _responseDto.Result = assessments;
-            _responseDto.IsSuccess = true;
+            _responseDto = await _codingAssessmentService.GetAllForNexus(HttpContext, new Guid(NexusId));
             return _responseDto;
         }
 
@@ -86,23 +84,8 @@ namespace NexusAPI.Controllers
 
 
             CodingAssessment companyToSave = _mapper.Map<CodingAssessment>(company);
-            try
-            {
-                Nexus? n = await _ApplicationDbContext.Nexus.FirstOrDefaultAsync(_ => _.NexusId == new Guid(company.AssociatedNexusId));
-                companyToSave.Nexus = n;
-                _ApplicationDbContext.CodingAssessments.Add(companyToSave);
-                await _ApplicationDbContext.SaveChangesAsync();
-                _responseDto.Message = "Added Successfully";
-                _responseDto.IsSuccess = true;
-                return Ok(_responseDto);
-            }
-            catch (Exception ex)
-            {
-
-                _responseDto.Message = ex.Message;
-                _responseDto.IsSuccess = false;
-                return Ok(_responseDto);
-            }
+            _responseDto = await _codingAssessmentService.Create(HttpContext, companyToSave, new Guid( company.AssociatedNexusId));
+            return _responseDto;
 
         }
 

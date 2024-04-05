@@ -10,8 +10,7 @@ namespace EvaluationService.Data
         public ApplicatioDbContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<UserSubmissionandSulition> userSubmissionandSulitions { get; set; }
-        public DbSet<SubmissionRequest> submissionRequests { get; set; }
+   
         public DbSet<CodingAssessmentResult> CodingAssessmentResult { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

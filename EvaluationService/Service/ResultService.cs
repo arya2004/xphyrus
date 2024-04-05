@@ -18,19 +18,18 @@ namespace Xphyrus.EvaluationAPI.Service
         
         }
 
-        public async Task AddResult(SubmissionRequest submissionRequest)
+       
+
+        public async Task AddResult(CodingAssessmentSubmission codingAssessmentSubmission, EvaluationService.Dtos.SubmissionStatusResponse submissionStatusResponse)
         {
             try
             {
-                EvaluationService.Models.SubmissionRequest model = new EvaluationService.Models.SubmissionRequest()
-                {
-                    source_code = submissionRequest.source_code
-
-                };
-                await using var _db = new ApplicatioDbContext(_options);
-                await _db.submissionRequests.AddAsync(model);
-                await _db.SaveChangesAsync();   
+                CodingAssessmentResult codingAssessmentResult = new CodingAssessmentResult(codingAssessmentSubmission, submissionStatusResponse);
                 
+                await using var _db = new ApplicatioDbContext(_options);
+                await _db.CodingAssessmentResult.AddAsync(codingAssessmentResult);
+                await _db.SaveChangesAsync();
+
             }
             catch (Exception ex)
             {
@@ -38,8 +37,6 @@ namespace Xphyrus.EvaluationAPI.Service
                 Console.WriteLine(ex);
             }
         }
-
-    
 
         public async Task Migrate()
         {

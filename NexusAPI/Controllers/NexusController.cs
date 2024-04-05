@@ -23,7 +23,7 @@ namespace NexusAPI.Controllers
         private readonly IAuthorizationService _authorizationService;
         private readonly INexusService _nexusService;
 
-        public NexusController(IMapper mapper, AuthorizationService authorizationService, NexusService nexusService )
+        public NexusController(IMapper mapper, IAuthorizationService authorizationService, INexusService nexusService )
         {
 
             _responseDto = new ResponseDto();
