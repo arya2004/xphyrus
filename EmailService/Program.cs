@@ -1,5 +1,5 @@
-using EmailService.Extension;
-using EmailService.MessageBrokerListner;
+
+
 using EmailService.RabbitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +18,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
     return ConnectionMultiplexer.Connect(options);
 });
 
-//builder.Services.AddSingleton<IAzureServiceBus,  AzureServiceBus>();
+
 
 //builder.Services.AddDbContext<ApplicatioDbContext>(
 //    options =>

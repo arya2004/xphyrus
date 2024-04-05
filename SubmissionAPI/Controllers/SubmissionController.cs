@@ -6,7 +6,7 @@ using SubmissionAPI.Models;
 using SubmissionAPI.RabbitMQ;
 using SubmissionAPI.Service.IService;
 using System.Security.Claims;
-using Xphyrus.MessageBus;
+
 
 namespace SubmissionAPI.Controllers
 {

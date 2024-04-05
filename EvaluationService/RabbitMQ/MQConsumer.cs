@@ -72,7 +72,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             request.stdin = msg.Input;
             //request.expected_output = "Hello, ArReva";
 
-             TokenResponse tkres = await _judgeService.SubmitPost(request);
+            // TokenResponse tkres = await _judgeService.SubmitPost(request);
             
             var httpClient = _httpClientFactory.CreateClient();
             var uri = new Uri("http://localhost:2358/submissions/");
@@ -84,7 +84,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
 
 
             Thread.Sleep(10000);
-            SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(tkres);
+            //SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(tkres);
 
             var client = _httpClientFactory.CreateClient("Judge0");
             var resp = await client.GetAsync($"/submissions/" + res.token.ToString());
