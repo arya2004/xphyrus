@@ -1,12 +1,11 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Newtonsoft.Json;
-using SubmissionAPI.Models.Dtos;
+using SubmissionAPI.Dtos;
 using SubmissionAPI.Service.IService;
 using System;
 using System.Security.Policy;
 using System.Text;
-using Xphyrus.SubmissionAPI.Models.Dtos;
 
 namespace SubmissionAPI.Service
 {

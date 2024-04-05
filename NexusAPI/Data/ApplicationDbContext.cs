@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NexusService.Models;
+using NexusAPI.Models;
 
 
-namespace NexusService.Data
+namespace NexusAPI.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

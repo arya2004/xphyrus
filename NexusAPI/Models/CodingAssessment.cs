@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
-namespace NexusService.Models
+namespace NexusAPI.Models
 {
     public class CodingAssessment
     {

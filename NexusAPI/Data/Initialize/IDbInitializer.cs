@@ -1,4 +1,4 @@
-﻿namespace NexusService.Data.Initialize
+﻿namespace NexusAPI.Data.Initialize
 {
     public interface IDbInitializer
     {

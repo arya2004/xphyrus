@@ -1,6 +1,6 @@
 ﻿using Azure;
 
-namespace NexusService.Models
+namespace NexusAPI.Models
 {
     public class Nexus
     {

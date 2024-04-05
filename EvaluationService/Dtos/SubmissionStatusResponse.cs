@@ -1,4 +1,4 @@
-﻿namespace SubmissionAPI.Models.Dtos
+﻿namespace EvaluationService.Dtos
 {
     public class SubmissionStatusResponse
     {

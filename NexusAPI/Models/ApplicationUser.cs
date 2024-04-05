@@ -1,7 +1,7 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Identity;
 
-namespace NexusService.Models
+namespace NexusAPI.Models
 {
     public class ApplicationUser : IdentityUser
     {

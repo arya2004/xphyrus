@@ -35,8 +35,9 @@ var optionBuilder = new DbContextOptionsBuilder<ApplicatioDbContext>(); //cant u
 
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
+builder.Services.AddTransient<IJudgeService, JudgeService>();
 builder.Services.AddSingleton<IMQSender, MQSender>();
-//builder.Services.AddTransient<IJudgeService, JudgeService>();
+
 builder.Services.AddHostedService<MQConsumer>();
 //builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 //builder.Services.AddScoped<IDbInitializer, DbInitializer>();

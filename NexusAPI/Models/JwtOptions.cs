@@ -1,4 +1,4 @@
-﻿namespace NexusService.Models
+﻿namespace NexusAPI.Models
 {
     public class JwtOptions
     {

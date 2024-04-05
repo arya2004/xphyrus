@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SubmissionAPI.Dtos;
 using SubmissionAPI.Models;
-using SubmissionAPI.Models.Dtos;
-using SubmissionAPI.Models.ResReq;
 using SubmissionAPI.RabbitMQ;
 using SubmissionAPI.Service.IService;
 using System.Security.Claims;

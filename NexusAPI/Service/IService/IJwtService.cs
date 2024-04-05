@@ -1,7 +1,7 @@
-﻿using NexusService.Models;
+﻿using NexusAPI.Models;
 
 
-namespace NexusService.Service.IService
+namespace NexusAPI.Service.IService
 {
     public interface IJwtService
     {

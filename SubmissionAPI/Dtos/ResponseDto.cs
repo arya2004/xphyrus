@@ -1,4 +1,4 @@
-﻿namespace SubmissionAPI.Models.ResReq
+﻿namespace SubmissionAPI.Dtos
 {
     public class ResponseDto
     {

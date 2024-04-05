@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Xphyrus.NexusService;
 
-namespace NexusService.Controllers
+namespace NexusAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]

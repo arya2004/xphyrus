@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using NexusService.Data;
-using NexusService.Models;
+using NexusAPI.Data;
+using NexusAPI.Models;
 
-namespace NexusService.Data.Initialize
+namespace NexusAPI.Data.Initialize
 {
     public class DbInitializer : IDbInitializer
     {

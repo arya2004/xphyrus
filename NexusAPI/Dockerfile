@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["Xphyrus.NexusService/Xphyrus.NexusService.csproj", "Xphyrus.NexusService/"]
-RUN dotnet restore "Xphyrus.NexusService/Xphyrus.NexusService.csproj"
+COPY ["Xphyrus.NexusAPI/Xphyrus.NexusAPI.csproj", "Xphyrus.NexusAPI/"]
+RUN dotnet restore "Xphyrus.NexusAPI/Xphyrus.NexusAPI.csproj"
 COPY . .
-WORKDIR "/src/Xphyrus.NexusService"
-RUN dotnet build "Xphyrus.NexusService.csproj" -c Release -o /app/build
+WORKDIR "/src/Xphyrus.NexusAPI"
+RUN dotnet build "Xphyrus.NexusAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Xphyrus.NexusService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Xphyrus.NexusAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Xphyrus.NexusService.dll","--server.urls", "http://+:80;https://+:443"]
+ENTRYPOINT ["dotnet", "Xphyrus.NexusAPI.dll","--server.urls", "http://+:80;https://+:443"]

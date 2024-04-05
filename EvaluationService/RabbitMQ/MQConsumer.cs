@@ -1,7 +1,7 @@
 ﻿
 using Azure.Core;
+using EvaluationService.Dtos;
 using EvaluationService.Models;
-using EvaluationService.Models.Dtos;
 using EvaluationService.RabbitMQ;
 using EvaluationService.Service;
 using EvaluationService.Service.IService;
@@ -20,13 +20,15 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
         private IConnection _connection;
         private IModel _channel;
         private readonly IMQSender _bus;
+        private IJudgeService _judgeService;
      
         private readonly IHttpClientFactory _httpClientFactory;
-        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus, IHttpClientFactory httpClientFactory)
+        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus, IHttpClientFactory httpClientFactory, IJudgeService judgeService)
         {
             _configuration = configuration;
             _resultService = resultService;
             _bus = bus;
+            _judgeService = judgeService;
          
             _httpClientFactory = httpClientFactory;
             var factory = new ConnectionFactory
@@ -70,7 +72,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             request.stdin = msg.Input;
             //request.expected_output = "Hello, ArReva";
 
-            // TokenResponse res = await _judgeService.SubmitPost(submissionRequest);
+             TokenResponse tkres = await _judgeService.SubmitPost(request);
             
             var httpClient = _httpClientFactory.CreateClient();
             var uri = new Uri("http://localhost:2358/submissions/");
@@ -82,7 +84,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
 
 
             Thread.Sleep(10000);
-            // SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(res);
+            SubmissionStatusResponse statusResponse = await _judgeService.GetResponse(tkres);
 
             var client = _httpClientFactory.CreateClient("Judge0");
             var resp = await client.GetAsync($"/submissions/" + res.token.ToString());

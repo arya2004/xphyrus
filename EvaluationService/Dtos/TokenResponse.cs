@@ -1,4 +1,4 @@
-﻿namespace EvaluationService.Models.Dtos
+﻿namespace EvaluationService.Dtos
 {
     public class TokenResponse
     {

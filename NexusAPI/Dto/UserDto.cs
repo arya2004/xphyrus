@@ -1,5 +1,5 @@
-﻿namespace NexusService.Models.Dto
-{   
+﻿namespace NexusAPI.Dto
+{
     public class UserDto
     {
         public string? Email { get; set; }

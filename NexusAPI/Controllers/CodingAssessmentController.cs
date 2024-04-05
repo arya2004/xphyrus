@@ -2,15 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NexusService.Data;
-using NexusService.Models;
-using NexusService.Models.Dto;
-using NexusService.Models.ResReq;
+using NexusAPI.Data;
+using NexusAPI.Dto;
+using NexusAPI.Models;
+using NexusAPI.Service;
+using NexusAPI.Service.IService;
 using System.Security.Claims;
 
 
 
-namespace NexusService.Controllers
+namespace NexusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -19,30 +20,20 @@ namespace NexusService.Controllers
         private readonly ApplicationDbContext _ApplicationDbContext;
         private ResponseDto _responseDto;
         private IMapper _mapper;
-
-        public CodingAssessmentController(ApplicationDbContext ApplicationDbContext, IMapper mapper)
+        private readonly IAuthorizationService _authorizationService;
+        public CodingAssessmentController(ApplicationDbContext ApplicationDbContext, IMapper mapper, AuthorizationService authorizationService)
         {
             _ApplicationDbContext = ApplicationDbContext;
             _responseDto = new ResponseDto();
             _mapper = mapper;
+            _authorizationService = authorizationService;
         }
         [HttpGet("GetAll")]
         public ActionResult<ResponseDto> GetAll()
         {
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
-            //if (roles == null || roles.Count == 0 || email == null)
-            //{
-            //    _responseDto.Message = "invalid token";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
-            //if (!roles.Contains("ADMIN"))
-            //{
-            //    _responseDto.Message = "unauthorized";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
+           
+            _responseDto = _authorizationService.VerifyToken(this.HttpContext);
+            if(!_responseDto.IsSuccess) return _responseDto;
 
             List<CodingAssessment> companies = _ApplicationDbContext.CodingAssessments.ToList();
             _responseDto.Result = companies;
@@ -53,20 +44,8 @@ namespace NexusService.Controllers
         [HttpGet("GetAllForNexus")]
         public ActionResult<ResponseDto> GetAllForNexus(string NexusId)
         {
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
-            //if (roles == null || roles.Count == 0 || email == null)
-            //{
-            //    _responseDto.Message = "invalid token";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
-            //if (!roles.Contains("ADMIN"))
-            //{
-            //    _responseDto.Message = "unauthorized";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
+            _responseDto = _authorizationService.VerifyToken(this.HttpContext);
+            if (!_responseDto.IsSuccess) return _responseDto;
 
             Guid nId = new Guid(NexusId);
 
@@ -86,20 +65,8 @@ namespace NexusService.Controllers
 
         public async Task<ActionResult<ResponseDto>> Get(string id)
         {
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
-            //if (roles == null || roles.Count == 0 || email == null)
-            //{
-            //    _responseDto.Message = "invalid token";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
-            //if (!roles.Contains("ADMIN"))
-            //{
-            //    _responseDto.Message = "unauthorized";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
+            _responseDto = _authorizationService.VerifyToken(this.HttpContext);
+            if (!_responseDto.IsSuccess) return _responseDto;
 
             CodingAssessment? assessment = await _ApplicationDbContext.CodingAssessments.FirstOrDefaultAsync(_ => _.CodingAssessmentId == new Guid(id));
             _responseDto.Result = assessment;
@@ -114,20 +81,9 @@ namespace NexusService.Controllers
         public async Task<ActionResult<ResponseDto>> Create([FromBody] CreateCodingAssessmentDto company)
         {
 
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
-            //if (roles == null || roles.Count == 0 || email == null)
-            //{
-            //    _responseDto.Message = "invalid token";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
-            //if (!roles.Contains("ADMIN"))
-            //{
-            //    _responseDto.Message = "unauthorized";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
+            _responseDto = _authorizationService.VerifyToken(this.HttpContext);
+            if (!_responseDto.IsSuccess) return _responseDto;
+
 
             CodingAssessment companyToSave = _mapper.Map<CodingAssessment>(company);
             try
@@ -179,21 +135,10 @@ namespace NexusService.Controllers
         public async Task<ActionResult<ResponseDto>> Delete(Guid id)
         {
 
+            _responseDto = _authorizationService.VerifyToken(this.HttpContext);
+            if (!_responseDto.IsSuccess) return _responseDto;
 
-            var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            var roles = HttpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
-            //if (roles == null || roles.Count == 0 || email == null)
-            //{
-            //    _responseDto.Message = "invalid token";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
-            //if (!roles.Contains("ADMIN"))
-            //{
-            //    _responseDto.Message = "unauthorized";
-            //    _responseDto.IsSuccess = false;
-            //    return _responseDto;
-            //}
+
             try
             {
                 Nexus? company = _ApplicationDbContext.Nexus.FirstOrDefault(_ => _.NexusId == id);

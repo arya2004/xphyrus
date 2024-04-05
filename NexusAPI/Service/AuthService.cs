@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using NexusService.Data;
-using NexusService.Models;
-using NexusService.Models.Dto;
-using NexusService.Service.IService;
+using NexusAPI.Data;
+using NexusAPI.Dto;
+using NexusAPI.Models;
+using NexusAPI.Service.IService;
 
 
-namespace NexusService.Service
+namespace NexusAPI.Service
 {
     public class AuthService : IAuthService
     {

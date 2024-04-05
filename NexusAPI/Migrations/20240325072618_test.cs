@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Xphyrus.NexusService.Migrations
+namespace Xphyrus.NexusAPI.Migrations
 {
     /// <inheritdoc />
     public partial class test : Migration

@@ -1,5 +1,4 @@
-﻿using EvaluationService.Models.Dtos;
-using EvaluationService.Models.ResReq;
+﻿using EvaluationService.Dtos;
 using EvaluationService.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

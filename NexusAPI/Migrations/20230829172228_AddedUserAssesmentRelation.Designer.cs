@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NexusService.Data;
+using NexusAPI.Data;
 
 #nullable disable
 
-namespace Xphyrus.NexusService.Migrations
+namespace Xphyrus.NexusAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230829172228_AddedUserAssesmentRelation")]
@@ -158,7 +158,7 @@ namespace Xphyrus.NexusService.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Xphyrus.NexusService.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Xphyrus.NexusAPI.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -226,7 +226,7 @@ namespace Xphyrus.NexusService.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Xphyrus.NexusService.Models.AssesmentAdmins", b =>
+            modelBuilder.Entity("Xphyrus.NexusAPI.Models.AssesmentAdmins", b =>
                 {
                     b.Property<string>("AssesmentAdminsId")
                         .HasColumnType("nvarchar(450)");
@@ -248,7 +248,7 @@ namespace Xphyrus.NexusService.Migrations
                     b.ToTable("AssesmentAdmins");
                 });
 
-            modelBuilder.Entity("Xphyrus.NexusService.Models.AssesmentParticipant", b =>
+            modelBuilder.Entity("Xphyrus.NexusAPI.Models.AssesmentParticipant", b =>
                 {
                     b.Property<string>("AssesmentParticipantId")
                         .HasColumnType("nvarchar(450)");
@@ -285,7 +285,7 @@ namespace Xphyrus.NexusService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Xphyrus.NexusService.Models.ApplicationUser", null)
+                    b.HasOne("Xphyrus.NexusAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -294,7 +294,7 @@ namespace Xphyrus.NexusService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Xphyrus.NexusService.Models.ApplicationUser", null)
+                    b.HasOne("Xphyrus.NexusAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -309,7 +309,7 @@ namespace Xphyrus.NexusService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Xphyrus.NexusService.Models.ApplicationUser", null)
+                    b.HasOne("Xphyrus.NexusAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -318,16 +318,16 @@ namespace Xphyrus.NexusService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Xphyrus.NexusService.Models.ApplicationUser", null)
+                    b.HasOne("Xphyrus.NexusAPI.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Xphyrus.NexusService.Models.AssesmentAdmins", b =>
+            modelBuilder.Entity("Xphyrus.NexusAPI.Models.AssesmentAdmins", b =>
                 {
-                    b.HasOne("Xphyrus.NexusService.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Xphyrus.NexusAPI.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -336,9 +336,9 @@ namespace Xphyrus.NexusService.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
-            modelBuilder.Entity("Xphyrus.NexusService.Models.AssesmentParticipant", b =>
+            modelBuilder.Entity("Xphyrus.NexusAPI.Models.AssesmentParticipant", b =>
                 {
-                    b.HasOne("Xphyrus.NexusService.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Xphyrus.NexusAPI.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)

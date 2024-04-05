@@ -1,5 +1,5 @@
-﻿namespace EvaluationService.Models.Dtos
-{   
+﻿namespace SubmissionAPI.Dtos
+{
     public class SubmissionStatusResponse
     {
         public string? stdout { get; set; }

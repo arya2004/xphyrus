@@ -1,4 +1,4 @@
-﻿namespace NexusService.Models.Dto
+﻿namespace NexusAPI.Dto
 {
     public class CreateCodingAssessmentDto
     {

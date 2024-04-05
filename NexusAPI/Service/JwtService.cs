@@ -3,11 +3,11 @@ using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using NexusService.Models;
+using NexusAPI.Models;
 
-using NexusService.Service.IService;
+using NexusAPI.Service.IService;
 
-namespace NexusService.Service
+namespace NexusAPI.Service
 {
     public class JwtService : IJwtService
     {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using NexusService.Models;
-using NexusService.Models.Dto;
+using NexusAPI.Dto;
+using NexusAPI.Models;
 
-namespace Xphyrus.NexusService
+namespace NexusAPI
 {
     public class MappingConfig
     {
@@ -10,11 +10,11 @@ namespace Xphyrus.NexusService
         {
             var mappingCOnfig = new MapperConfiguration(config =>
             {
-               
+
                 config.CreateMap<NexusDto, Nexus>().ReverseMap();
                 config.CreateMap<CreateCodingAssessmentDto, CodingAssessment>().ReverseMap();
             });
-                return mappingCOnfig;
+            return mappingCOnfig;
         }
     }
 }

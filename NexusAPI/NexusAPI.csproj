@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>5b3ddff8-f49b-4620-8100-cb7110dbf605</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	<RootNamespace>NexusService</RootNamespace>
+	<RootNamespace>NexusAPI</RootNamespace>
 
   </PropertyGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace NexusService.Models.ResReq
+﻿namespace AssessmentAPI.Dto
 {
     public class ResponseDto
     {

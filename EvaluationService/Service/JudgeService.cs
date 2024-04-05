@@ -1,6 +1,6 @@
 ﻿using Azure;
+using EvaluationService.Dtos;
 using EvaluationService.Models;
-using EvaluationService.Models.Dtos;
 using EvaluationService.Service.IService;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Newtonsoft.Json;

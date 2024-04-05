@@ -2,18 +2,17 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using NexusService.Models;
-using NexusService.Models.Dto;
-using NexusService.Models.ResReq;
-using NexusService.Service.IService;
+using NexusAPI.Dto;
+using NexusAPI.Models;
+using NexusAPI.Service.IService;
 using System.Security.Claims;
 
 
-namespace NexusService.Controllers
+namespace NexusAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticationAPIController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
         private readonly IAuthService _authService;
         private readonly IConfiguration _configuration;
@@ -21,7 +20,7 @@ namespace NexusService.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IJwtService _jwtService;
-        public AuthenticationAPIController(IAuthService authService, IConfiguration configuration, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IJwtService jwtService)
+        public AuthenticationController(IAuthService authService, IConfiguration configuration, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager, IJwtService jwtService)
         {
             _authService = authService;
             _configuration = configuration;
@@ -99,12 +98,7 @@ namespace NexusService.Controllers
         [HttpGet("user")]
         public async Task<ActionResult<ResponseDto>> LoadCurrentUser()
         {
-            //var text = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
-            //Console.WriteLine(text);
 
-            //var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-            //Console.WriteLine(email);
-            //var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
             var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             var user = await _userManager.FindByEmailAsync(email);
             var roles = await _userManager.GetRolesAsync(user);

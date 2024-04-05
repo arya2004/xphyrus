@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Xphyrus.NexusService.Migrations
+namespace Xphyrus.NexusAPI.Migrations
 {
     /// <inheritdoc />
     public partial class initMigsisd : Migration

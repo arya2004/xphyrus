@@ -1,7 +1,6 @@
-﻿using NexusService.Models.Dto;
+﻿using NexusAPI.Dto;
 
-
-namespace NexusService.Service.IService
+namespace NexusAPI.Service.IService
 {
     public interface IAuthService
     {

@@ -1,8 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SubmissionAPI.Models.Dtos;
-using SubmissionAPI.Models.ResReq;
+using SubmissionAPI.Dtos;
 using SubmissionAPI.Service.IService;
 using System.Security.Claims;
 using Xphyrus.MessageBus;

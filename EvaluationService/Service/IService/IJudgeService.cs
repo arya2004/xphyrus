@@ -1,7 +1,7 @@
 ﻿
 
+using EvaluationService.Dtos;
 using EvaluationService.Models;
-using EvaluationService.Models.Dtos;
 
 namespace EvaluationService.Service.IService
 {

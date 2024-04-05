@@ -1,6 +1,5 @@
 ﻿
-using SubmissionAPI.Models.Dtos;
-using Xphyrus.SubmissionAPI.Models.Dtos;
+using SubmissionAPI.Dtos;
 
 namespace SubmissionAPI.Service.IService
 {

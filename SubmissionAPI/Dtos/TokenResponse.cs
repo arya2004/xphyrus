@@ -1,4 +1,4 @@
-﻿namespace SubmissionAPI.Models.Dtos
+﻿namespace SubmissionAPI.Dtos
 {
     public class TokenResponse
     {

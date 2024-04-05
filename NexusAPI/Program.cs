@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NexusService.Data;
-using NexusService.Service;
+using NexusAPI.Data;
+using NexusAPI.Service;
 using System;
 using System.Text;
-using Xphyrus.NexusService;
-using NexusService.Data.Initialize;
-using NexusService.Models;
+using NexusAPI.Data.Initialize;
+using NexusAPI.Models;
 
-using NexusService.Service.IService;
+using NexusAPI.Service.IService;
+using NexusAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +53,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<INexusService, NexusService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

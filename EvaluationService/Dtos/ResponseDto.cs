@@ -1,4 +1,4 @@
-﻿namespace AssessmentAPI.Models.ResReq
+﻿namespace EvaluationService.Dtos
 {
     public class ResponseDto
     {

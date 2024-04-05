@@ -1,4 +1,4 @@
-namespace Xphyrus.NexusService
+namespace NexusAPI
 {
     public class WeatherForecast
     {

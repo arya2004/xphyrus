@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.Security.Claims;
 using AssessmentAPI.Models;
-using AssessmentAPI.Models.ResReq;
+using AssessmentAPI.Dto;
 
 namespace AssessmentAPI.Controllers
 {
