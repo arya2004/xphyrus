@@ -10,6 +10,8 @@ import { NexusService } from 'src/app/nexus/nexus.service';
 import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
 import { AssessmentService } from '../assessment.service';
 import { IAssessmentDetail } from 'src/app/shared/models/IAssessment';
+import { ICodingAssessmentResult } from 'src/app/shared/models/IResults';
+import { Subject } from 'rxjs';
 
 
 declare var monaco: any;
@@ -42,13 +44,21 @@ export class DashboardComponent {
 
   ]
 
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
+
+
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers'
+    };
     this.sub = this.route.params.subscribe(params => {
       this.nexusId = params['id']; 
       this.assessmentId = params['codingAssessmentId']; // (+) converts string 'id' to a number
         
       });
     this.getAss()
+    this.getRes()
     
   }
 
@@ -64,6 +74,8 @@ export class DashboardComponent {
  
 
   assessment !: IAssessmentDetail  
+  assResult : ICodingAssessmentResult[] = []
+
   getAss()
   {
     this.ass.getOneAssessment(this.assessmentId).subscribe({
@@ -71,6 +83,22 @@ export class DashboardComponent {
         console.log(res.result);
         
       this.assessment =  res.result;
+      console.log(this.assessment)
+      
+    },
+  
+    error: err => console.log(err)
+  });
+  }
+
+  getRes()
+  {
+    this.ass.getResults(this.assessmentId).subscribe({
+      next: res => {
+        console.log(res.result);
+        
+      this.assResult =  res.result;
+      this.dtTrigger.next(null);
       console.log(this.assessment)
       
     },

@@ -6,6 +6,7 @@ export interface IExaminee {
   twitter: string
   language: string
   input: string
+  assessmentId: string
   }
   
 
@@ -19,5 +20,6 @@ export class Examinee implements IExaminee {
   twitter: string
   language: string
   input: string
+  assessmentId: string
  
   }

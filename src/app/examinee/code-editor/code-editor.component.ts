@@ -270,6 +270,7 @@ export class CodeEditorComponent {
       coding.twitter = this.submissionForm.value.twitter;
       coding.language = this.languageForm.value.selectedLanguage;
       coding.input = this.above.value.input;
+      coding.assessmentId = this.id;
 
       //console.log(coding);
    
