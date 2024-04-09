@@ -10,6 +10,7 @@
         public string? Name { get; set; }
         public string? Twitter { get; set; }
         public string? Language { get; set; }
+        public Guid?  AssessmentId { get; set; }
 
 
         //Dev oonly

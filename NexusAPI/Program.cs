@@ -24,6 +24,11 @@ if(builder.Environment.IsProduction())
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
+    builder.Services.AddDbContext<ResultsDbContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ResultsConnection"));
+    });
 
 }
 else
@@ -32,6 +37,11 @@ else
     options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    });
+    builder.Services.AddDbContext<ResultsDbContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("ResultsConnection"));
     });
 }
 
@@ -55,6 +65,7 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<INexusService, NexusService>();
+builder.Services.AddScoped<IResultsService, ResultsService>();
 builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
 
 builder.Services.AddControllers();

@@ -20,7 +20,7 @@ namespace EvaluationService.Models
         public string? Message { get; set; }
         public string? Description { get; set; }
 
-        public Guid AssessmentId { get; set; }
+        public Guid? AssessmentId { get; set; }
 
 
 
@@ -37,11 +37,13 @@ namespace EvaluationService.Models
             Name = codingAssessmentSubmission.Name;
             Twitter = codingAssessmentSubmission.Twitter;
             Language = codingAssessmentSubmission.Language;
+            AssessmentId = codingAssessmentSubmission.AssessmentId;
 
             Time = submissionStatusResponse.time;
             Memory = submissionStatusResponse.memory;
             Message = submissionStatusResponse.message;
             Description = submissionStatusResponse.status.description;
+
 
         }
 
