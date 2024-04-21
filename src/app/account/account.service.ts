@@ -58,7 +58,9 @@ export class AccountService {
   }
 
   loadCurrentUser(token: string | null){
+    console.log(this.baseUrl);
     if(token === null){
+      console.log('token is null');
       this.currentUserSource.next(null);
       return of(null);
     }
@@ -69,16 +71,19 @@ export class AccountService {
     console.log(this.baseUrl);
     console.log(headers);
     
-    return this.http.get<IResponse<IUser>>(this.baseUrl, {headers}).pipe(
+    return this.http.get<IUser>(this.baseUrl+ "GetCurrentUser", {headers}).pipe(
       map(user => {
+        console.log(user);
         if(user){
           console.log(user);
           
-          localStorage.setItem('token', user.result.token);
-          this.currentUserSource.next(user.result);
-          return user.result;
+          localStorage.setItem('token', user.token);
+          this.currentUserSource.next(user);
+          console.log("got token");
+          return user;
         }
         else{
+          console.log("not got");
           return null;
         }
       })
