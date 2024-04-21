@@ -1,4 +1,5 @@
 ﻿using EvaluationService.Data;
+using EvaluationService.Dtos;
 using EvaluationService.Models;
 using EvaluationService.Service.IService;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,22 @@ namespace Xphyrus.EvaluationAPI.Service
             {
 
                 Console.WriteLine(ex);
+            }
+        }
+
+        public async Task<ResponseDto> GetAllForAssessment(Guid assessmentId)
+        {
+            try
+            {
+               
+                await using var _applicationDbContext = new ApplicatioDbContext(_options);
+                string testCases = "";
+                return new ResponseDto(testCases, true, "");
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(ex.Message, false, "");
             }
         }
 

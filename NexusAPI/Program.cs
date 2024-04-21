@@ -67,6 +67,7 @@ builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<INexusService, NexusService>();
 builder.Services.AddScoped<IResultsService, ResultsService>();
 builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
+builder.Services.AddScoped<ITestCaseService, TestCaseService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
