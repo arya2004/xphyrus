@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { NexusService } from 'src/app/nexus/nexus.service';
 
@@ -12,6 +12,7 @@ import { AssessmentService } from '../assessment.service';
 import { IAssessmentDetail } from 'src/app/shared/models/IAssessment';
 import { ICodingAssessmentResult } from 'src/app/shared/models/IResults';
 import { Subject } from 'rxjs';
+import { ITestCase } from 'src/app/shared/models/ITestCase';
 
 
 declare var monaco: any;
@@ -32,7 +33,7 @@ export class DashboardComponent {
 
   id: string
   private sub: any;
-  constructor(private fb:FormBuilder, private teacherService: NexusService, private ass:AssessmentService,private route: ActivatedRoute) {}
+  constructor(private fb:FormBuilder, private teacherService: NexusService, private ass:AssessmentService,private route: ActivatedRoute,private router: Router ) {}
 
   lel: string = "1 2 3 4 5 <br>45 6";
   testCases: string[] = [
@@ -59,7 +60,19 @@ export class DashboardComponent {
       });
     this.getAss()
     this.getRes()
+    this.patchFormValues()
+    this.getAllTT()
     
+  }
+
+  patchFormValues(){
+    // Example values to patch into the form
+    const patchedValues = {
+      associatedCodingAssessment: this.assessmentId
+
+    };
+
+    this.newNexusForm.patchValue(patchedValues);
   }
 
 
@@ -80,10 +93,10 @@ export class DashboardComponent {
   {
     this.ass.getOneAssessment(this.assessmentId).subscribe({
       next: res => {
-        console.log(res.result);
+      
         
       this.assessment =  res.result;
-      console.log(this.assessment)
+    
       
     },
   
@@ -95,11 +108,11 @@ export class DashboardComponent {
   {
     this.ass.getResults(this.assessmentId).subscribe({
       next: res => {
-        console.log(res.result);
+       
         
       this.assResult =  res.result;
       this.dtTrigger.next(null);
-      console.log(this.assessment)
+     
       
     },
   
@@ -108,6 +121,34 @@ export class DashboardComponent {
   }
 
  
+  newNexusForm = this.fb.group({
+    inputCase: ['', Validators.required],
+    outputCase: ['', [Validators.required]],
+    associatedCodingAssessment: [this.assessmentId]
+   
+  })
+
+  onNewNexusCreate(){
+    
+    console.log(this.newNexusForm.value);
+    
+    this.ass.postTestCase(this.newNexusForm.value).subscribe({
+      next: () => window.location.reload(),
+    })
+  }
+  testCaseArray: ITestCase[] = [];
+  getAllTT()
+  {
+    this.ass.getAssociatedTestCase(this.assessmentId).subscribe({
+      next: res => {
+      this.testCaseArray = res.result;
+      console.log(this.testCaseArray)
+    
+    },
+  
+    error: err => console.log(err)
+  });
+  }
 
 
 }

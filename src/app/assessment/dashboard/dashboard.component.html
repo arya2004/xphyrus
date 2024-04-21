@@ -98,10 +98,58 @@
                   aria-labelledby="profile-tab"
                 >
                   <h5 class="card-title">Cases</h5>
+                  <div class="card-body pb-0">
+            
+        
+                    <!-- Floating Labels Form -->
+                    <form class="row g-3" [formGroup]="newNexusForm"  (ngSubmit)="onNewNexusCreate()">
+                      <div class="col-md-12">
+                        <div class="form-floating">
+                          <textarea
+                          formControlName="inputCase"
+                            class="form-control"
+                            placeholder="Address"
+                            id="floatingName"
+                            style="height: 100px"
+                          ></textarea>
+                          <label for="floatingName">Input</label>
+                        </div>
+                      </div>
+        
+                      <div class="col-12">
+                        <div class="form-floating">
+                          <textarea
+                          formControlName="outputCase"
+                            class="form-control"
+                            placeholder="Address"
+                            id="floatingTextarea"
+                            style="height: 100px"
+                          ></textarea>
+                          <label for="floatingTextarea">Output</label>
+                        </div>
+                      </div>
+        
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary m-3">
+                          Create Test Case
+                        </button>
+                        <button type="reset" class="btn btn-secondary m-3">
+                          Reset
+                        </button>
+                      </div>
+                    </form>
+                    <!-- End floating Labels Form -->
+                  </div>
   
                   <!-- Default Accordion -->
                   <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
+
+
+                    
+
+
+
+                    <div class="accordion-item" *ngFor="let c of testCaseArray">
                       <h2 class="accordion-header" id="headingOne">
                         <button
                           class="accordion-button"
@@ -110,9 +158,10 @@
                           data-bs-target="#collapseOne"
                           aria-expanded="true"
                           aria-controls="collapseOne"
-                          [innerHTML]="testCases[0]"
+                       
                         >
-                          Accordion Item #1
+                        {{c.inputCase}}
+               
                         </button>
                       </h2>
                       <div
@@ -121,55 +170,12 @@
                         aria-labelledby="headingOne"
                         data-bs-parent="#accordionExample"
                       >
-                        <div class="accordion-body">No</div>
+                        <div class="accordion-body"> {{c.outputCase}} </div>
                       </div>
                     </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="headingOne">
-                        <button
-                          class="accordion-button"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseOne"
-                          aria-expanded="true"
-                          aria-controls="collapseOne"
-                          [innerHTML]="testCases[0]"
-                        >
-                          Accordion Item #1
-                        </button>
-                      </h2>
-                      <div
-                        id="collapseOne"
-                        class="accordion-collapse collapse show"
-                        aria-labelledby="headingOne"
-                        data-bs-parent="#accordionExample"
-                      >
-                        <div class="accordion-body">No</div>
-                      </div>
-                    </div>
-                    <div class="accordion-item">
-                      <h2 class="accordion-header" id="headingOne">
-                        <button
-                          class="accordion-button"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseOne"
-                          aria-expanded="true"
-                          aria-controls="collapseOne"
-                          [innerHTML]="testCases[0]"
-                        >
-                          Accordion Item #1
-                        </button>
-                      </h2>
-                      <div
-                        id="collapseOne"
-                        class="accordion-collapse collapse show"
-                        aria-labelledby="headingOne"
-                        data-bs-parent="#accordionExample"
-                      >
-                        <div class="accordion-body">No</div>
-                      </div>
-                    </div>
+
+             
+              
                   </div>
                   <!-- End Default Accordion Example -->
                 </div>

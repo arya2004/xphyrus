@@ -69,6 +69,16 @@ export class AssessmentService {
     return this.http.get<IResponse<any>>(`https://localhost:5000/api/Results/GetAllForAssessment?AssessmentId=${assessmentId}`);
     //https://localhost:5000/api/CodingAssessment/GetOne?id=42fe021b-8ae2-4c1c-aa0c-fe7c31446d84
   }
+
+  postTestCase(nexus: any)
+  {
+    return this.http.post<any>(`https://localhost:5000/api/TestCase` , nexus);
+  }
+
+  getAssociatedTestCase(nexusId:string)
+  {
+    return this.http.get<IResponse<any>>("https://localhost:5000/api/TestCase/GetAllForAssessment"+ `?assessmentId=${nexusId}`)
+  }
     
 
 }
