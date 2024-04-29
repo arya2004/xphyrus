@@ -13,11 +13,20 @@ using NexusAPI.Models;
 
 using NexusAPI.Service.IService;
 using NexusAPI;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+{
+    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+    return ConnectionMultiplexer.Connect(options);
+});
+
+
+
 // Add services to the container.
-if(builder.Environment.IsProduction())
+if (builder.Environment.IsProduction())
 {
     builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
@@ -59,6 +68,7 @@ IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddSingleton<ICachingService, CachingService>();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IJwtService, JwtService>();

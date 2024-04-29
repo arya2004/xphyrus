@@ -5,7 +5,7 @@ using AssessmentAPI.Service.IService;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace NexusAPI.Service
+namespace AssessmentAPI.Service
 {
     public class CodingAssessmentService : ICodingAssessmentService
     {

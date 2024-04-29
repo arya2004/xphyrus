@@ -20,15 +20,38 @@ namespace NexusAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IAuthorizationService _authorizationService;
         private readonly INexusService _nexusService;
+        private readonly ICachingService _cachingService;
 
-        public NexusController(IMapper mapper, IAuthorizationService authorizationService, INexusService nexusService )
+        public NexusController( ICachingService cachingService,IMapper mapper, IAuthorizationService authorizationService, INexusService nexusService )
         {
 
             _responseDto = new ResponseDto();
             _mapper = mapper;
             _authorizationService = authorizationService;
             _nexusService = nexusService;
+            _cachingService = cachingService;
         }
+
+
+        [HttpGet("GetCache")]
+        public async Task<ActionResult<ResponseDto>> GetCache(string id)
+        {
+
+            var obj = await _cachingService.GetCached(id);
+            _responseDto.Result = obj;
+            return _responseDto;
+        }
+
+        [HttpGet("SetCache")]
+        public async Task<ActionResult<ResponseDto>> SetCache(string thingToCache)
+        {
+
+            bool success = await _cachingService.Cache(Guid.NewGuid().ToString(), thingToCache, TimeSpan.FromHours(20));
+            _responseDto.IsSuccess = success;
+            return _responseDto;
+        }
+
+
         [HttpGet("GetAll")]
         public async Task<ActionResult<ResponseDto>> GetAll()
         {

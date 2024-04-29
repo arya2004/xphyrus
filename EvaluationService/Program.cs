@@ -14,12 +14,12 @@ using Xphyrus.EvaluationAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
-//{
-//    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
-//    return ConnectionMultiplexer.Connect(options);
-//});
+//Add services to the container.
+builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+{
+    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+return ConnectionMultiplexer.Connect(options);
+});
 
 builder.Services.AddDbContext<ApplicatioDbContext>(
     options =>
@@ -35,6 +35,7 @@ var optionBuilder = new DbContextOptionsBuilder<ApplicatioDbContext>(); //cant u
 
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
+builder.Services.AddSingleton<ICachingService, CachingService>();
 builder.Services.AddTransient<IJudgeService, JudgeService>();
 builder.Services.AddSingleton<IMQSender, MQSender>();
 

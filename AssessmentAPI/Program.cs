@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using NexusAPI.Service;
+using AssessmentAPI.Service;
 using StackExchange.Redis;
 using System.Text;
 using System.Threading.Tasks.Dataflow;
@@ -17,11 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
-//{
-//    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
-//    return ConnectionMultiplexer.Connect(options);
-//});
+builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
+{
+    var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
+    return ConnectionMultiplexer.Connect(options);
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
@@ -32,6 +32,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddSingleton<ICachingService, CachingService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
 builder.Services.AddHttpClient();
