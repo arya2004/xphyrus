@@ -12,6 +12,8 @@ using StackExchange.Redis;
 using System.Text;
 using System.Threading.Tasks.Dataflow;
 using AssessmentAPI.Service.IService;
+using AssessmentAPI.RabbitMQ;
+using SubmissionAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSingleton<ICachingService, CachingService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
+builder.Services.AddScoped<IJudgeService, JudgeService>();
+//builder.Services.AddScoped<IBus, Bus>();
+builder.Services.AddScoped<IMQSender, MQSender>();
+
 builder.Services.AddHttpClient();
 
 builder.Services.AddControllers();

@@ -1,10 +1,7 @@
-﻿    using AutoMapper;
-
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
 using NexusAPI.Dto;
 using NexusAPI.Models;
-
 using NexusAPI.Service.IService;
 
 
