@@ -13,7 +13,7 @@ export class HasRoleGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const isAuthorized =  this.accountService.Token.role.includes(route.data?.['role']);
+    const isAuthorized =  this.accountService.token.role.includes(route.data?.['role']);
 
     if (!isAuthorized) {
       window.alert('You are not authorized to access this area');

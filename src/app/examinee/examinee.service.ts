@@ -6,36 +6,52 @@ import { IResponse } from '../shared/models/IResponse';
 import { TestRun } from '../shared/models/ITestRun';
 import { Submit } from '../shared/models/ISubmit';
 
+/**
+ * Service to handle operations related to examinees.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ExamineeService {
 
-  
+  private assignmentUrl = environment.assesmentApiUrl;
+  private subUrl = "https://localhost:7003/api/TestRun/Run";
+  private doneUrl = "https://localhost:7137/api/Submission/Submit";
+  private studUrl = "https://localhost:7000/api/Participants/Joined";
+  private joinUrl = "https://localhost:7000/api/Participants/Register";
+
+  /**
+   * Constructor to inject necessary services.
+   * @param http HttpClient to perform HTTP requests.
+   * @param router Router to navigate between routes.
+   */
   constructor(private http: HttpClient, private router: Router) { }
 
-  assignmnetUrl  = environment.assesmentApiUrl;
-  subURl = "https://localhost:7003/api/TestRun/Run"
-  doneURl = "https://localhost:7003/api/SubmissionAPI/Submit"
-  studUrl = "https://localhost:7000/api/Participants/Joined"
-  joimURl = "https://localhost:7000/api/Participants/Register"
-
-
-
-  testRun(code: TestRun)
-  {
-    return this.http.post<IResponse<any>>(this.subURl, code);
-  }
-  submitRun(code:any)
-  {
-    return this.http.post<IResponse<any>>("https://localhost:7003/api/Submission/Submit", code);
+  /**
+   * Method to trigger a test run.
+   * @param code The TestRun object containing the test details.
+   * @returns Observable of the response.
+   */
+  testRun(code: TestRun) {
+    return this.http.post<IResponse<any>>(this.subUrl, code);
   }
 
-
-  getOneAssessment(nexus: any)
-  {
-    return this.http.get<IResponse<any>>(`https://localhost:7137/api/CodingAssessment/GetOne?id=${nexus}`);
-    //https://localhost:5000/api/CodingAssessment/GetOne?id=42fe021b-8ae2-4c1c-aa0c-fe7c31446d84
+  /**
+   * Method to submit a test run.
+   * @param code The submission data.
+   * @returns Observable of the response.
+   */
+  submitRun(code: any) {
+    return this.http.post<IResponse<any>>(this.doneUrl, code);
   }
-  
+
+  /**
+   * Method to get one assessment by its ID.
+   * @param nexus The ID of the assessment.
+   * @returns Observable of the response.
+   */
+  getOneAssessment(nexus: any) {
+    const url = `https://localhost:7137/api/CodingAssessment/GetOne?id=${nexus}`;
+    return this.http.get<IResponse<any>>(url);
+  }
 }

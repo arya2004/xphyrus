@@ -28,7 +28,7 @@ export class DashboardComponent {
 
   getAllCompany()
   {
-    this.companyService.GetNexus().subscribe({
+    this.companyService.getNexus().subscribe({
       next: res => {
       this.nexus = res.result;
       this.dtTrigger.next(null);
@@ -42,7 +42,7 @@ export class DashboardComponent {
   deleteCompany(id: string)
   {
     console.log(id);
-    this.companyService.DeleteNexus(id).subscribe({
+    this.companyService.deleteNexus(id).subscribe({
       next: res => {
         console.log(res);
         window.location.reload();

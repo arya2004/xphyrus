@@ -1,81 +1,82 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { IAssignment } from '../shared/models/IAssesmentCreate';
 import { IResponse } from '../shared/models/IResponse';
 import { environment } from 'src/environments/environment.development';
 
+/**
+ * Service to handle operations related to Nexus entities.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class NexusService {
 
-  
+  private apiUri = "https://localhost:5000/api/Nexus/";
+  private assignmentUrl = environment.assesmentApiUrl;
+  private assessmentUrl = "https://localhost:7000/api/Assesment";
+
+  /**
+   * Constructor to inject necessary services.
+   * @param http HttpClient to perform HTTP requests.
+   * @param router Router to navigate between routes.
+   */
   constructor(private http: HttpClient, private router: Router) { }
 
-  ApiUri  = "https://localhost:5000/api/Nexus/";
-
-
-  assignmnetUrl  = environment.assesmentApiUrl;
-  assUrl = "https://localhost:7000/api/Assesment"
-
-  postAssignment(assignment: IAssignment)
-  {
-    return this.http.post<IResponse<any>>(this.assignmnetUrl , assignment);
+  /**
+   * Method to create a new Nexus.
+   * @param nexus The Nexus object containing the Nexus details.
+   * @returns Observable of the response.
+   */
+  postNexus(nexus: any) {
+    return this.http.post<any>(this.apiUri, nexus);
   }
 
-  indexAssesmnet()
-  {
-    return this.http.get<IResponse<any>>(this.assignmnetUrl);
+  /**
+   * Method to get associated assessments for a specific Nexus.
+   * @param nexusId The ID of the Nexus.
+   * @returns Observable of the response.
+   */
+  getAssociatedAssessment(nexusId: string) {
+    const url = `https://localhost:5000/api/CodingAssessment/GetAllForNexus?NexusId=${nexusId}`;
+    return this.http.get<IResponse<any>>(url);
   }
 
-  detailAssesment(id: number)
-  {
-    return this.http.get<IResponse<any>>(this.assignmnetUrl+ `?assesmentCode=${id}`);
+  /**
+   * Method to get all Nexus entities associated with the current user.
+   * @returns Observable of the response.
+   */
+  getNexus() {
+    console.log(this.apiUri);
+    return this.http.get<any>(`${this.apiUri}GetMy`);
   }
 
-  getCreated()
-  {
-    return this.http.get<IResponse<any>>(this.assignmnetUrl + "created")
+  /**
+   * Method to get a specific Nexus by its ID.
+   * @param id The ID of the Nexus.
+   * @returns Observable of the response.
+   */
+  getOneNexus(id: number) {
+    const url = `${this.apiUri}GetOne?id=${id}`;
+    return this.http.get<any>(url);
   }
 
-
-  loadDetailed(id: string)
-  {
-    return this.http.get<IResponse<any>>(this.assUrl+ "?assesmentCode=" + id )
+  /**
+   * Method to update an existing Nexus.
+   * @param nexus The Nexus object containing the updated Nexus details.
+   * @returns Observable of the response.
+   */
+  updateNexus(nexus: any) {
+    return this.http.put<any>(this.apiUri, nexus);
   }
 
-  postNexus(nexus: any)
-  {
-    return this.http.post<any>(this.ApiUri , nexus);
-  }
-  
-  getAssociatedAssessment(nexusId:string)
-  {
-    return this.http.get<IResponse<any>>("https://localhost:5000/api/CodingAssessment/GetAllForNexus"+ `?NexusId=${nexusId}`)
-  }
-
-  GetNexus()
-  {
-    console.log(this.ApiUri);
-    
-    
-    return this.http.get<any>(this.ApiUri+ "GetMy");
-   
-  }
-  
-  GetOneNexus(id: number)
-  {
-    return this.http.get<any>(this.ApiUri + "GetOne" + `?id=${id}`);
-  }
-
-  UpdateNexus(nexus: any)
-  {
-    return this.http.put<any>("https://localhost:5000/api/Nexus/", nexus);
-  }
-
-  DeleteNexus(name: string)
-  {
-    return this.http.delete<any>(this.ApiUri + `?id=${name}`);
+  /**
+   * Method to delete a specific Nexus by its name.
+   * @param name The name of the Nexus.
+   * @returns Observable of the response.
+   */
+  deleteNexus(name: string) {
+    const url = `${this.apiUri}?id=${name}`;
+    return this.http.delete<any>(url);
   }
 }
