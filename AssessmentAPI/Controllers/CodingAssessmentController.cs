@@ -31,7 +31,7 @@ namespace AssessmentAPI.Controllers
 
         public async Task<ActionResult<ResponseDto>> Get(string id)
         {
-            _responseDto = await _codingAssessmentService.Get(HttpContext, new Guid(id));
+            _responseDto = await _codingAssessmentService.GetAsync(HttpContext, new Guid(id));
             return _responseDto;
 
         }
