@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment.development';
 export class NexusService {
 
   private apiUri = "https://localhost:5000/api/Nexus/";
-  private assignmentUrl = environment.assesmentApiUrl;
+  private assignmentUrl = environment.assessmentApiUrl;
   private assessmentUrl = "https://localhost:7000/api/Assesment";
 
   /**

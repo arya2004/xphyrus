@@ -1,33 +1,26 @@
-import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import { NexusService } from 'src/app/nexus/nexus.service';
-import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
+import { Subscription } from 'rxjs';
 import { AssessmentService } from '../assessment.service';
 
-
+/**
+ * Component for creating a new assignment.
+ */
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit, OnDestroy {
   id!: string;
-  private sub: any;
-
-  constructor(private fb:FormBuilder, private teacherService: AssessmentService, private router: Router, private route: ActivatedRoute ) {}
-
-  ngOnInit(): void {
-    this.sub = this.route.params.subscribe(params => {
-      this.id = params['id']; // (+) converts string 'id' to a number
-        console.log(this.id);
-      });
-      console.log(this.id);
-  }
-
-
+  private sub: Subscription | null = null;
   description = "";
+  selectedOption: string = "student";
+  registerForm: FormGroup;
+
+  // Editor configuration
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -37,35 +30,74 @@ export class CreateComponent {
     translate: 'no',
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Arial',
-   
   };
 
-
-  selectedOption: string = "student";
-  complexPasswd = "(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$"
-
-  registerForm = this.fb.group({
+  constructor(
+    private fb: FormBuilder, 
+    private assessmentService: AssessmentService, 
+    private router: Router, 
+    private route: ActivatedRoute
+  ) {
+    // Initialize form
+    this.registerForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      associatedNexusId: [this.id]
+      associatedNexusId: ['']
     });
-
-  onSubmit(){
-    this.registerForm.value.startDate = new Date(this.registerForm.value.startDate).toISOString();
-    this.registerForm.value.endDate = new Date(this.registerForm.value.endDate).toISOString();
-    this.registerForm.value.associatedNexusId = this.id;
-    console.log(this.registerForm.value);
-
-    
-    this.teacherService.postNexus(this.registerForm.value).subscribe({
-      next: () => this.router.navigateByUrl('/Syndicate')
-    })
   }
 
-  
-  
-  
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   */
+  ngOnInit(): void {
+    // Subscribe to route parameters
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['id'];
+      console.log(this.id);
 
+      // Update associatedNexusId with the id from route params
+      this.registerForm.patchValue({ associatedNexusId: this.id });
+    });
+  }
+
+  /**
+   * Lifecycle hook that is called when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    // Unsubscribe from route params to avoid memory leaks
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
+
+  /**
+   * Handles form submission.
+   */
+  onSubmit(): void {
+    if (this.registerForm.valid) {
+      const formValue = this.registerForm.value;
+
+      // Convert date fields to ISO string format
+      formValue.startDate = new Date(formValue.startDate).toISOString();
+      formValue.endDate = new Date(formValue.endDate).toISOString();
+
+      // Log form value for debugging
+      console.log(formValue);
+
+      // Post form data to the server
+      this.assessmentService.postNexus(formValue).subscribe({
+        next: () => this.router.navigateByUrl('/Syndicate'),
+        error: (err) => {
+          // Handle error
+          console.error('Error posting nexus:', err);
+          alert('There was an error creating the assignment. Please try again later.');
+        }
+      });
+    } else {
+      // Handle form invalid case
+      alert('Please fill out all required fields correctly.');
+    }
+  }
 }

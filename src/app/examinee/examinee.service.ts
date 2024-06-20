@@ -14,7 +14,7 @@ import { Submit } from '../shared/models/ISubmit';
 })
 export class ExamineeService {
 
-  private assignmentUrl = environment.assesmentApiUrl;
+  private assignmentUrl = environment.assessmentApiUrl;
   private subUrl = "https://localhost:7003/api/TestRun/Run";
   private doneUrl = "https://localhost:7137/api/Submission/Submit";
   private studUrl = "https://localhost:7000/api/Participants/Joined";

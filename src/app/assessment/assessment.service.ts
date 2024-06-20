@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment.development';
 })
 export class AssessmentService {
 
-  private assignmentUrl = environment.assesmentApiUrl;
+  private assignmentUrl = environment.assessmentApiUrl;
   private subUrl = "https://localhost:7003/api/TestRun/Run";
   private doneUrl = "https://localhost:7003/api/SubmissionAPI/Submit";
   private studUrl = "https://localhost:7000/api/Participants/Joined";

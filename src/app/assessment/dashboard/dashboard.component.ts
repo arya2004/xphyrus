@@ -1,154 +1,169 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Subject, Subscription } from 'rxjs';
 import { NexusService } from 'src/app/nexus/nexus.service';
-
-import { Assignment, IAssignment } from 'src/app/shared/models/IAssesmentCreate';
 import { AssessmentService } from '../assessment.service';
 import { IAssessmentDetail } from 'src/app/shared/models/IAssessment';
 import { ICodingAssessmentResult } from 'src/app/shared/models/IResults';
-import { Subject } from 'rxjs';
 import { ITestCase } from 'src/app/shared/models/ITestCase';
-
 
 declare var monaco: any;
 
-
-
-
-
-
+/**
+ * Component for displaying and managing the dashboard.
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
   nexusId!: string;
   assessmentId!: string;
+  private sub: Subscription | null = null;
 
-  id: string
-  private sub: any;
-  constructor(private fb:FormBuilder, private teacherService: NexusService, private ass:AssessmentService,private route: ActivatedRoute,private router: Router ) {}
+  // Example long text for display
+  longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
+  from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
+  originally bred for hunting.`;
 
-  lel: string = "1 2 3 4 5 <br>45 6";
-  testCases: string[] = [
-    "3 4 3 8<br>3 4 3 8",
-    "1 5 6 5<br>1 5 6 5",
-    "2 2 2 8<br>2 2 2 8",
-    "5 3 5 7<br>5 3 5 7",
-    "1 1 1 7<br>1 1 1 7",
-
-  ]
-
+  description = "<p>Write a function to find the longest common prefix string amongst an array of strings...</p>";
+  
+  assessment!: IAssessmentDetail;
+  assResult: ICodingAssessmentResult[] = [];
+  testCaseArray: ITestCase[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
+  // Form for new Nexus
+  newNexusForm: FormGroup;
 
+  constructor(
+    private fb: FormBuilder, 
+    private nexusService: NexusService, 
+    private assessmentService: AssessmentService, 
+    private route: ActivatedRoute, 
+    private router: Router
+  ) {
+    // Initialize form
+    this.newNexusForm = this.fb.group({
+      inputCase: ['', Validators.required],
+      outputCase: ['', [Validators.required]],
+      associatedCodingAssessment: ['']
+    });
+  }
+
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   */
   ngOnInit(): void {
+    // DataTable options
     this.dtOptions = {
       pagingType: 'full_numbers'
     };
+
+    // Subscribe to route parameters
     this.sub = this.route.params.subscribe(params => {
-      this.nexusId = params['id']; 
-      this.assessmentId = params['codingAssessmentId']; // (+) converts string 'id' to a number
-        
-      });
-    this.getAss()
-    this.getRes()
-    this.patchFormValues()
-    this.getAllTT()
-    
+      this.nexusId = params['id'];
+      this.assessmentId = params['codingAssessmentId'];
+    });
+
+    this.getAssessment();
+    this.getResults();
+    this.patchFormValues();
+    this.getAllTestCases();
   }
 
-  patchFormValues(){
-    // Example values to patch into the form
+  /**
+   * Lifecycle hook that is called when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    // Unsubscribe from route params to avoid memory leaks
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+
+    // Complete the DataTable trigger to avoid memory leaks
+    this.dtTrigger.unsubscribe();
+  }
+
+  /**
+   * Patch form values with the provided values.
+   */
+  patchFormValues(): void {
     const patchedValues = {
       associatedCodingAssessment: this.assessmentId
-
     };
 
     this.newNexusForm.patchValue(patchedValues);
   }
 
-
-  longText = `The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
-  from Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-  originally bred for hunting.`;
-
-  description = "<p>Write a function to find the longest common prefix string amongst an array of strings.</p><p>If there is no common prefix, return an empty string&#160;<code>&#34;&#34;</code>.</p><p>&#160;</p><p><span class=\"example\">Example 1:</span></p><pre><span>Input:</span> strs = [&#34;flower&#34;,&#34;flow&#34;,&#34;flight&#34;]&#10;<span>Output:</span> &#34;fl&#34;&#10;</pre><p><span class=\"example\">Example 2:</span></p><pre><span>Input:</span> strs = [&#34;dog&#34;,&#34;racecar&#34;,&#34;car&#34;]&#10;<span>Output:</span> &#34;&#34;&#10;<span>Explanation:</span> There is no common prefix among the input strings.&#10;</pre><p>&#160;</p><p><span>Constraints:</span></p><ul><li><code>1 &lt;= strs.length &lt;= 200</code></li><li><code>0 &lt;= strs[i].length &lt;= 200</code></li><li><code>strs[i]</code>&#160;consists of only lowercase English letters.</li></ul>";
-  
-
-
- 
-
-  assessment !: IAssessmentDetail  
-  assResult : ICodingAssessmentResult[] = []
-
-  getAss()
-  {
-    this.ass.getOneAssessment(this.assessmentId).subscribe({
+  /**
+   * Fetch assessment details.
+   */
+  getAssessment(): void {
+    this.assessmentService.getOneAssessment(this.assessmentId).subscribe({
       next: res => {
-      
-        
-      this.assessment =  res.result;
-    
-      
-    },
-  
-    error: err => console.log(err)
-  });
+        this.assessment = res.result;
+      },
+      error: err => {
+        console.error('Error fetching assessment:', err);
+        alert('There was an error fetching the assessment details. Please try again later.');
+      }
+    });
   }
 
-  getRes()
-  {
-    this.ass.getResults(this.assessmentId).subscribe({
+  /**
+   * Fetch assessment results.
+   */
+  getResults(): void {
+    this.assessmentService.getResults(this.assessmentId).subscribe({
       next: res => {
-       
-        
-      this.assResult =  res.result;
-      this.dtTrigger.next(null);
-     
-      
-    },
-  
-    error: err => console.log(err)
-  });
+        this.assResult = res.result;
+        this.dtTrigger.next(null);
+      },
+      error: err => {
+        console.error('Error fetching results:', err);
+        alert('There was an error fetching the results. Please try again later.');
+      }
+    });
   }
 
- 
-  newNexusForm = this.fb.group({
-    inputCase: ['', Validators.required],
-    outputCase: ['', [Validators.required]],
-    associatedCodingAssessment: [this.assessmentId]
-   
-  })
-
-  onNewNexusCreate(){
-    
-    console.log(this.newNexusForm.value);
-    
-    this.ass.postTestCase(this.newNexusForm.value).subscribe({
-      next: () => window.location.reload(),
-    })
-  }
-  testCaseArray: ITestCase[] = [];
-  getAllTT()
-  {
-    this.ass.getAssociatedTestCase(this.assessmentId).subscribe({
+  /**
+   * Fetch all associated test cases.
+   */
+  getAllTestCases(): void {
+    this.assessmentService.getAssociatedTestCase(this.assessmentId).subscribe({
       next: res => {
-      this.testCaseArray = res.result;
-      console.log(this.testCaseArray)
-    
-    },
-  
-    error: err => console.log(err)
-  });
+        this.testCaseArray = res.result;
+        console.log(this.testCaseArray);
+      },
+      error: err => {
+        console.error('Error fetching test cases:', err);
+        alert('There was an error fetching the test cases. Please try again later.');
+      }
+    });
   }
 
+  /**
+   * Handle the creation of a new Nexus.
+   */
+  onNewNexusCreate(): void {
+    if (this.newNexusForm.valid) {
+      console.log(this.newNexusForm.value);
 
+      this.assessmentService.postTestCase(this.newNexusForm.value).subscribe({
+        next: () => window.location.reload(),
+        error: err => {
+          console.error('Error creating new Nexus:', err);
+          alert('There was an error creating the new Nexus. Please try again later.');
+        }
+      });
+    } else {
+      alert('Please fill out all required fields correctly.');
+    }
+  }
 }
