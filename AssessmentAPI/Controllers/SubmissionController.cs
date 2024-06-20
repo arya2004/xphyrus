@@ -1,14 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AssessmentAPI.Dto;
+using AssessmentAPI.Models;
+using AssessmentAPI.RabbitMQ;
+using AssessmentAPI.Service.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SubmissionAPI.Dtos;
-using SubmissionAPI.Models;
-using SubmissionAPI.RabbitMQ;
-using SubmissionAPI.Service.IService;
-using System.Security.Claims;
 
-
-namespace SubmissionAPI.Controllers
+namespace AssessmentAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +14,7 @@ namespace SubmissionAPI.Controllers
         private readonly IJudgeService _judgeService;
         private readonly IMQSender _bus;
         private readonly IConfiguration _configuration;
-    
+
         protected ResponseDto _responseDto;
         public SubmissionController(IJudgeService judgeService, IMQSender bus, IConfiguration configuration)
         {
@@ -25,7 +22,7 @@ namespace SubmissionAPI.Controllers
             _bus = bus;
             _configuration = configuration;
             _responseDto = new ResponseDto();
-          
+
 
         }
 
@@ -37,19 +34,19 @@ namespace SubmissionAPI.Controllers
         }
         [HttpPost]
 
-        
+
         [HttpPost("Submit")]
-        public  ActionResult<ResponseDto> Submission([FromBody] CodingAssessmentSubmission submissionDto)
+        public ActionResult<ResponseDto> Submission([FromBody] CodingAssessmentSubmission submissionDto)
         {
-            
+
 
             try
             {
-             
+
                 _bus.SendMessage(submissionDto, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
                 _responseDto.IsSuccess = true;
                 _responseDto.Message = "Uploaded";
-              
+
             }
             catch (Exception ex)
             {
@@ -78,6 +75,4 @@ namespace SubmissionAPI.Controllers
             return true;
         }
     }
-
-
 }

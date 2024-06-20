@@ -1,6 +1,6 @@
 services:
 
-  AssesmentApiInstance:
+  redis:
     image: redis:latest
     ports:
       - 6379:6379
@@ -8,26 +8,12 @@ services:
     volumes:
       - redis-data:/data
 
-  EvaluationApiInstance:
-    image: redis:latest
-    ports:
-      - 6380:6379
-    command: ["redis-server", "--appendonly", "yes"]
-    volumes:
-      - redis-data2:/data
-  
-  redis:
-    image: redis:latest
-    ports:
-      - 6381:6379
-    command: ["redis-server", "--appendonly", "yes"]
-    volumes:
-      - redis-data3:/data
+
 
   redis-commander:
     image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOSTS=local:AssesmentApiInstance:6379,local:EvaluationApiInstance:6379,local:redis:6379
+      - REDIS_HOSTS=local:redis:6379
       - HTTP_USER=root
       - HTTP_PASSWORD=secret
     ports:
@@ -37,5 +23,3 @@ services:
     
 volumes:
   redis-data:
-  redis-data2:
-  redis-data3:

@@ -30,6 +30,7 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
     });
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<ICachingService, CachingService>();
 builder.Services.AddScoped<BackendApiAuthHttpClientHandler>();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>(); 
