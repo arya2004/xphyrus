@@ -8,5 +8,7 @@ import { AccountService } from 'src/app/account/account.service';
 })
 export class NavBarComponent {
 
-  constructor(public accountService: AccountService) {}
+  constructor(public accountService: AccountService) {
+    console.log(accountService.currentUser$);
+  }
 }

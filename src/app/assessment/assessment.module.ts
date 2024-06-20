@@ -22,6 +22,8 @@ import { SharedModule } from '../shared/shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { CoreModule } from '../core/core.module';
+import { DataTablesModule } from 'angular-datatables';
+
 
 
 @NgModule({
@@ -46,15 +48,12 @@ import { CoreModule } from '../core/core.module';
     MatIconModule,
     MatRadioModule,
    CoreModule,
-   
-   
-    
-   
-  
+
   
     SharedModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    DataTablesModule
   ]
 })
 export class AssessmentModule { }

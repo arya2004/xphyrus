@@ -4,6 +4,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -15,7 +16,17 @@ import { NotFoundComponent } from './not-found/not-found.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-full-width',
+      preventDuplicates: true,
+      progressBar: true,
+      closeButton: true,
+      tapToDismiss: false,
+      countDuplicates: true,
+    
+    })
+    
   ],
   exports:[
     NavBarComponent,

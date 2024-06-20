@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -18,7 +19,7 @@ import { AppRoutingModule } from '../app-routing.module';
     CommonModule,
     RouterModule,
     SharedModule,
-    
+    CoreModule
   ],
   exports:[
     HomeComponent
