@@ -220,7 +220,7 @@ namespace NexusAPI.Service
                     return new ResponseDto(false, "Invalid Token");
                 }
 
-                nexus.ApplicationUsers.Add(user);
+
                 await _applicationDbContext.SaveChangesAsync();
 
                 return new ResponseDto(nexus, true, "Successfully joined Nexus.");
