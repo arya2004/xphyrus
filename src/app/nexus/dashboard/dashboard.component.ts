@@ -57,7 +57,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getAllCompany(): void {
     this.companyService.getNexus().subscribe({
       next: res => {
-        this.nexus = res.result;
+        this.nexus = res.result.map((c : INexusDashboard) => {
+          // Convert the creationDate to the desired format
+          const date = new Date(c.creationDate);
+          const formattedDate = date.toISOString().split('T')[0];
+          return { ...c, creationDate: formattedDate };
+        });
         this.dtTrigger.next(null);
       },
       error: err => {

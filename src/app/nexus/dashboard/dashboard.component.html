@@ -16,7 +16,7 @@
    
     <section class="section dashboard">
       <div class="row">
-        <div class="col-lg-9" style="overflow-x: auto">
+        <div class="col-lg-6" style="overflow-x: auto">
           <table
             datatable
             [dtOptions]="dtOptions"
@@ -25,11 +25,13 @@
           >
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Creator</th>
-                <th scope="col">Creation Date</th>
+            
+                <th scope="col">Title</th>
+                <th scope="col">Position</th>
+             
+                <th scope="col">Location</th>
+                <th scope="col">Date</th>
+                <th scope="col">Hired?</th>
               
   
                 <th scope="col"></th>
@@ -38,16 +40,18 @@
             </thead>
             <tbody>
               <tr *ngFor="let c of nexus">
-                <td scope="row">{{ c.nexusId }}</td>
-                <td>{{ c.name }}</td>
+                
                 <td>{{ c.description }}</td>
-                <td>{{ c.creator }}</td>
-                <td>{{ c.creationDate }}</td>
+                <td>Intern</td>
+               
+                <td>baner, Pune</td>
+                <td>{{ c.creationDate}}</td>
+                <td>No</td>
               
   
                 <td>
                   <a routerLink="/Syndicate/{{ c.nexusId }}">
-                    <button type="button" class="btn btn-secondary">View</button>
+                    <button type="button" class="btn btn-secondary"><i class="bi bi-pen"></i></button>
                   </a>
                 </td>
                 <td>
@@ -57,7 +61,7 @@
                     class="btn btn-danger"
                     (click)="deleteCompany(c.nexusId)"
                   >
-                    Delete
+                  <i class="bi bi-trash"></i>
                   </button>
                 </td>
               </tr>
@@ -65,30 +69,10 @@
           </table>
         </div>
   
-        <div class="col-lg-3">
+        <div class="col-lg-6">
           <!-- Recent Activity -->
           <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Join <span>| Existing</span></h5>
-  
-              <div class="row mb-3">
-                <form class="">
-                  <div class="col-sm-12">
-                    <div class="form-floating mb-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="floatingInput"
-                        placeholder="name@example.com"
-                      />
-                      <label for="floatingInput">Nexus Code</label>
-                    </div>
-  
-                    <button type="submit" class="btn btn-primary">Join</button>
-                  </div>
-                </form>
-              </div>
-            </div>
+           
   
             <div class="card-body pb-0">
               <h5 class="card-title">Create <span>| New</span></h5>

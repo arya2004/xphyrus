@@ -14,6 +14,7 @@ import { CoreModule } from '../core/core.module';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
+
     
   ],
   imports: [
