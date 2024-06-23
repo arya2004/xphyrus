@@ -33,11 +33,7 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
      // password: ['', [Validators.required, Validators.pattern(this.complexPasswd)]],
       password: ['', [Validators.required]],
-      website: [''],
-      employeeCount: [''],
-      about: [''],
-      LinkedIn: [''],
-      Twitter: ['']
+      
     });
   }
 

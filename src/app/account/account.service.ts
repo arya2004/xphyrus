@@ -96,6 +96,7 @@ export class AccountService {
     return this.http.get<IUser>(this.baseUrl + "GetCurrentUser", { headers }).pipe(
       map(user => {
         if (user) {
+    
           localStorage.setItem('token', user.token);
           this.currentUserSource.next(user);
           return user;
