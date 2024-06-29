@@ -42,11 +42,21 @@
                   </div>
 
                   <div class="col-12">
-                    <label for="yourPassword" class="form-label">Password</label>
-                    <input formControlName="password" type="password" name="password" class="form-control"
-                      id="yourPassword" required />
-                    <div class="invalid-feedback">
-                      Please enter your password!
+                    <label for="displlayname" class="form-label">Password</label>
+
+
+                    <div class="input-Syndicate has-validation">
+
+                      <input [class.is-invalid]="
+                            loginForm.get('password')?.touched &&
+                            loginForm.get('password')?.invalid
+                          " formControlName="password" type="password"  name="username" class="form-control"
+                        id="yourUsername" required />
+                        <div *ngIf="loginForm.get('password')?.errors?.['required']" class="invalid-feedback">
+                          Password is required!
+                        </div>
+                        
+
                     </div>
                   </div>
 

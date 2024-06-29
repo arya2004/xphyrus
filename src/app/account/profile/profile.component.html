@@ -361,14 +361,16 @@
                         <div *ngIf="passwordChangeForm.get('reEnterNewPassword')?.errors?.['required']" class="invalid-feedback">
                           Re-enter New Password is required!
                         </div>
+
+                        <div *ngIf="passwordChangeForm.get('reEnterNewPassword')?.errors?.['mismatch']" class="invalid-feedback">
+                          New Password and Re-entered Password do not match!
+                        </div>
                         
 
                     </div>
                   </div>
 
-                  <div *ngIf="passwordChangeForm.errors?.['mismatch']" class="invalid-feedback">
-                    New Password and Re-entered Password do not match!
-                  </div>
+                
 
 
                   <div class="text-center">

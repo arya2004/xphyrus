@@ -23,19 +23,29 @@ export class RegisterComponent {
    * @param router Router to navigate within the application
    * @param accService Service for handling account operations
    */
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private accService: AccountService
-  ) {
+  constructor(private fb: FormBuilder, private router: Router, private accService: AccountService) {
     this.registerForm = this.fb.group({
+      companyName: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
      // password: ['', [Validators.required, Validators.pattern(this.complexPasswd)]],
-      password: ['', [Validators.required]],
-      
-    });
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required]],
+      terms: [false, Validators.requiredTrue]
+    }, { validator: this.passwordMatchValidator });
   }
+
+  passwordMatchValidator(formGroup: FormGroup) : any{
+    const password = formGroup.get('password').value;
+    const confirmPassword = formGroup.get('confirmPassword').value;
+  
+    if (password !== confirmPassword) {
+      formGroup.get('confirmPassword').setErrors({ mismatch: true });
+    } else {
+      return null;
+    }
+  }
+  
 
   /**
    * Handles form submission for user registration.

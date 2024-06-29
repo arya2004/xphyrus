@@ -65,10 +65,15 @@ export class ProfileComponent implements OnInit {
       reEnterNewPassword: ['', Validators.required]}, { validator: this.passwordMatchValidator });
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const newPassword = form.get('newPassword')?.value;
-    const reEnterNewPassword = form.get('reEnterNewPassword')?.value;
-    return newPassword === reEnterNewPassword ? null : { mismatch: true };
+  passwordMatchValidator(formGroup: FormGroup) : any{
+    const password = formGroup.get('newPassword').value;
+    const confirmPassword = formGroup.get('reEnterNewPassword').value;
+  
+    if (password !== confirmPassword) {
+      formGroup.get('reEnterNewPassword').setErrors({ mismatch: true });
+    } else {
+      return null;
+    }
   }
 
   onSubmit() {
