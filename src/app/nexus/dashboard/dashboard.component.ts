@@ -15,6 +15,63 @@ import { INexusDashboard } from 'src/app/shared/models/INexus';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  nexusForm: FormGroup;
+
+  typeOfPositions = [
+    { value: 0, viewValue: 'Full-Time Employee' },
+    { value: 1, viewValue: 'Contractor' },
+    { value: 2, viewValue: 'Cofounder' },
+    { value: 3, viewValue: 'Intern' }
+  ];
+
+  remotePolicies = [
+    { value: 0, viewValue: 'In Office/WFH Flexible' },
+    { value: 1, viewValue: 'In Office Not WFH Flexible' },
+    { value: 2, viewValue: 'Onsite or Remote' },
+    { value: 3, viewValue: 'Remote Only' }
+  ];
+
+  currencies = [
+    { value: 'USD', viewValue: 'United States Dollar' },
+    { value: 'EUR', viewValue: 'Euro' },
+    { value: 'GBP', viewValue: 'British Pound Sterling' },
+    { value: 'JPY', viewValue: 'Japanese Yen' },
+    { value: 'AUD', viewValue: 'Australian Dollar' },
+    { value: 'CAD', viewValue: 'Canadian Dollar' },
+    { value: 'CHF', viewValue: 'Swiss Franc' },
+    { value: 'CNY', viewValue: 'Chinese Yuan' },
+    { value: 'INR', viewValue: 'Indian Rupee' },
+    { value: 'RUB', viewValue: 'Russian Ruble' },
+    { value: 'BRL', viewValue: 'Brazilian Real' },
+    { value: 'ZAR', viewValue: 'South African Rand' },
+    { value: 'SEK', viewValue: 'Swedish Krona' },
+    { value: 'NZD', viewValue: 'New Zealand Dollar' },
+    { value: 'MXN', viewValue: 'Mexican Peso' },
+    { value: 'SGD', viewValue: 'Singapore Dollar' },
+    { value: 'HKD', viewValue: 'Hong Kong Dollar' },
+    { value: 'NOK', viewValue: 'Norwegian Krone' },
+    { value: 'KRW', viewValue: 'South Korean Won' },
+    { value: 'TRY', viewValue: 'Turkish Lira' },
+    { value: 'SAR', viewValue: 'Saudi Riyal' },
+    { value: 'AED', viewValue: 'United Arab Emirates Dirham' },
+    { value: 'ARS', viewValue: 'Argentine Peso' },
+    { value: 'COP', viewValue: 'Colombian Peso' },
+    { value: 'IDR', viewValue: 'Indonesian Rupiah' },
+    { value: 'ILS', viewValue: 'Israeli Shekel' },
+    { value: 'PLN', viewValue: 'Polish Zloty' },
+    { value: 'THB', viewValue: 'Thai Baht' },
+    { value: 'VND', viewValue: 'Vietnamese Dong' }
+  ];
+  
+
+
+
+
+  onSubmit(): void {
+    if (this.nexusForm.valid) {
+      console.log(this.nexusForm.value);
+    }
+  }
   company: ICompany[] = [];
   nexus: INexusDashboard[] = [];
   dtOptions: DataTables.Settings = {};
@@ -30,6 +87,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.newNexusForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', [Validators.required]],
+    });
+
+    this.nexusForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      typeOfPosition: [0, Validators.required],
+      primaryRole: [''],
+      workExperience: [0, [Validators.required, Validators.min(0)]],
+      skills: [''],
+      location: [''],
+      acceptApplicantsWhoNeedToRelocate: [false],
+      relocationAssistance: [false],
+      remotePolicy: [0, Validators.required],
+      currency: ['USD', Validators.required],
+      annualSalaryMin: [null, Validators.min(0)],
+      annualSalaryMax: [null, Validators.min(0)],
+      equity: [false],
+      equityMin: [null, Validators.min(0)],
+      equityMax: [null, Validators.min(0)],
+    
+  
     });
   }
 
