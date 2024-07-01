@@ -97,19 +97,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
       workExperience: [0, [Validators.required, Validators.min(0)]],
       skills: [''],
       location: [''],
-      acceptApplicantsWhoNeedToRelocate: [false],
+      acceptApplicantsWhoNeedToRelocate: [false, Validators.required],
       relocationAssistance: [false],
       remotePolicy: [0, Validators.required],
       currency: ['USD', Validators.required],
-      annualSalaryMin: [null, Validators.min(0)],
-      annualSalaryMax: [null, Validators.min(0)],
+      annualSalaryMin: [null, [Validators.min(0), Validators.required]],
+      annualSalaryMax: [null, [Validators.min(0), Validators.required]],
       equity: [false],
-      equityMin: [null, Validators.min(0)],
-      equityMax: [null, Validators.min(0)],
+      equityMin: [null, [Validators.min(0),Validators.max(100), Validators.required]],
+      equityMax: [null, [Validators.min(0), Validators.max(100), Validators.required]],
     
   
-    });
+    }, { validator: [this.salaryValidator, this.equityValidator ]});
   }
+
+  salaryValidator(formGroup: FormGroup) : any{
+    const annualSalaryMin = formGroup.get('annualSalaryMin').value;
+    const annualSalaryMax = formGroup.get('annualSalaryMax').value;
+  
+    if (annualSalaryMin > annualSalaryMax) {
+      formGroup.get('annualSalaryMax').setErrors({ mismatch: true });
+    } else {
+      return null;
+    }
+  }
+
+  equityValidator(formGroup: FormGroup) : any{
+    const annualSalaryMin = formGroup.get('equityMin').value;
+    const annualSalaryMax = formGroup.get('equityMax').value;
+  
+    if (annualSalaryMin > annualSalaryMax) {
+      formGroup.get('equityMax').setErrors({ equityError: true });
+    } else {
+      return null;
+    }
+  }
+  
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -173,18 +196,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Handle the creation of a new Nexus.
    */
   onNewNexusCreate(): void {
-    if (this.newNexusForm.valid) {
-      console.log('Form Value:', this.newNexusForm.value);
+    if (this.nexusForm.valid) {
+      console.log('Form Value:', this.nexusForm.value);
 
-      this.companyService.postNexus(this.newNexusForm.value).subscribe({
-        next: () =>  window.location.reload(),
-        error: err => {
-          console.error('Error creating Nexus:', err);
-          alert('There was an error creating the Nexus. Please try again later.');
-        }
-      });
+      // this.companyService.postNexus(this.newNexusForm.value).subscribe({
+      //   next: () =>  window.location.reload(),
+      //   error: err => {
+      //     console.error('Error creating Nexus:', err);
+      //     alert('There was an error creating the Nexus. Please try again later.');
+      //   }
+      // });
     } else {
-      alert('Please fill out all required fields correctly.');
+      // alert('Please fill out all required fields correctly.');
+      console.log('Form Value:', this.nexusForm.value);
+
     }
   }
 }

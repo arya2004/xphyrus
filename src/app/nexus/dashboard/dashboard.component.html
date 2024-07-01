@@ -16,7 +16,7 @@
    
     <section class="section dashboard">
       <div class="row">
-        <div class="col-lg-6" style="overflow-x: auto">
+        <div class="col-lg-6 mb-3" style="overflow-x: auto">
           <table
             datatable
             [dtOptions]="dtOptions"
@@ -77,21 +77,7 @@
             <div class="card-body pb-0">
               <h5 class="card-title">Create <span>| New</span></h5>
   
-              <!-- Floating Labels Form -->
-              <form class="row g-3" [formGroup]="newNexusForm"  (ngSubmit)="onNewNexusCreate()">
-                
-  
-  
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary m-3">
-                    Create Syndicate
-                  </button>
-                  <button type="reset" class="btn btn-secondary m-3">
-                    Reset
-                  </button>
-                </div>
-              </form>
-              <form [formGroup]="nexusForm" class="needs-validation" (ngSubmit)="onSubmit()">
+              <form [formGroup]="nexusForm" class="needs-validation" (ngSubmit)="onNewNexusCreate()">
                
                 <div class="card-body">
                
@@ -110,44 +96,44 @@
                   <div class="tab-content pt-2" id="myTabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="home-tab">
                     
-                      <div class="col-md-12  mb-3">
-                        <div class="form-floating has-validation">
-                          <input [class.is-invalid]="
-                          nexusForm.get('title')?.touched &&
-                          nexusForm.get('title')?.invalid
-                        " formControlName="title"
 
-                            type="text"
-                            class="form-control"
-                            id="floatingName"
-                            placeholder="Your Name"
-                          />
-                          <label for="floatingName">Title</label>
+
+                      <div class="row mb-3 has-validation">
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Title</label>
+    
+    
+                        <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+    
+                          <input [class.is-invalid]="
+                                nexusForm.get('title')?.touched &&
+                                nexusForm.get('title')?.invalid
+                              " formControlName="title" type="text" name="username" class="form-control"
+                            id="yourUsername" required />
                           <div *ngIf="nexusForm.get('title')?.errors?.['required']"
                             class="invalid-feedback">
                             Title is required!
                           </div>
+    
                         </div>
                       </div>
 
-                      <div class="col-12  mb-3">
-                        <div class="form-floating has-validation">
+                     
+                      <div class="row mb-3 has-validation">
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Description</label>
+    
+    
+                        <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+    
                           <textarea [class.is-invalid]="
-                          nexusForm.get('description')?.touched &&
-                          nexusForm.get('description')?.invalid
-                        " formControlName="description"
-                          
-                            class="form-control"
-                            placeholder="Address"
-                            id="floatingTextarea"
-                            style="height: 100px"
-                            required
-                          ></textarea>
-                          <label for="floatingTextarea">Description</label>
+                                nexusForm.get('description')?.touched &&
+                                nexusForm.get('description')?.invalid
+                              " formControlName="description" type="text" name="username" class="form-control"
+                            id="yourUsername" required ></textarea>
                           <div *ngIf="nexusForm.get('description')?.errors?.['required']"
                             class="invalid-feedback">
-                            One Line Pitch is required!
+                            Description is required!
                           </div>
+    
                         </div>
                       </div>
                     
@@ -171,64 +157,45 @@
                         </div>
                       </div>
 
-                      <div class="col-md-12  mb-3">
-                        <div class="form-floating has-validation">
+                      <div class="row mb-3 has-validation">
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Primary Role</label>
+    
+    
+                        <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+    
                           <input [class.is-invalid]="
-                          nexusForm.get('title')?.touched &&
-                          nexusForm.get('title')?.invalid
-                        " formControlName="title"
-
-                            type="text"
-                            class="form-control"
-                            id="floatingName"
-                            placeholder="Your Name"
-                          />
-                          <label for="floatingName">Title</label>
-                          <div *ngIf="nexusForm.get('title')?.errors?.['required']"
-                            class="invalid-feedback">
-                            Title is required!
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-md-12  mb-3">
-                        <div class="form-floating has-validation">
-                          <input [class.is-invalid]="
-                          nexusForm.get('title')?.touched &&
-                          nexusForm.get('title')?.invalid
-                        " formControlName="title"
-
-                            type="text"
-                            class="form-control"
-                            id="floatingName"
-                            placeholder="Your Name"
-                          />
-                          <label for="floatingName">Title</label>
-                          <div *ngIf="nexusForm.get('title')?.errors?.['required']"
-                            class="invalid-feedback">
-                            Title is required!
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-12  mb-3">
-                        <div class="form-floating has-validation">
-                          <textarea [class.is-invalid]="
-                          nexusForm.get('description')?.touched &&
-                          nexusForm.get('description')?.invalid
-                        " formControlName="description"
+                                nexusForm.get('primaryRole')?.touched &&
+                                nexusForm.get('primaryRole')?.invalid
+                              " formControlName="primaryRole" type="text" name="username" class="form-control"
+                            id="yourUsername"    />
                           
-                            class="form-control"
-                            placeholder="Address"
-                            id="floatingTextarea"
-                            style="height: 100px"
-                            required
-                          ></textarea>
-                          <label for="floatingTextarea">Description</label>
-                          <div *ngIf="nexusForm.get('description')?.errors?.['required']"
-                            class="invalid-feedback">
-                            One Line Pitch is required!
+    
+                        </div>
+                      </div>
+
+                   
+                      <div class="row mb-5">
+                        <label class="col-md-4 col-lg-3  col-form-label">Work Exp:  {{nexusForm.get('workExperience').value}} Years</label>
+                        <div class="col-md-8 col-lg-9">
+                          
+                        
+                          <div  >
+                            <label for="customRange2" class="form-label"></label>
+                            <input formControlName="workExperience" type="range" class="form-range" min="0" max="40" step="1" id="customRange2">
                           </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 has-validation">
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Skills</label>
+    
+    
+                        <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+    
+                          <textarea formControlName="skills" type="text" name="username" class="form-control"
+                            id="yourUsername" ></textarea>
+                          
+    
                         </div>
                       </div>
       
@@ -240,82 +207,84 @@
                     
                     
                     
-                      <div class="col-md-12  mb-3">
-                        <div class="form-floating has-validation">
+                      <div class="row mb-3 has-validation">
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Location</label>
+    
+    
+                        <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+    
                           <input [class.is-invalid]="
-                          nexusForm.get('title')?.touched &&
-                          nexusForm.get('title')?.invalid
-                        " formControlName="title"
-
-                            type="text"
-                            class="form-control"
-                            id="floatingName"
-                            placeholder="Your Name"
-                          />
-                          <label for="floatingName">Title</label>
-                          <div *ngIf="nexusForm.get('title')?.errors?.['required']"
+                                nexusForm.get('location')?.touched &&
+                                nexusForm.get('location')?.invalid
+                              " formControlName="location" type="text" name="username" class="form-control"
+                            id="yourUsername" required />
+                          <div *ngIf="nexusForm.get('location')?.errors?.['required']"
                             class="invalid-feedback">
-                            Title is required!
+                            Location is required!
                           </div>
+    
                         </div>
                       </div>
 
-                      <div class="col-md-12  mb-3">
-                        <div class="form-floating has-validation">
-                          <input [class.is-invalid]="
-                          nexusForm.get('title')?.touched &&
-                          nexusForm.get('title')?.invalid
-                        " formControlName="title"
-
-                            type="text"
-                            class="form-control"
-                            id="floatingName"
-                            placeholder="Your Name"
-                          />
-                          <label for="floatingName">Title</label>
-                          <div *ngIf="nexusForm.get('title')?.errors?.['required']"
-                            class="invalid-feedback">
-                            Title is required!
+                      <fieldset class="row mb-3 has-validation">
+                        <legend class="col-form-label col-sm-9 pt-0">Willing to Accept Applicants Who Need To Relocate</legend>
+                        <div class="col-sm-3">
+                          <div class="form-check">
+                            <input checked [class.is-invalid]="
+                            nexusForm.get('acceptApplicantsWhoNeedToRelocate')?.touched &&
+                            nexusForm.get('acceptApplicantsWhoNeedToRelocate')?.invalid
+                          " formControlName="acceptApplicantsWhoNeedToRelocate"  class="form-check-input" type="radio" name="acceptApplicantsWhoNeedToRelocate" id="gridRadios1" value="true" >
+                            <label class="form-check-label" for="gridRadios1">
+                              Yes
+                            </label>
                           </div>
+                          <div class="form-check">
+                            <input  [class.is-invalid]="
+                            nexusForm.get('acceptApplicantsWhoNeedToRelocate')?.touched &&
+                            nexusForm.get('acceptApplicantsWhoNeedToRelocate')?.invalid
+                          " formControlName="acceptApplicantsWhoNeedToRelocate" class="form-check-input" type="radio" name="acceptApplicantsWhoNeedToRelocate" id="gridRadios2" value="false">
+                            <label class="form-check-label" for="gridRadios2">
+                              No
+                            </label>
+                            <div *ngIf="nexusForm.get('acceptApplicantsWhoNeedToRelocate')?.errors?.['required']"
+                            class="invalid-feedback">
+                            This field is required!
+                          </div>
+                          </div>
+                          
                         </div>
-                      </div>
+                      </fieldset>
 
-                      <div class="col-md-12  mb-3">
-                        <div class="form-floating has-validation">
-                          <input [class.is-invalid]="
-                          nexusForm.get('title')?.touched &&
-                          nexusForm.get('title')?.invalid
-                        " formControlName="title"
+                     
+                      <div class="row mb-3">
+                        <legend class="col-form-label col-sm-9 pt-0">Willing to Offer Relocation Assistance</legend>
+                        <div class="col-sm-3">
+      
 
-                            type="text"
-                            class="form-control"
-                            id="floatingName"
-                            placeholder="Your Name"
-                          />
-                          <label for="floatingName">Title</label>
-                          <div *ngIf="nexusForm.get('title')?.errors?.['required']"
-                            class="invalid-feedback">
-                            Title is required!
+                          <div class="form-check">
+                            <input  formControlName="relocationAssistance" class="form-check-input" type="checkbox" id="gridCheck2" checked>
+                            
                           </div>
+      
                         </div>
                       </div>
                     
                     
                       <div class="row mb-3 has-validation">
-                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Type of Position</label>
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Remote Policy</label>
     
     
                         <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
     
                           
                             <select [class.is-invalid]="
-                            nexusForm.get('typeOfPosition')?.touched &&
-                            nexusForm.get('typeOfPosition')?.invalid
-                          "  class="form-select" id="typeOfPosition" formControlName="typeOfPosition" aria-label="Default select example" required>
-                              <option *ngFor="let size of typeOfPositions" [value]="size.value">{{ size.viewValue }}</option>
+                            nexusForm.get('remotePolicy')?.touched &&
+                            nexusForm.get('remotePolicy')?.invalid
+                          "  class="form-select" id="remotePolicy" formControlName="remotePolicy" aria-label="Default select example" required>
+                              <option *ngFor="let size of remotePolicies" [value]="size.value">{{ size.viewValue }}</option>
                             </select>
-                            <div *ngIf="nexusForm.get('typeOfPosition')?.errors?.['required']" class="invalid-feedback">
-                              Type Of Position is required!
+                            <div *ngIf="nexusForm.get('remotePolicy')?.errors?.['required']" class="invalid-feedback">
+                              Remote Policy is required!
                             </div>
     
                         </div>
@@ -330,25 +299,128 @@
                     
                     
                       <div class="row mb-3 has-validation">
-                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Type of Position</label>
+                        <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Currency</label>
     
     
                         <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
     
                           
                             <select [class.is-invalid]="
-                            nexusForm.get('typeOfPosition')?.touched &&
-                            nexusForm.get('typeOfPosition')?.invalid
-                          "  class="form-select" id="typeOfPosition" formControlName="typeOfPosition" aria-label="Default select example" required>
-                              <option *ngFor="let size of typeOfPositions" [value]="size.value">{{ size.viewValue }}</option>
+                            nexusForm.get('currency')?.touched &&
+                            nexusForm.get('currency')?.invalid
+                          "  class="form-select" id="currency" formControlName="currency" aria-label="Default select example" required>
+                              <option *ngFor="let size of currencies" [value]="size.value">({{size.value}}) {{ size.viewValue }} </option>
                             </select>
-                            <div *ngIf="nexusForm.get('typeOfPosition')?.errors?.['required']" class="invalid-feedback">
-                              Type Of Position is required!
+                            <div *ngIf="nexusForm.get('currency')?.errors?.['required']" class="invalid-feedback">
+                              Currency is required!
                             </div>
     
                         </div>
                       </div>
-                    
+
+                      <div class="row mb-3 has-validation">
+                        <label for="inputNumber" class="col-sm-3 col-form-label">Annual Salary Range</label>
+                        <div class="col-sm-4 mb-3 has-validation">
+                          <input [class.is-invalid]="
+                          nexusForm.get('annualSalaryMin')?.touched &&
+                          nexusForm.get('annualSalaryMin')?.invalid
+                        " formControlName="annualSalaryMin"  type="number" class="form-control">
+                          <div *ngIf="nexusForm.get('annualSalaryMin')?.errors?.['min']"
+                            class="invalid-feedback">
+                            Salary can't be negative 
+                          </div>
+                          <div *ngIf="nexusForm.get('annualSalaryMin')?.errors?.['required']"
+                            class="invalid-feedback">
+                            Minimum Annual Salary is required!
+                          </div>
+                          <div *ngIf="nexusForm.get('annualSalaryMax')?.errors?.['min']"
+                            class="invalid-feedback">
+                            Max Salary can't be negative 
+                          </div>
+                          <div *ngIf="nexusForm.get('annualSalaryMax')?.errors?.['required']"
+                            class="invalid-feedback">
+                            Maximum Annual Salary is required!
+                          </div>
+                          <div *ngIf="nexusForm.get('annualSalaryMax')?.errors?.['mismatch']" class="invalid-feedback">
+                            Max salary can't be less than Min
+                          </div>
+                        </div>
+                        <div class="col-sm-1 ">
+                          <label for="inputNumber" class="col-form-label">to</label>
+                        
+                        </div>
+                        
+                        <div class="col-sm-4 has-validation">
+                          <input [class.is-invalid]="
+                          nexusForm.get('annualSalaryMax')?.touched &&
+                          nexusForm.get('annualSalaryMax')?.invalid
+                        " formControlName="annualSalaryMax"  type="number" class="form-control">
+                          
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 has-validation">
+                        <label for="inputNumber" class="col-sm-3 col-form-label">Equity Range</label>
+                        <div class="col-sm-4 mb-3 has-validation">
+                          <input  [attr.disabled]="nexusForm.get('equity').value === true ? true : null" [class.is-invalid]="
+                          nexusForm.get('equityMin')?.touched &&
+                          nexusForm.get('equityMin')?.invalid
+                        " formControlName="equityMin"  type="number" class="form-control">
+                          <div *ngIf="nexusForm.get('equityMin')?.errors?.['min']"
+                            class="invalid-feedback">
+                            Minimum Equity can't be negative 
+                          </div>
+                          <div *ngIf="nexusForm.get('equityMin')?.errors?.['max']"
+                            class="invalid-feedback">
+                            Minimum Equity can't exceed 100%
+                          </div>
+                          <div *ngIf="nexusForm.get('equityMin')?.errors?.['required']"
+                            class="invalid-feedback">
+                            Minimum Equity Salary is required!
+                          </div>
+                          <div *ngIf="nexusForm.get('equityMax')?.errors?.['min']"
+                            class="invalid-feedback">
+                            Max Equity can't be negative 
+                          </div>
+                          <div *ngIf="nexusForm.get('equityMax')?.errors?.['max']"
+                            class="invalid-feedback">
+                            Max Equity can't exceed 100%
+                          </div>
+                          <div *ngIf="nexusForm.get('equityMax')?.errors?.['required']"
+                            class="invalid-feedback">
+                            Maximum Rquity Salary is required!
+                          </div>
+                          <div *ngIf="nexusForm.get('equityMax')?.errors?.['equityError']" class="invalid-feedback">
+                            Max Equity can't be less than Min
+                          </div>
+                        </div>
+                        <div class="col-sm-1 ">
+                          <label for="inputNumber" class="col-form-label">to</label>
+                        
+                        </div>
+                        
+                        <div class="col-sm-4 has-validation" >
+                          <input   [attr.disabled]="nexusForm.get('equity').value === true ? true : null" [class.is-invalid]="
+                          nexusForm.get('equityMax')?.touched &&
+                          nexusForm.get('equityMax')?.invalid
+                        " formControlName="equityMax"  type="number" class="form-control">
+                          
+                        </div>
+                      </div>
+
+
+                      <div class="row mb-3">
+                        <legend class="col-form-label col-sm-3 pt-0">No Equity</legend>
+                        <div class="col-sm-9">
+      
+
+                          <div class="form-check">
+                            <input  formControlName="equity" class="form-check-input" type="checkbox" id="gridCheck2" >
+                            
+                          </div>
+      
+                        </div>
+                      </div>
                     
                     
                     
@@ -376,8 +448,11 @@
 
 
                 <div class="text-center">
-                  <button type="submit" [disabled]="nexusForm.invalid" class="btn btn-primary">
+                  <!-- <button type="submit" [disabled]="nexusForm.invalid" class="btn btn-primary">
                     Save Changes
+                  </button> -->
+                  <button type="submit"   class="btn btn-primary">
+                    Create
                   </button>
                   <button type="reset" class="btn btn-secondary m-3">
                     Reset
