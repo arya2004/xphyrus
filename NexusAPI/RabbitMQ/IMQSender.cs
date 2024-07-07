@@ -1,6 +1,8 @@
-﻿using AssessmentAPI.Models;
+﻿
 
-namespace AssessmentAPI.RabbitMQ
+using NexusAPI.Dto;
+
+namespace NexusAPI.RabbitMQ
 {
     /// <summary>
     /// Interface for sending messages to a message queue.

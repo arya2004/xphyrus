@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AssessmentAPI.Models
+namespace NexusAPI.Dto
 {
     /// <summary>
     /// Represents a submission for a coding assessment.

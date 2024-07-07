@@ -55,8 +55,7 @@ namespace NexusAPI.Controllers
 
 
 
-
-
+        
 
 
         [HttpGet("GetOne")]
@@ -64,12 +63,18 @@ namespace NexusAPI.Controllers
         public async Task<ActionResult<ResponseDto>> Get(string id)
         {
             _responseDto = _authorizationService.VerifyToken(this.HttpContext);
-            if (!_responseDto.IsSuccess) return _responseDto;
+            if (_responseDto.IsSuccess)
+            {
+                CodingAssessment? assessment = await _ApplicationDbContext.CodingAssessments.FirstOrDefaultAsync(_ => _.CodingAssessmentId == new Guid(id));
+                _responseDto.Result = assessment;
+                _responseDto.IsSuccess = true;
+                return Ok(_responseDto);
+            }
 
-            CodingAssessment? assessment = await _ApplicationDbContext.CodingAssessments.FirstOrDefaultAsync(_ => _.CodingAssessmentId == new Guid(id));
-            _responseDto.Result = assessment;
-            _responseDto.IsSuccess = true;
-            return Ok(_responseDto);
+            
+
+            _responseDto = await _codingAssessmentService.GetAsync(HttpContext, new Guid(id));
+            return _responseDto;
 
         }
 

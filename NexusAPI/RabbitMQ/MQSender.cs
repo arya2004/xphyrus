@@ -1,10 +1,10 @@
-﻿using AssessmentAPI.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using NexusAPI.Dto;
 using RabbitMQ.Client;
 using System;
 using System.Text;
 
-namespace AssessmentAPI.RabbitMQ
+namespace NexusAPI.RabbitMQ
 {
     /// <summary>
     /// Implementation of <see cref="IMQSender"/> for sending messages to RabbitMQ.
