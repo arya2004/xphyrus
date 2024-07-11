@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { AccountService } from 'src/app/account/account.service';
 
 @Component({
@@ -8,7 +8,20 @@ import { AccountService } from 'src/app/account/account.service';
 })
 export class NavBarComponent {
 
-  constructor(public accountService: AccountService) {
+  constructor(public accountService: AccountService, private renderer: Renderer2, private el: ElementRef) {
     console.log(accountService.currentUser$);
+  }
+
+
+  
+
+  toggleSidebar() {
+    // Toggle the 'toggle-sidebar' class on the body element
+    const body = this.el.nativeElement.ownerDocument.body;
+    if (body.classList.contains('toggle-sidebar')) {
+      this.renderer.removeClass(body, 'toggle-sidebar');
+    } else {
+      this.renderer.addClass(body, 'toggle-sidebar');
+    }
   }
 }
