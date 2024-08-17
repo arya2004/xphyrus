@@ -14,6 +14,7 @@ using NexusAPI.Models;
 using NexusAPI.Service.IService;
 using NexusAPI;
 using StackExchange.Redis;
+using NexusAPI.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -74,10 +75,11 @@ builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
-builder.Services.AddScoped<INexusService, NexusService>();
-builder.Services.AddScoped<IResultsService, ResultsService>();
-builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
-builder.Services.AddScoped<ITestCaseService, TestCaseService>();
+//builder.Services.AddScoped<INexusService, NexusService>();
+//builder.Services.AddScoped<IResultsService, ResultsService>();
+//builder.Services.AddScoped<ICodingAssessmentService, CodingAssessmentService>();
+//builder.Services.AddScoped<ITestCaseService, TestCaseService>();
+builder.Services.AddScoped<IMQSender, MQSender>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -10,7 +10,7 @@ namespace NexusAPI.Data
         {
         }
 
-        public DbSet<CodingAssessmentResult> CodingAssessmentResult { get; set; }
+        public DbSet<CodingQuestionResult> CodingAssessmentResult { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
