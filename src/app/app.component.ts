@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { AccountService } from './account/account.service';
 
 @Component({
@@ -21,5 +21,9 @@ export class AppComponent implements OnInit {
     this.accountService.loadCurrentUser(token).subscribe();
     
   }
+
+
+
+ 
 
 }

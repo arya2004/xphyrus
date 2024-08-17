@@ -16,7 +16,7 @@ export class ExamineeService {
 
   private assignmentUrl = environment.assessmentApiUrl;
   private subUrl = "https://localhost:7003/api/TestRun/Run";
-  private doneUrl = "https://localhost:7137/api/Submission/Submit";
+  private doneUrl = "https://localhost:5000/api/Submission/Submit";
   private studUrl = "https://localhost:7000/api/Participants/Joined";
   private joinUrl = "https://localhost:7000/api/Participants/Register";
 
@@ -51,7 +51,7 @@ export class ExamineeService {
    * @returns Observable of the response.
    */
   getOneAssessment(nexus: any) {
-    const url = `https://localhost:7137/api/CodingAssessment/GetOne?id=${nexus}`;
+    const url = `https://localhost:5000/api/CodingAssessment/GetOne?id=${nexus}`;
     return this.http.get<IResponse<any>>(url);
   }
 }

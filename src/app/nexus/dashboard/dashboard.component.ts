@@ -15,6 +15,63 @@ import { INexusDashboard } from 'src/app/shared/models/INexus';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  nexusForm: FormGroup;
+
+  typeOfPositions = [
+    { value: 0, viewValue: 'Full-Time Employee' },
+    { value: 1, viewValue: 'Contractor' },
+    { value: 2, viewValue: 'Cofounder' },
+    { value: 3, viewValue: 'Intern' }
+  ];
+
+  remotePolicies = [
+    { value: 0, viewValue: 'In Office/WFH Flexible' },
+    { value: 1, viewValue: 'In Office Not WFH Flexible' },
+    { value: 2, viewValue: 'Onsite or Remote' },
+    { value: 3, viewValue: 'Remote Only' }
+  ];
+
+  currencies = [
+    { value: 'USD', viewValue: 'United States Dollar' },
+    { value: 'EUR', viewValue: 'Euro' },
+    { value: 'GBP', viewValue: 'British Pound Sterling' },
+    { value: 'JPY', viewValue: 'Japanese Yen' },
+    { value: 'AUD', viewValue: 'Australian Dollar' },
+    { value: 'CAD', viewValue: 'Canadian Dollar' },
+    { value: 'CHF', viewValue: 'Swiss Franc' },
+    { value: 'CNY', viewValue: 'Chinese Yuan' },
+    { value: 'INR', viewValue: 'Indian Rupee' },
+    { value: 'RUB', viewValue: 'Russian Ruble' },
+    { value: 'BRL', viewValue: 'Brazilian Real' },
+    { value: 'ZAR', viewValue: 'South African Rand' },
+    { value: 'SEK', viewValue: 'Swedish Krona' },
+    { value: 'NZD', viewValue: 'New Zealand Dollar' },
+    { value: 'MXN', viewValue: 'Mexican Peso' },
+    { value: 'SGD', viewValue: 'Singapore Dollar' },
+    { value: 'HKD', viewValue: 'Hong Kong Dollar' },
+    { value: 'NOK', viewValue: 'Norwegian Krone' },
+    { value: 'KRW', viewValue: 'South Korean Won' },
+    { value: 'TRY', viewValue: 'Turkish Lira' },
+    { value: 'SAR', viewValue: 'Saudi Riyal' },
+    { value: 'AED', viewValue: 'United Arab Emirates Dirham' },
+    { value: 'ARS', viewValue: 'Argentine Peso' },
+    { value: 'COP', viewValue: 'Colombian Peso' },
+    { value: 'IDR', viewValue: 'Indonesian Rupiah' },
+    { value: 'ILS', viewValue: 'Israeli Shekel' },
+    { value: 'PLN', viewValue: 'Polish Zloty' },
+    { value: 'THB', viewValue: 'Thai Baht' },
+    { value: 'VND', viewValue: 'Vietnamese Dong' }
+  ];
+  
+
+
+
+
+  onSubmit(): void {
+    if (this.nexusForm.valid) {
+      console.log(this.nexusForm.value);
+    }
+  }
   company: ICompany[] = [];
   nexus: INexusDashboard[] = [];
   dtOptions: DataTables.Settings = {};
@@ -31,7 +88,51 @@ export class DashboardComponent implements OnInit, OnDestroy {
       name: ['', Validators.required],
       description: ['', [Validators.required]],
     });
+
+    this.nexusForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      typeOfPosition: [0, Validators.required],
+      primaryRole: [''],
+      workExperience: [0, [Validators.required, Validators.min(0)]],
+      skills: [''],
+      location: [''],
+      acceptApplicantsWhoNeedToRelocate: [false, Validators.required],
+      relocationAssistance: [false],
+      remotePolicy: [0, Validators.required],
+      currency: ['USD', Validators.required],
+      annualSalaryMin: [null, [Validators.min(0), Validators.required]],
+      annualSalaryMax: [null, [Validators.min(0), Validators.required]],
+      equity: [false],
+      equityMin: [null, [Validators.min(0),Validators.max(100), Validators.required]],
+      equityMax: [null, [Validators.min(0), Validators.max(100), Validators.required]],
+    
+  
+    }, { validator: [this.salaryValidator, this.equityValidator ]});
   }
+
+  salaryValidator(formGroup: FormGroup) : any{
+    const annualSalaryMin = formGroup.get('annualSalaryMin').value;
+    const annualSalaryMax = formGroup.get('annualSalaryMax').value;
+  
+    if (annualSalaryMin > annualSalaryMax) {
+      formGroup.get('annualSalaryMax').setErrors({ mismatch: true });
+    } else {
+      return null;
+    }
+  }
+
+  equityValidator(formGroup: FormGroup) : any{
+    const annualSalaryMin = formGroup.get('equityMin').value;
+    const annualSalaryMax = formGroup.get('equityMax').value;
+  
+    if (annualSalaryMin > annualSalaryMax) {
+      formGroup.get('equityMax').setErrors({ equityError: true });
+    } else {
+      return null;
+    }
+  }
+  
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -57,7 +158,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   getAllCompany(): void {
     this.companyService.getNexus().subscribe({
       next: res => {
-        this.nexus = res.result;
+        this.nexus = res.result.map((c : INexusDashboard) => {
+          // Convert the creationDate to the desired format
+          const date = new Date(c.creationDate);
+          const formattedDate = date.toISOString().split('T')[0];
+          return { ...c, creationDate: formattedDate };
+        });
         this.dtTrigger.next(null);
       },
       error: err => {
@@ -90,18 +196,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Handle the creation of a new Nexus.
    */
   onNewNexusCreate(): void {
-    if (this.newNexusForm.valid) {
-      console.log('Form Value:', this.newNexusForm.value);
+    if (this.nexusForm.valid) {
+      console.log('Form Value:', this.nexusForm.value);
 
-      this.companyService.postNexus(this.newNexusForm.value).subscribe({
-        next: () =>  window.location.reload(),
-        error: err => {
-          console.error('Error creating Nexus:', err);
-          alert('There was an error creating the Nexus. Please try again later.');
-        }
-      });
+      // this.companyService.postNexus(this.newNexusForm.value).subscribe({
+      //   next: () =>  window.location.reload(),
+      //   error: err => {
+      //     console.error('Error creating Nexus:', err);
+      //     alert('There was an error creating the Nexus. Please try again later.');
+      //   }
+      // });
     } else {
-      alert('Please fill out all required fields correctly.');
+      // alert('Please fill out all required fields correctly.');
+      console.log('Form Value:', this.nexusForm.value);
+
     }
   }
 }

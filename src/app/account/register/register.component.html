@@ -24,7 +24,7 @@
                     Create an Account
                   </h5>
                   <p class="text-center small">
-                    Enter your Company details to create account
+                    Enter your User details to create account
                   </p>
                 </div>
 
@@ -34,9 +34,33 @@
                   class="row g-3 needs-validation"
                   novalidate
                 >
+
+                <div class="col-12 has-validation">
+                  <label for="companyName" class="form-label">Company Name</label>
+                  <input
+                  [class.is-invalid]="
+                          registerForm.get('companyName')?.touched &&
+                          registerForm.get('companyName')?.invalid
+                        "
+                    formControlName="companyName"
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    id="companyName"
+                    required
+                  />
+                  <div *ngIf="registerForm.get('companyName')?.errors?.['required']"
+                      class="invalid-feedback">
+                      Company Name is required!
+                    </div>
+                </div>
                   <div class="col-12">
                     <label for="yourName" class="form-label">Your Name</label>
                     <input
+                    [class.is-invalid]="
+                          registerForm.get('name')?.touched &&
+                          registerForm.get('name')?.invalid
+                        "
                       formControlName="name"
                       type="text"
                       name="name"
@@ -44,123 +68,93 @@
                       id="yourName"
                       required
                     />
-                    <div class="invalid-feedback">Please, enter your name!</div>
-                  </div>
-
-                  <div class="col-12">
-                    <label for="yourEmail" class="form-label">Your Email</label>
-                    <input
-                      formControlName="email"
-                      type="email"
-                      name="email"
-                      class="form-control"
-                      id="yourEmail"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      Please enter a valid Email adddress!
+                    <div *ngIf="registerForm.get('name')?.errors?.['required']"
+                      class="invalid-feedback">
+                      Your Name is required!
                     </div>
                   </div>
 
                   <div class="col-12">
-                    <label for="yourPassword" class="form-label"
-                      >Password</label
-                    >
-                    <input
-                      formControlName="password"
-                      type="password"
-                      name="password"
-                      class="form-control"
-                      id="yourPassword"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      Please enter your password!
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <label for="description" class="form-label">About</label>
-                    <textarea
-                      formControlName="about"
-                      id="description"
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      required
-                    ></textarea>
-                    <div class="invalid-feedback">
-                      Please, enter your Descriptioon
+                    <label for="yourUsername" class="form-label">Email</label>
+                    <div class="input-Syndicate has-validation">
+                      
+                      <input [class.is-invalid]="
+                          registerForm.get('email')?.touched &&
+                          registerForm.get('email')?.invalid
+                        " formControlName="email" type="text" name="username" class="form-control"
+                        id="yourUsername" required />
+                      <div *ngIf="registerForm.get('email')?.errors?.['required']" class="invalid-feedback">
+                        Please choose an email!
+                      </div>
+                      <div *ngIf="registerForm.get('email')?.errors?.['email']" class="invalid-feedback">
+                        Invalid Email!
+                      </div>
                     </div>
                   </div>
 
                   <div class="col-12">
-                    <label for="website" class="form-label">Website</label>
-                    <input
-                      formControlName="website"
-                      type="text"
-                      name="name"
-                      class="form-control"
-                      id="website"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      Please, enter your Website!
+                    <label for="displlayname" class="form-label">Password</label>
+
+
+                    <div class="input-Syndicate has-validation">
+
+                      <input [class.is-invalid]="
+                            registerForm.get('password')?.touched &&
+                            registerForm.get('password')?.invalid
+                          " formControlName="password" type="password"  name="username" class="form-control"
+                        id="yourUsername" required />
+                        <div *ngIf="registerForm.get('password')?.errors?.['required']" class="invalid-feedback">
+                          Password is required!
+                        </div>
+                        <div *ngIf="registerForm.get('password')?.errors?.['minlength']" class="invalid-feedback">
+                          Password must be at least 8 characters long!
+                        </div>
+
                     </div>
                   </div>
 
                   <div class="col-12">
-                    <label for="ec" class="form-label">Employee Count</label>
-                    <input
-                      formControlName="employeeCount"
-                      type="number"
-                      name="name"
-                      class="form-control"
-                      id="ec"
-                      required
-                    />
-                    <div class="invalid-feedback">
-                      Please, enter your Employee COunt!
+                    <label for="displlayname" class="form-label">Re-enter Password</label>
+
+
+                    <div class="input-Syndicate has-validation">
+
+                      <input [class.is-invalid]="
+                            registerForm.get('confirmPassword')?.touched &&
+                            registerForm.get('confirmPassword')?.invalid 
+                          " formControlName="confirmPassword"type="password"  name="username" class="form-control"
+                        id="yourUsername" required />
+                        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']" class="invalid-feedback">
+                          Re-enter New Password is required!
+                        </div>
+                        <div *ngIf="registerForm.get('confirmPassword')?.errors?.['mismatch']" class="invalid-feedback">
+                          Password and Re-entered Password do not match!
+                        </div>
+
                     </div>
                   </div>
 
-                  <label for="basic-url" class="form-label">LinkedIn</label>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"
-                      >https://www.linkedin.com/</span
-                    >
-                    <input
-                      formControlName="LinkedIn"
-                      type="text"
-                      class="form-control"
-                      id="basic-url"
-                      aria-describedby="basic-addon3"
-                    />
-                  </div>
+                 
 
-                  <label for="basic-url" class="form-label">Twitter</label>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon3"
-                      >https://twitter.com/</span
-                    >
-                    <input
-                      formControlName="Twitter"
-                      type="text"
-                      class="form-control"
-                      id="basic-url1"
-                      aria-describedby="basic-addon3"
-                    />
-                  </div>
+                  
 
+                
                   <div class="col-12">
                     <div class="form-check">
                       <input
+                      [class.is-invalid]="
+                            registerForm.get('terms')?.touched &&
+                            registerForm.get('terms')?.invalid 
+                          " formControlName="terms"
                         class="form-check-input"
                         name="terms"
                         type="checkbox"
                         value=""
                         id="acceptTerms"
+                        formControlName="terms"
                         required
                       />
+                     
                       <label class="form-check-label" for="acceptTerms"
                         >I agree and accept the
                         <a href="#">terms and conditions</a></label
@@ -168,10 +162,11 @@
                       <div class="invalid-feedback">
                         You must agree before submitting.
                       </div>
+                      
                     </div>
                   </div>
                   <div class="col-12">
-                    <button class="btn btn-primary w-100" type="submit">
+                    <button [disabled]="registerForm.invalid" class="btn btn-primary w-100" type="submit">
                       Create Account
                     </button>
                   </div>
