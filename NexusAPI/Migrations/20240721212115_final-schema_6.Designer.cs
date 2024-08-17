@@ -9,11 +9,11 @@ using NexusAPI.Data;
 
 #nullable disable
 
-namespace Xphyrus.NexusAPI.Migrations
+namespace NexusAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240623110415_userSchemaJobUpdate")]
-    partial class userSchemaJobUpdate
+    [Migration("20240721212115_final-schema_6")]
+    partial class finalschema_6
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,17 +166,16 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("Bio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanySize")
-                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DisplayName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -186,23 +185,11 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FacebookUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LinkedinUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Market")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -211,9 +198,6 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("OneLinePitch")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -224,13 +208,14 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Role")
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TwitterUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -239,12 +224,6 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("WebsiteUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WorkEmail")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -259,102 +238,195 @@ namespace Xphyrus.NexusAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("NexusAPI.Models.Classroom", b =>
+                {
+                    b.Property<Guid>("ClassroomId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EnrollmentKey")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FacultyId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MaxStudents")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClassroomId");
+
+                    b.HasIndex("FacultyId");
+
+                    b.ToTable("Classrooms");
+                });
+
             modelBuilder.Entity("NexusAPI.Models.CodingAssessment", b =>
                 {
                     b.Property<Guid>("CodingAssessmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ClassroomId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("NexusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("int");
 
                     b.HasKey("CodingAssessmentId");
 
-                    b.HasIndex("NexusId");
+                    b.HasIndex("ClassroomId");
 
                     b.ToTable("CodingAssessments");
                 });
 
-            modelBuilder.Entity("NexusAPI.Models.Nexus", b =>
+            modelBuilder.Entity("NexusAPI.Models.CodingAssessmentResult", b =>
                 {
-                    b.Property<Guid>("NexusId")
+                    b.Property<Guid>("CodingAssessmentResultId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("AcceptApplicantsWhoNeedToRelocate")
-                        .HasColumnType("bit");
+                    b.Property<string>("Batch")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("AnnualSalaryMax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("AnnualSalaryMin")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("Creator")
+                    b.Property<Guid?>("CodingAssessmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Currency")
+                    b.Property<string>("Division")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PRN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Score")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CodingAssessmentResultId");
+
+                    b.HasIndex("CodingAssessmentId");
+
+                    b.ToTable("CodingAssessmentResults");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.CodingQuestion", b =>
+                {
+                    b.Property<Guid>("CodingQuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CodingAssessmentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Equity")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal?>("EquityMax")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("EquityMin")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrimaryRole")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("RelocationAssistance")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("RemotePolicy")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Skills")
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TypeOfPosition")
+                    b.HasKey("CodingQuestionId");
+
+                    b.HasIndex("CodingAssessmentId");
+
+                    b.ToTable("CodingQuestions");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.CodingQuestionResult", b =>
+                {
+                    b.Property<Guid>("CodingQuestionResultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CodingAssessmentResultId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CodingQuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Memory")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkExperience")
-                        .HasColumnType("int");
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("NexusId");
+                    b.Property<string>("SourceCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.Property<string>("Time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Nexus");
+                    b.HasKey("CodingQuestionResultId");
+
+                    b.HasIndex("CodingAssessmentResultId");
+
+                    b.HasIndex("CodingQuestionId");
+
+                    b.ToTable("CodingQuestionResults");
                 });
 
             modelBuilder.Entity("NexusAPI.Models.TestCase", b =>
@@ -363,20 +435,51 @@ namespace Xphyrus.NexusAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CodingAssessmentId")
+                    b.Property<Guid?>("CodingQuestionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("InputCase")
+                    b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OutputCase")
+                    b.Property<string>("InputCase")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHidden")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OutputCase")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
 
                     b.HasKey("TestCaseId");
 
-                    b.HasIndex("CodingAssessmentId");
+                    b.HasIndex("CodingQuestionId");
 
                     b.ToTable("TestCases");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.TestCaseResult", b =>
+                {
+                    b.Property<Guid>("TestCaseResultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Passed")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("TestCaseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TestCaseResultId");
+
+                    b.HasIndex("TestCaseId");
+
+                    b.ToTable("TestCaseResults");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -430,46 +533,104 @@ namespace Xphyrus.NexusAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NexusAPI.Models.CodingAssessment", b =>
+            modelBuilder.Entity("NexusAPI.Models.Classroom", b =>
                 {
-                    b.HasOne("NexusAPI.Models.Nexus", "Nexus")
-                        .WithMany("CodingAssessments")
-                        .HasForeignKey("NexusId");
-
-                    b.Navigation("Nexus");
-                });
-
-            modelBuilder.Entity("NexusAPI.Models.Nexus", b =>
-                {
-                    b.HasOne("NexusAPI.Models.ApplicationUser", null)
-                        .WithMany("Nexus")
-                        .HasForeignKey("ApplicationUserId");
-                });
-
-            modelBuilder.Entity("NexusAPI.Models.TestCase", b =>
-                {
-                    b.HasOne("NexusAPI.Models.CodingAssessment", "CodingAssessment")
-                        .WithMany("TestCases")
-                        .HasForeignKey("CodingAssessmentId")
+                    b.HasOne("NexusAPI.Models.ApplicationUser", "Faculty")
+                        .WithMany("Classrooms")
+                        .HasForeignKey("FacultyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Faculty");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.CodingAssessment", b =>
+                {
+                    b.HasOne("NexusAPI.Models.Classroom", "Classroom")
+                        .WithMany("CodingAssessments")
+                        .HasForeignKey("ClassroomId");
+
+                    b.Navigation("Classroom");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.CodingAssessmentResult", b =>
+                {
+                    b.HasOne("NexusAPI.Models.CodingAssessment", "CodingAssessment")
+                        .WithMany("CodingAssessmentResults")
+                        .HasForeignKey("CodingAssessmentId");
 
                     b.Navigation("CodingAssessment");
                 });
 
+            modelBuilder.Entity("NexusAPI.Models.CodingQuestion", b =>
+                {
+                    b.HasOne("NexusAPI.Models.CodingAssessment", "CodingAssessment")
+                        .WithMany("CodingQuestions")
+                        .HasForeignKey("CodingAssessmentId");
+
+                    b.Navigation("CodingAssessment");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.CodingQuestionResult", b =>
+                {
+                    b.HasOne("NexusAPI.Models.CodingAssessmentResult", "CodingAssessmentResult")
+                        .WithMany("CodingQuestionResults")
+                        .HasForeignKey("CodingAssessmentResultId");
+
+                    b.HasOne("NexusAPI.Models.CodingQuestion", "CodingQuestion")
+                        .WithMany()
+                        .HasForeignKey("CodingQuestionId");
+
+                    b.Navigation("CodingAssessmentResult");
+
+                    b.Navigation("CodingQuestion");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.TestCase", b =>
+                {
+                    b.HasOne("NexusAPI.Models.CodingQuestion", "CodingQuestion")
+                        .WithMany("TestCases")
+                        .HasForeignKey("CodingQuestionId");
+
+                    b.Navigation("CodingQuestion");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.TestCaseResult", b =>
+                {
+                    b.HasOne("NexusAPI.Models.TestCase", "TestCase")
+                        .WithMany()
+                        .HasForeignKey("TestCaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestCase");
+                });
+
             modelBuilder.Entity("NexusAPI.Models.ApplicationUser", b =>
                 {
-                    b.Navigation("Nexus");
+                    b.Navigation("Classrooms");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.Classroom", b =>
+                {
+                    b.Navigation("CodingAssessments");
                 });
 
             modelBuilder.Entity("NexusAPI.Models.CodingAssessment", b =>
                 {
-                    b.Navigation("TestCases");
+                    b.Navigation("CodingAssessmentResults");
+
+                    b.Navigation("CodingQuestions");
                 });
 
-            modelBuilder.Entity("NexusAPI.Models.Nexus", b =>
+            modelBuilder.Entity("NexusAPI.Models.CodingAssessmentResult", b =>
                 {
-                    b.Navigation("CodingAssessments");
+                    b.Navigation("CodingQuestionResults");
+                });
+
+            modelBuilder.Entity("NexusAPI.Models.CodingQuestion", b =>
+                {
+                    b.Navigation("TestCases");
                 });
 #pragma warning restore 612, 618
         }

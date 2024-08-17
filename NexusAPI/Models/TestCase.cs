@@ -9,8 +9,8 @@ namespace NexusAPI.Models
         public string OutputCase { get; set; }
         public string Description { get; set; }
         public bool IsHidden { get; set; } = false;
-        public Guid CodingQuestionId { get; set; }
-        public CodingQuestion CodingQuestion { get; set; }
+        public Guid? CodingQuestionId { get; set; }
+        public CodingQuestion? CodingQuestion { get; set; }
         public int Points { get; set; }
     }
 

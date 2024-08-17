@@ -11,7 +11,7 @@ namespace NexusAPI
             var mappingCOnfig = new MapperConfiguration(config =>
             {
 
-                config.CreateMap<NexusDto, Nexus>().ReverseMap();
+                config.CreateMap<NexusDto, Classroom>().ReverseMap();
                 config.CreateMap<CreateCodingAssessmentDto, CodingAssessment>().ReverseMap();
                 config.CreateMap<CreateTestCase, TestCase>().ReverseMap();
             });

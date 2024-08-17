@@ -8,9 +8,9 @@ namespace NexusAPI.Service.IService
     {
         public Task<ResponseDto> Join(HttpContext httpContext, string nexusCode);
 
-        public Task<ResponseDto> Create(HttpContext httpContext, Nexus nexus);
+        public Task<ResponseDto> Create(HttpContext httpContext, Classroom nexus);
 
-        public Task<ResponseDto> Edit(HttpContext httpContext, Nexus nexus);
+        public Task<ResponseDto> Edit(HttpContext httpContext, Classroom nexus);
 
         public Task<ResponseDto> Delete(HttpContext httpContext, Guid nexusId);
         public Task<ResponseDto> Get(HttpContext httpContext, Guid nexusId);

@@ -10,10 +10,10 @@ namespace NexusAPI.Models
         public int Memory { get; set; }
         public string Message { get; set; }
         public string Description { get; set; }
-        public Guid CodingAssessmentResultId { get; set; }
-        public CodingAssessmentResult CodingAssessmentResult { get; set; }
-        public Guid CodingQuestionId { get; set; }
-        public CodingQuestion CodingQuestion { get; set; }
+        public Guid? CodingAssessmentResultId { get; set; }
+        public CodingAssessmentResult? CodingAssessmentResult { get; set; }
+        public Guid? CodingQuestionId { get; set; }
+        public CodingQuestion? CodingQuestion { get; set; }
     }
 
 }

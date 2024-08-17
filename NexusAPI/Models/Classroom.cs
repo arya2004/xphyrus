@@ -11,12 +11,12 @@ namespace NexusAPI.Models
         public string Description { get; set; }
         public CourseType Type { get; set; }
         public string FacultyId { get; set; }
-        public ApplicationUser Faculty { get; set; }
+        public ApplicationUser? Faculty { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
         public bool IsArchived { get; set; } = false;
         public string EnrollmentKey { get; set; }
         public int MaxStudents { get; set; }
-        public ICollection<CodingAssessment> CodingAssessments { get; set; } = new List<CodingAssessment>();
+        public ICollection<CodingAssessment>? CodingAssessments { get; set; } = new List<CodingAssessment>();
     }
 
 
