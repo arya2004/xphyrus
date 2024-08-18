@@ -5,18 +5,20 @@ namespace NexusAPI.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public string DisplayName { get; set; }
-        public UserRole Role { get; set; }
-        public ICollection<Classroom> Classrooms { get; set; } = new List<Classroom>();
-        public string ProfilePictureUrl { get; set; }
-        public string Bio { get; set; }
+        public string? DisplayName { get; set; }
+        public UserRole Type{ get; set; }
+        public ICollection<Classroom>? Classrooms { get; set; } = new List<Classroom>();
+        public string? PRN { get; set; }
+        public string? Division { get; set; }
+        public string? Batch { get; set; }
+        public string? Bio { get; set; }
        
     }
 
     public enum UserRole
     {
         Student,
-        Faculty,
+        Teacher,
         Admin
     }
 

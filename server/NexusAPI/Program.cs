@@ -34,11 +34,11 @@ if (builder.Environment.IsProduction())
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
-    builder.Services.AddDbContext<ResultsDbContext>(
-    options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ResultsConnection"));
-    });
+    //builder.Services.AddDbContext<ResultsDbContext>(
+    //options =>
+    //{
+    //    options.UseSqlServer(builder.Configuration.GetConnectionString("ResultsConnection"));
+    //});
 
 }
 else
@@ -48,11 +48,11 @@ else
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
     });
-    builder.Services.AddDbContext<ResultsDbContext>(
-    options =>
-    {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("ResultsConnection"));
-    });
+    //builder.Services.AddDbContext<ResultsDbContext>(
+    //options =>
+    //{
+    //    options.UseSqlServer(builder.Configuration.GetConnectionString("ResultsConnection"));
+    //});
 }
 
 

@@ -12,7 +12,7 @@ namespace NexusAPI
             {
 
                 config.CreateMap<NexusDto, Classroom>().ReverseMap();
-                config.CreateMap<CreateCodingAssessmentDto, CodingAssessment>().ReverseMap();
+                config.CreateMap<CreateCodingAssessmentDto, CodingQuestion>().ReverseMap();
                 config.CreateMap<CreateTestCase, TestCase>().ReverseMap();
             });
             return mappingCOnfig;

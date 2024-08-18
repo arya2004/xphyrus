@@ -13,9 +13,9 @@ namespace NexusAPI.Service.IService
         /// <param name="codingAssessmentId">The identifier of the coding assessment.</param>
         /// <returns>A <see cref="ResponseDto"/> containing the assessment details or an error message.</returns>
         Task<ResponseDto> GetAsync(HttpContext httpContext, Guid codingAssessmentId);
-        public Task<ResponseDto> Create(HttpContext httpContext, CodingAssessment codingAssessment, Guid nexusId);
+        public Task<ResponseDto> Create(HttpContext httpContext, CodingQuestion codingAssessment, Guid nexusId);
 
-        public Task<ResponseDto> Edit(HttpContext httpContext, CodingAssessment codingAssessment);
+        public Task<ResponseDto> Edit(HttpContext httpContext, CodingQuestion codingAssessment);
 
         public Task<ResponseDto> Delete(HttpContext httpContext, Guid codingAssessmentId);
         public Task<ResponseDto> Get(HttpContext httpContext, Guid codingAssessmentId);
