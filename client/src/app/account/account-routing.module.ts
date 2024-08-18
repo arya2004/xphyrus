@@ -4,13 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component:RegisterComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent}
+  {path: 'profile', component: ProfileComponent}
 ]
 
 @NgModule({

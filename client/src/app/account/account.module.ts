@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './profile/profile.component';
 import { CoreModule } from '../core/core.module';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -15,7 +14,6 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    ForgotPasswordComponent,
 
     
   ],
