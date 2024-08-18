@@ -1,1 +1,204 @@
-<p>test-detail works!</p>
+
+<div class="wrapper">
+    <!-- sidebar navigation component -->
+    
+    <!-- end of sidebar component -->
+    <div id="body" class="active">
+  
+        <div class="content">
+            <div class="container">
+                <div class="page-title">
+                    <h3>Test 1</h3>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-md-12 col-lg-12">
+                        <div class="card">
+                            <!-- Card Header with Coding Question Details -->
+                            <div class="card-header">
+                                <h4>Title: Prime Number Validator</h4>
+                                <p>Description: A function to determine whether a given number is prime.</p>
+                                <p>Difficulty: Medium</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Input Case</th>
+                                                <th>Expected Output</th>
+                                                <th>Description</th>
+                                                <th>Is Hidden?</th>
+                                                <th>Marks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>true</td>
+                                                <td>Checks if 2 is correctly identified as a prime number.</td>
+                                                <td>No</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td>false</td>
+                                                <td>Checks if 4 is correctly identified as not a prime number.</td>
+                                                <td>No</td>
+                                                <td>5</td>
+                                            </tr>
+                                            <tr>
+                                                <td>17</td>
+                                                <td>true</td>
+                                                <td>Checks if 17 is correctly identified as a prime number.</td>
+                                                <td>No</td>
+                                                <td>10</td>
+                                            </tr>
+                                            <tr>
+                                                <td>19</td>
+                                                <td>true</td>
+                                                <td>Checks if 19 is correctly identified as a prime number.</td>
+                                                <td>Yes</td>
+                                                <td>15</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 col-lg-12">
+                        <div class="card">
+                          
+                            <div class="card-header">
+                                <h4>Title: Prime Number Validator - Student Submissions</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Student Name</th>
+                                                <th>Submitted Code</th>
+                                                <th>Marks Awarded</th>
+                                                <th>Submitted Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>John Doe</td>
+                                                <td>public bool IsPrime(int n) </td>
+                                                <td>40</td>
+                                                <td>2024-08-18 10:30 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jane Smith</td>
+                                                <td>public bool IsPrime(int n) </td>
+                                                <td>45</td>
+                                                <td>2024-08-18 11:00 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Michael Johnson</td>
+                                                <td>public bool IsPrime(int n) </td>
+                                                <td>35</td>
+                                                <td>2024-08-18 11:45 AM</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Emily Davis</td>
+                                                <td>public bool IsPrime(int n) </td>
+                                                <td>50</td>
+                                                <td>2024-08-18 12:00 PM</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">Coding Question Form</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Please fill out the form below for the coding question details.</h5>
+                                <form accept-charset="utf-8">
+                                    <div class="mb-3">
+                                        <label for="title" class="form-label">Question Title</label>
+                                        <input type="text" name="title" placeholder="Question Title" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea name="description" placeholder="Description" class="form-control" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="difficulty" class="form-label">Difficulty Level</label>
+                                        <select name="difficulty" class="form-select" required>
+                                            <option value="" selected>Choose...</option>
+                                            <option value="1">Easy</option>
+                                            <option value="2">Medium</option>
+                                            <option value="3">Hard</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">Test Case Form</div>
+                            <div class="card-body">
+                                <h5 class="card-title">Please fill out the form below for the test case details.</h5>
+                                <form accept-charset="utf-8">
+                                    <div class="mb-3">
+                                        <label for="inputCase" class="form-label">Input Case</label>
+                                        <textarea name="inputCase" placeholder="Input Case" class="form-control" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="outputCase" class="form-label">Output Case</label>
+                                        <textarea name="outputCase" placeholder="Output Case" class="form-control" rows="3" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea name="description" placeholder="Description" class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="isHidden" class="form-label">Is Hidden</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="isHidden" id="isHidden">
+                                            <label class="form-check-label" for="isHidden">
+                                                Yes, hide this test case
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="codingQuestion" class="form-label">Associated Coding Question</label>
+                                        <select name="codingQuestion" class="form-select" required>
+                                            <option value="" selected>Choose a coding question...</option>
+                                            <option value="1">Reverse a String</option>
+                                            <option value="2">Find the Largest Element in an Array</option>
+                                            <option value="3">Check for Palindrome</option>
+                                            <option value="4">Calculate Fibonacci Sequence</option>
+                                            <option value="5">Sort an Array</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="marks" class="form-label">Marks</label>
+                                        <input type="number" name="marks" placeholder="Marks" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

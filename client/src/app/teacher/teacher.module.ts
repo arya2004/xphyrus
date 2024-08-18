@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ClassroomComponent } from './classroom/classroom.component';
 import { TestCreateComponent } from './test-create/test-create.component';
 import { TestDetailComponent } from './test-detail/test-detail.component';
+import { TeacherRoutingModule } from './teacher-routing.module';
 
 
 
@@ -15,7 +16,8 @@ import { TestDetailComponent } from './test-detail/test-detail.component';
     TestDetailComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TeacherRoutingModule
   ]
 })
 export class TeacherModule { }
