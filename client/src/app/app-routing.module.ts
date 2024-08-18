@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './account/login/login.component';
-import { RegisterComponent } from './account/register/register.component';
+
 
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -12,7 +10,8 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 
 
 const routes: Routes = [
-  {path: '', component:HomeComponent},
+  {path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
+ 
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path: 'a', loadChildren: () => import('./examinee/examinee.module').then(m => m.ExamineeModule)},
   {path: 'Syndicate', loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},

@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastrModule } from 'ngx-toastr';
+import { SideBarComponent } from './side-bar/side-bar.component';
 
 
 
@@ -12,7 +13,8 @@ import { ToastrModule } from 'ngx-toastr';
   declarations: [
     NavBarComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SideBarComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,10 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   exports:[
     NavBarComponent,
-    FooterComponent
-  ]
+    FooterComponent,
+    SideBarComponent
+   
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
 export class CoreModule { }
