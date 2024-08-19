@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Subscription } from 'rxjs';
-import { AssessmentService } from 'src/app/assessment/assessment.service';
+
 
 @Component({
   selector: 'app-new',
@@ -31,7 +31,6 @@ export class NewComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder, 
-    private assessmentService: AssessmentService, 
     private router: Router, 
     private route: ActivatedRoute
   ) {
@@ -84,14 +83,7 @@ export class NewComponent implements OnInit, OnDestroy {
       console.log(formValue);
 
       // Post form data to the server
-      this.assessmentService.postNexus(formValue).subscribe({
-        next: () => this.router.navigateByUrl('/Syndicate'),
-        error: (err) => {
-          // Handle error
-          console.error('Error posting nexus:', err);
-          alert('There was an error creating the assignment. Please try again later.');
-        }
-      });
+      
     } else {
       // Handle form invalid case
       alert('Please fill out all required fields correctly.');

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { NexusService } from 'src/app/nexus/nexus.service';
+
 import { ICompany } from 'src/app/shared/models/ICompany';
 import { INexusDashboard } from 'src/app/shared/models/INexus';
 import { Classroom } from 'src/app/shared/models/teacher/Classroom';
@@ -83,7 +83,7 @@ export class DashboardComponent  implements OnInit {
   newNexusForm: FormGroup;
 
   constructor(
-    private companyService: NexusService, 
+
     private fb: FormBuilder, 
     private router: Router
   ) {
@@ -131,21 +131,7 @@ export class DashboardComponent  implements OnInit {
    * Fetch all companies from the service.
    */
   getAllCompany(): void {
-    this.companyService.getNexus().subscribe({
-      next: res => {
-        this.nexus = res.result.map((c : INexusDashboard) => {
-          // Convert the creationDate to the desired format
-          const date = new Date(c.creationDate);
-          const formattedDate = date.toISOString().split('T')[0];
-          return { ...c, creationDate: formattedDate };
-        });
-        this.dtTrigger.next(null);
-      },
-      error: err => {
-        console.error('Error fetching companies:', err);
-        alert('There was an error fetching the companies. Please try again later.');
-      }
-    });
+   
   }
 
   /**
@@ -153,18 +139,18 @@ export class DashboardComponent  implements OnInit {
    * @param id - The ID of the company to delete
    */
   deleteClassroom(id: string): void {
-    if (confirm('Are you sure you want to delete this company?')) {
-      this.companyService.deleteNexus(id).subscribe({
-        next: res => {
-          console.log('Company deleted:', res);
-          window.location.reload();  
-        },
-        error: err => {
-          console.error('Error deleting company:', err);
-          alert('There was an error deleting the company. Please try again later.');
-        }
-      });
-    }
+    // if (confirm('Are you sure you want to delete this company?')) {
+    //   this.companyService.deleteNexus(id).subscribe({
+    //     next: res => {
+    //       console.log('Company deleted:', res);
+    //       window.location.reload();  
+    //     },
+    //     error: err => {
+    //       console.error('Error deleting company:', err);
+    //       alert('There was an error deleting the company. Please try again later.');
+    //     }
+    //   });
+    // }
   }
 
  

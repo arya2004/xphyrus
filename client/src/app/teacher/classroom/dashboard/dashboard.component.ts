@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { NexusService } from 'src/app/nexus/nexus.service';
+
 import { ICompany } from 'src/app/shared/models/ICompany';
 import { INexusDashboard } from 'src/app/shared/models/INexus';
 import { Classroom } from 'src/app/shared/models/teacher/Classroom';
 import { Test } from 'src/app/shared/models/Test';
+import { NexusService } from '../../nexus.service';
 
 @Component({
   selector: 'app-dashboard',

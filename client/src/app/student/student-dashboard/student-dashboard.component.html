@@ -1,0 +1,86 @@
+<app-student-side-bar></app-student-side-bar>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Student Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+
+    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#joinTestModal">
+        Join Test
+    </button>
+
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-12 mb-3" style="overflow-x: auto">
+                <h2>My Test Results</h2>
+                <table
+                    datatable
+                    [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger"
+                    class="table table-striped"
+                >
+                    <thead>
+                        <tr>
+                            <th scope="col">Test Name</th>
+                            <th scope="col">Marks Awarded</th>
+                            <th scope="col">Submitted Date</th>
+                            <th scope="col">Number of Coding Questions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let result of testResults">
+                            <td>{{ result.test }}</td>
+                            <td>{{ result.marksAwarded }}</td>
+                            <td>{{ result.submittedDate | date: 'medium' }}</td>
+                            <td>{{ result.numberOfCodingQuestion || 'N/A' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <!-- Join Test Modal -->
+                <div class="modal fade" id="joinTestModal" tabindex="-1" data-bs-backdrop="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Join Test</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="joinTestForm" class="needs-validation" (ngSubmit)="onJoinTest()">
+                                    <div class="mb-3">
+                                        <label for="testCode" class="form-label">Test Code</label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="testCode"
+                                            formControlName="testCode"
+                                            [class.is-invalid]="joinTestForm.get('testCode')?.touched && joinTestForm.get('testCode')?.invalid"
+                                            required
+                                        />
+                                        <div *ngIf="joinTestForm.get('testCode')?.errors?.['required']" class="invalid-feedback">
+                                            Test Code is required!
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Join</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Join Test Modal-->
+            </div>
+        </div>
+    </section>
+</main>

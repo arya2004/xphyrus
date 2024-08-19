@@ -15,9 +15,11 @@ const routes: Routes = [
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path: 'a', loadChildren: () => import('./examinee/examinee.module').then(m => m.ExamineeModule)},
   {path: 'teacher', loadChildren: () => import('./teacher/teacher.module').then(m => m.TeacherModule)},
-  {path: 'Syndicate', loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},
-  {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},
-  {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./nexus/nexus.module').then(m => m.NexusModule)},
+  {path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule)},
+  {path: 'exam', loadChildren: () => import('./exam/exam.module').then(m => m.ExamModule)},
+ 
+  {path: 'prot',canActivate:[AuthGuard], loadChildren: () => import('./exam/exam.module').then(m => m.ExamModule)},
+  {path: 'cat',canActivate:[ HasRoleGuard],loadChildren: () => import('./exam/exam.module').then(m => m.ExamModule)},
   { path: '**', component: NotFoundComponent },
   
 
