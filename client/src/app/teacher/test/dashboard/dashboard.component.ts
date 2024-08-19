@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { NexusService } from 'src/app/nexus/nexus.service';
-import { ICompany } from 'src/app/shared/models/ICompany';
+import { CodingQuestion, Difficulty } from 'src/app/shared/models/CodingQuestion';
 import { INexusDashboard } from 'src/app/shared/models/INexus';
-import { Classroom } from 'src/app/shared/models/teacher/Classroom';
 import { Test } from 'src/app/shared/models/Test';
 
 @Component({
@@ -24,7 +23,7 @@ export class DashboardComponent  implements OnInit {
         endDate: new Date(this.testForm.value.endDate),
         duration: this.testForm.value.duration
       };
-      this.tests.push(formData);
+   
       console.log('Test created:', formData);
 
       // Reset the form and close the modal if needed
@@ -34,51 +33,37 @@ export class DashboardComponent  implements OnInit {
     }
   }
 
-    tests: Test[] = [
+  deleteQuestion(title: string): void {
+    this.codingQuestions = this.codingQuestions.filter(q => q.title !== title);
+}
+ 
+    codingQuestions: CodingQuestion[] = [
       {
-        title: 'Math Test 1',
-        description: 'First math test covering algebra and geometry',
-        startDate: new Date(Date.now()),
-        endDate: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2 hours later
-        duration: 120 // Duration in minutes
+          title: 'Two Sum',
+          difficulty: Difficulty.Easy,
+          totalTestCases: 10,
+          totalMarks: 100
       },
       {
-        title: 'Physics Test 1',
-        description: 'Basic physics test including motion and forces',
-        startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day later
-        endDate: new Date(Date.now() + 25.5 * 60 * 60 * 1000), // 1.5 hours later
-        duration: 90
+          title: 'Binary Search',
+          difficulty: Difficulty.Medium,
+          totalTestCases: 15,
+          totalMarks: 150
       },
       {
-        title: 'Chemistry Test 1',
-        description: 'Introductory test on chemical reactions',
-        startDate: new Date(Date.now() + 48 * 60 * 60 * 1000), // 2 days later
-        endDate: new Date(Date.now() + 49.5 * 60 * 60 * 1000), // 1.5 hours later
-        duration: 90
-      },
-      {
-        title: 'English Literature Test',
-        description: 'Test on English literature covering 18th-century poets',
-        startDate: new Date(Date.now() + 72 * 60 * 60 * 1000), // 3 days later
-        endDate: new Date(Date.now() + 73.5 * 60 * 60 * 1000), // 1.5 hours later
-        duration: 90
-      },
-      {
-        title: 'Biology Test 1',
-        description: 'First biology test on cell biology and genetics',
-        startDate: new Date(Date.now() + 96 * 60 * 60 * 1000), // 4 days later
-        endDate: new Date(Date.now() + 98 * 60 * 60 * 1000), // 2 hours later
-        duration: 120
+          title: 'Merge Intervals',
+          difficulty: Difficulty.Hard,
+          totalTestCases: 20,
+          totalMarks: 200
       }
-    ];
+  ];
+  classroomId = 123;
+  testId = 1;
+
+
+
  
- 
-
-
-
-
- 
-  company: ICompany[] = [];
+  
   nexus: INexusDashboard[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -92,21 +77,7 @@ export class DashboardComponent  implements OnInit {
 
   }
 
-  getCourseTypeName(type: number): string {
-    switch (type) {
-      case 1:
-        return 'Theory';
-      case 2:
-        return 'Tutorial';
-      case 3:
-        return 'Lab';
-      default:
-        return 'Unknown';
-    }
-  }
-  /**
-   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
-   */
+
   ngOnInit(): void {
     this.testForm = this.fb.group({
       title: ['', Validators.required],
