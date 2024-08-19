@@ -38,8 +38,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\AdminDto\" />
     <Folder Include="Dto\StudentDto\" />
+    <Folder Include="Dto\TeacherDto\" />
   </ItemGroup>
 
 </Project>

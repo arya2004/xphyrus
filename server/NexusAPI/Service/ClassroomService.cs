@@ -1,96 +1,174 @@
-﻿using NexusAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using NexusAPI.Data;
 using NexusAPI.Dto;
-using NexusAPI.Dto.TeacherDto;
+
 using NexusAPI.Models;
 using NexusAPI.Service.IService;
+using System.Security.Claims;
 
 namespace NexusAPI.Service
 {
     public class ClassroomService : IClassroomService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _applicationDbContext;
 
-        public ClassroomService(ApplicationDbContext context)
+        public ClassroomService(ApplicationDbContext applicationDbContext)
         {
-            _context = context;
+            _applicationDbContext = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
         }
 
-        public async Task<ResponseDto> GetAsync(HttpContext httpContext, Guid id)
+        public async Task<ResponseDto> Create(HttpContext httpContext, Classroom classroom)
         {
-            var responseDto = new ResponseDto();
-
-            var classroom = await _context.Classrooms.FindAsync(id);
             if (classroom == null)
             {
-                responseDto.Message = "Classroom not found.";
-                return responseDto;
+                throw new ArgumentNullException(nameof(classroom));
             }
 
-            responseDto.Result = classroom;
-            responseDto.IsSuccess = true;
-            return responseDto;
-        }
-
-        public async Task<ResponseDto> CreateAsync(ClassroomDTO classroomDto)
-        {
-            var responseDto = new ResponseDto();
-
-            var classroom = new Classroom
+            try
             {
-                Name = classroomDto.Name,
-                Description = classroomDto.Description,
+                var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-               
-            };
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return new ResponseDto(false, "Invalid Token");
+                }
 
-            _context.Classrooms.Add(classroom);
-            await _context.SaveChangesAsync();
+                classroom.Teacher = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+                if (classroom.Teacher == null)
+                {
+                    return new ResponseDto(false, "Teacher not found.");
+                }
 
-            responseDto.Result = classroom;
-            responseDto.IsSuccess = true;
-            responseDto.Message = "Classroom created successfully.";
-            return responseDto;
+                await _applicationDbContext.Classrooms.AddAsync(classroom);
+                await _applicationDbContext.SaveChangesAsync();
+
+                return new ResponseDto(true, "Classroom added successfully.");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return new ResponseDto(false, "An error occurred while adding the classroom. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(false, "An unexpected error occurred. Please try again later.");
+            }
         }
 
-        public async Task<ResponseDto> UpdateAsync(Guid id, ClassroomDTO classroomDto)
+        public async Task<ResponseDto> Delete(HttpContext httpContext, Guid classroomId)
         {
-            var responseDto = new ResponseDto();
+            try
+            {
+                var classroom = await _applicationDbContext.Classrooms.FirstOrDefaultAsync(c => c.ClassroomId == classroomId);
+                if (classroom == null)
+                {
+                    return new ResponseDto(false, "Classroom not found.");
+                }
 
-            var classroom = await _context.Classrooms.FindAsync(id);
+                _applicationDbContext.Classrooms.Remove(classroom);
+                await _applicationDbContext.SaveChangesAsync();
+
+                return new ResponseDto(true, "Classroom deleted successfully.");
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return new ResponseDto(false, "An error occurred while deleting the classroom. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(false, "An unexpected error occurred. Please try again later.");
+            }
+        }
+
+        public async Task<ResponseDto> Edit(HttpContext httpContext, Classroom classroom)
+        {
             if (classroom == null)
             {
-                responseDto.Message = "Classroom not found.";
-                return responseDto;
+                throw new ArgumentNullException(nameof(classroom));
             }
 
-            classroom.Name = classroomDto.Name;
-            classroom.Description = classroomDto.Description;
-
-            await _context.SaveChangesAsync();
-
-            responseDto.Result = classroom;
-            responseDto.IsSuccess = true;
-            responseDto.Message = "Classroom updated successfully.";
-            return responseDto;
-        }
-
-        public async Task<ResponseDto> DeleteAsync(Guid id)
-        {
-            var responseDto = new ResponseDto();
-
-            var classroom = await _context.Classrooms.FindAsync(id);
-            if (classroom == null)
+            try
             {
-                responseDto.Message = "Classroom not found.";
-                return responseDto;
+                var existingClassroom = await _applicationDbContext.Classrooms.FirstOrDefaultAsync(c => c.ClassroomId == classroom.ClassroomId);
+                if (existingClassroom == null)
+                {
+                    return new ResponseDto(false, "Classroom not found.");
+                }
+
+                _applicationDbContext.Entry(existingClassroom).CurrentValues.SetValues(classroom);
+                await _applicationDbContext.SaveChangesAsync();
+
+                return new ResponseDto(true, "Classroom edited successfully.");
             }
-
-            _context.Classrooms.Remove(classroom);
-            await _context.SaveChangesAsync();
-
-            responseDto.IsSuccess = true;
-            responseDto.Message = "Classroom deleted successfully.";
-            return responseDto;
+            catch (DbUpdateException dbEx)
+            {
+                return new ResponseDto(false, "An error occurred while editing the classroom. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(false, "An unexpected error occurred. Please try again later.");
+            }
         }
+
+        public async Task<ResponseDto> Get(HttpContext httpContext, Guid classroomId)
+        {
+            try
+            {
+                var classroom = await _applicationDbContext.Classrooms.FirstOrDefaultAsync(c => c.ClassroomId == classroomId);
+                if (classroom == null)
+                {
+                    return new ResponseDto(false, "Classroom not found.");
+                }
+
+                return new ResponseDto(classroom, true, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(false, "An error occurred while retrieving the classroom. Please try again later.");
+            }
+        }
+
+        public async Task<ResponseDto> GetAll(HttpContext httpContext)
+        {
+            try
+            {
+                var classrooms = await _applicationDbContext.Classrooms.ToListAsync();
+                if (classrooms == null || classrooms.Count == 0)
+                {
+                    return new ResponseDto(false, "No classrooms found.");
+                }
+
+                return new ResponseDto(classrooms, true, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(false, "An error occurred while retrieving classrooms. Please try again later.");
+            }
+        }
+
+        public async Task<ResponseDto> GetMy(HttpContext httpContext)
+        {
+            try
+            {
+                var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return new ResponseDto(false, "Invalid Token");
+                }
+
+                var classrooms = await _applicationDbContext.Classrooms.Where(c => c.Teacher != null && c.Teacher.Id.ToString() == userId).ToListAsync();
+                if (classrooms == null || classrooms.Count == 0)
+                {
+                    return new ResponseDto(false, "No classrooms found for the teacher.");
+                }
+
+                return new ResponseDto(classrooms, true, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto(false, "An error occurred while retrieving your classrooms. Please try again later.");
+            }
+        }
+
+       
     }
 }

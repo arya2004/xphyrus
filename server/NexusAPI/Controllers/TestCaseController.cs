@@ -62,7 +62,7 @@
 //            _responseDto = _authorizationService.VerifyToken(this.HttpContext);
 //            if (!_responseDto.IsSuccess) return _responseDto;
 
-//            TestCase? assessment = await _ApplicationDbContext.TestCases.FirstOrDefaultAsync(_ => _.TestCaseId== new Guid(id));
+//            TestCase? assessment = await _ApplicationDbContext.TestCases.FirstOrDefaultAsync(_ => _.TestCaseId == new Guid(id));
 //            _responseDto.Result = assessment;
 //            _responseDto.IsSuccess = true;
 //            return Ok(_responseDto);
@@ -85,7 +85,7 @@
 
 //        }
 
-        
+
 
 //        [HttpDelete]
 //        [ActionName("Delete")]
@@ -98,14 +98,14 @@
 
 //            try
 //            {
-//                Classroom? company = _ApplicationDbContext.Nexus.FirstOrDefault(_ => _.ClassroomId == id);
+//                Classroom? company = _ApplicationDbContext.Classrooms.FirstOrDefault(_ => _.ClassroomId == id);
 //                if (company == null)
 //                {
 //                    _responseDto.Message = "NOt Found";
 //                    _responseDto.IsSuccess = false;
 //                    return NotFound(_responseDto);
 //                }
-//                _ApplicationDbContext.Nexus.Remove(company);
+//                _ApplicationDbContext.Classrooms.Remove(company);
 //                await _ApplicationDbContext.SaveChangesAsync();
 //                _responseDto.Message = "Deleted Successfully";
 //                _responseDto.IsSuccess = true;

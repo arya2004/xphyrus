@@ -1,13 +1,17 @@
 ﻿using NexusAPI.Dto;
-using NexusAPI.Dto.TeacherDto;
+
+using NexusAPI.Models;
 
 namespace NexusAPI.Service.IService
 {
     public interface IClassroomService
     {
-        Task<ResponseDto> GetAsync(HttpContext httpContext, Guid id);
-        Task<ResponseDto> CreateAsync(ClassroomDTO classroomDto);
-        Task<ResponseDto> UpdateAsync(Guid id, ClassroomDTO classroomDto);
-        Task<ResponseDto> DeleteAsync(Guid id);
+        Task<ResponseDto> Create(HttpContext httpContext, Classroom classroom);
+        Task<ResponseDto> Delete(HttpContext httpContext, Guid classroomId);
+        Task<ResponseDto> Edit(HttpContext httpContext, Classroom classroom);
+        Task<ResponseDto> Get(HttpContext httpContext, Guid classroomId);
+        Task<ResponseDto> GetAll(HttpContext httpContext);
+        Task<ResponseDto> GetMy(HttpContext httpContext);
+       
     }
 }
