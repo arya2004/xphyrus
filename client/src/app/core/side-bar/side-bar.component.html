@@ -4,109 +4,587 @@
     <ul class="sidebar-nav" id="sidebar-nav">
   
       <li class="nav-item">
-        <a class="nav-link " routerLink="/Syndicate">
+        <a class="nav-link " routerLink="/teacher/dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-  
+      <li class="nav-heading">My Classrooms</li>
+     
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav1" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Classroom 1</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Dashboard</span>
+        <div class="d-flex align-items-center justify-content-between">
+            <a class="nav-link" routerLink="/teacher/classroom/101">
+                <i class="bi bi-menu-button-wide"></i><span>Classroom 1</span>
             </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Test 1</span>
+            <a class="nav-link collapsed" data-bs-target="#classroom1-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-chevron-down"></i>
             </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Test 2</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Test 3</span>
-            </a>
-          </li>
-          
+        </div>
+        <ul id="classroom1-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+            <li>
+                <div class="d-flex align-items-center justify-content-between">
+                    <a class="nav-link" routerLink="/teacher/classroom/101/test/1">
+                        <i class="bi bi-menu-button-wide"></i><span>Test 1</span>
+                    </a>
+                    <a class="nav-link collapsed" data-bs-target="#test1-nav" data-bs-toggle="collapse" href="#">
+                        <i class="bi bi-chevron-down"></i>
+                    </a>
+                </div>
+                <ul id="test1-nav" class="nav-content collapse" data-bs-parent="#classroom1-nav">
+                    <li>
+                        <a routerLink="/teacher/classroom/101/test/1">
+                            <i class="bi bi-circle"></i><span>Test Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/teacher/classroom/101/test/1/question/1">
+                            <i class="bi bi-circle"></i><span>Question 1</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/teacher/classroom/101/test/1/question/2">
+                            <i class="bi bi-circle"></i><span>Question 2</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
-      </li><!-- End Components Nav -->
+    </li>
   
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Classroom 2</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a routerLink="/teacher/classroom/123">
-              <i class="bi bi-circle"></i><span>Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="/teacher/classroom/123/test/1">
-              <i class="bi bi-circle"></i><span>Test 1</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Test 2</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Test 3</span>
-            </a>
-          </li>
-          
-        </ul>
-      </li><!-- End Components Nav -->
     
-  
-  
-      <li class="nav-heading">Test</li>
-      
-      <li class="nav-item">
-        <a class="nav-link " routerLink="/Syndicate">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+    <li class="nav-item">
+      <div class="d-flex align-items-center justify-content-between">
+          <a class="nav-link" routerLink="/teacher/classroom/102">
+              <i class="bi bi-menu-button-wide"></i><span>Classroom 2</span>
+          </a>
+          <a class="nav-link collapsed" data-bs-target="#classroom2-nav" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-chevron-down"></i>
+          </a>
+      </div>
+      <ul id="classroom2-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+              <div class="d-flex align-items-center justify-content-between">
+                  <a class="nav-link" routerLink="/teacher/classroom/102/test/1">
+                      <i class="bi bi-menu-button-wide"></i><span>Test 1</span>
+                  </a>
+                  <a class="nav-link collapsed" data-bs-target="#test1-nav" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-down"></i>
+                  </a>
+              </div>
+              <ul id="test1-nav" class="nav-content collapse" data-bs-parent="#classroom2-nav">
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/1/question/1">
+                          <i class="bi bi-circle"></i><span>Question 1</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/1/question/2">
+                          <i class="bi bi-circle"></i><span>Question 2</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/1/question/3">
+                          <i class="bi bi-circle"></i><span>Question 3</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+              <div class="d-flex align-items-center justify-content-between">
+                  <a class="nav-link" routerLink="/teacher/classroom/102/test/2">
+                      <i class="bi bi-menu-button-wide"></i><span>Test 2</span>
+                  </a>
+                  <a class="nav-link collapsed" data-bs-target="#test2-nav" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-down"></i>
+                  </a>
+              </div>
+              <ul id="test2-nav" class="nav-content collapse" data-bs-parent="#classroom2-nav">
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/2/question/1">
+                          <i class="bi bi-circle"></i><span>Question 1</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/2/question/2">
+                          <i class="bi bi-circle"></i><span>Question 2</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+              <div class="d-flex align-items-center justify-content-between">
+                  <a class="nav-link" routerLink="/teacher/classroom/102/test/3">
+                      <i class="bi bi-menu-button-wide"></i><span>Test 3</span>
+                  </a>
+                  <a class="nav-link collapsed" data-bs-target="#test3-nav" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-down"></i>
+                  </a>
+              </div>
+              <ul id="test3-nav" class="nav-content collapse" data-bs-parent="#classroom2-nav">
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/3/question/1">
+                          <i class="bi bi-circle"></i><span>Question 1</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/3/question/2">
+                          <i class="bi bi-circle"></i><span>Question 2</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/3/question/3">
+                          <i class="bi bi-circle"></i><span>Question 3</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/3/question/4">
+                          <i class="bi bi-circle"></i><span>Question 4</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+              <div class="d-flex align-items-center justify-content-between">
+                  <a class="nav-link" routerLink="/teacher/classroom/102/test/4">
+                      <i class="bi bi-menu-button-wide"></i><span>Test 4</span>
+                  </a>
+                  <a class="nav-link collapsed" data-bs-target="#test4-nav" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-down"></i>
+                  </a>
+              </div>
+              <ul id="test4-nav" class="nav-content collapse" data-bs-parent="#classroom2-nav">
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/4/question/1">
+                          <i class="bi bi-circle"></i><span>Question 1</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/4/question/2">
+                          <i class="bi bi-circle"></i><span>Question 2</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+              <div class="d-flex align-items-center justify-content-between">
+                  <a class="nav-link" routerLink="/teacher/classroom/102/test/5">
+                      <i class="bi bi-menu-button-wide"></i><span>Test 5</span>
+                  </a>
+                  <a class="nav-link collapsed" data-bs-target="#test5-nav" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-down"></i>
+                  </a>
+              </div>
+              <ul id="test5-nav" class="nav-content collapse" data-bs-parent="#classroom2-nav">
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/5/question/1">
+                          <i class="bi bi-circle"></i><span>Question 1</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/5/question/2">
+                          <i class="bi bi-circle"></i><span>Question 2</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/102/test/5/question/3">
+                          <i class="bi bi-circle"></i><span>Question 3</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+  </li>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Question 1</span>
+  <li class="nav-item">
+    <div class="d-flex align-items-center justify-content-between">
+        <a class="nav-link" routerLink="/teacher/classroom/103">
+            <i class="bi bi-menu-button-wide"></i><span>Classroom 3</span>
         </a>
-      </li><!-- End Profile Page Nav -->
-  
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>Question 22</span>
+        <a class="nav-link collapsed" data-bs-target="#classroom3-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-chevron-down"></i>
         </a>
-      </li><!-- End F.A.Q Page Nav -->
+    </div>
+    <ul id="classroom3-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+            <div class="d-flex align-items-center justify-content-between">
+                <a class="nav-link" routerLink="/teacher/classroom/103/test/1">
+                    <i class="bi bi-menu-button-wide"></i><span>Test 1</span>
+                </a>
+                <a class="nav-link collapsed" data-bs-target="#test1-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+            </div>
+            <ul id="test1-nav" class="nav-content collapse" data-bs-parent="#classroom3-nav">
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/1/question/1">
+                        <i class="bi bi-circle"></i><span>Question 1</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/1/question/2">
+                        <i class="bi bi-circle"></i><span>Question 2</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/1/question/3">
+                        <i class="bi bi-circle"></i><span>Question 3</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="d-flex align-items-center justify-content-between">
+                <a class="nav-link" routerLink="/teacher/classroom/103/test/2">
+                    <i class="bi bi-menu-button-wide"></i><span>Test 2</span>
+                </a>
+                <a class="nav-link collapsed" data-bs-target="#test2-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+            </div>
+            <ul id="test2-nav" class="nav-content collapse" data-bs-parent="#classroom3-nav">
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/2/question/1">
+                        <i class="bi bi-circle"></i><span>Question 1</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/2/question/2">
+                        <i class="bi bi-circle"></i><span>Question 2</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/2/question/3">
+                        <i class="bi bi-circle"></i><span>Question 3</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="d-flex align-items-center justify-content-between">
+                <a class="nav-link" routerLink="/teacher/classroom/103/test/3">
+                    <i class="bi bi-menu-button-wide"></i><span>Test 3</span>
+                </a>
+                <a class="nav-link collapsed" data-bs-target="#test3-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+            </div>
+            <ul id="test3-nav" class="nav-content collapse" data-bs-parent="#classroom3-nav">
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/3/question/1">
+                        <i class="bi bi-circle"></i><span>Question 1</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/3/question/2">
+                        <i class="bi bi-circle"></i><span>Question 2</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/3/question/3">
+                        <i class="bi bi-circle"></i><span>Question 3</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/3/question/4">
+                        <i class="bi bi-circle"></i><span>Question 4</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="d-flex align-items-center justify-content-between">
+                <a class="nav-link" routerLink="/teacher/classroom/103/test/4">
+                    <i class="bi bi-menu-button-wide"></i><span>Test 4</span>
+                </a>
+                <a class="nav-link collapsed" data-bs-target="#test4-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-chevron-down"></i>
+                </a>
+            </div>
+            <ul id="test4-nav" class="nav-content collapse" data-bs-parent="#classroom3-nav">
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/4/question/1">
+                        <i class="bi bi-circle"></i><span>Question 1</span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/teacher/classroom/103/test/4/question/2">
+                        <i class="bi bi-circle"></i><span>Question 2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+
+    
+<li class="nav-item">
+  <div class="d-flex align-items-center justify-content-between">
+      <a class="nav-link" routerLink="/teacher/classroom/104">
+          <i class="bi bi-menu-button-wide"></i><span>Classroom 4</span>
+      </a>
+      <a class="nav-link collapsed" data-bs-target="#classroom4-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-chevron-down"></i>
+      </a>
+  </div>
+  <ul id="classroom4-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/1">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 1</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test1-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test1-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/1/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/1/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/1/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/2">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 2</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test2-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test2-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/2/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/2/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/2/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/3">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 3</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test3-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test3-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/3/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/3/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/3/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/4">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 4</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test4-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test4-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/4/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/4/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/4/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/5">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 5</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test5-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test5-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/5/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/5/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/5/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/6">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 6</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test6-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test6-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/6/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/6/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/6/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/6/question/4">
+                      <i class="bi bi-circle"></i><span>Question 4</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+      <li>
+          <div class="d-flex align-items-center justify-content-between">
+              <a class="nav-link" routerLink="/teacher/classroom/104/test/7">
+                  <i class="bi bi-menu-button-wide"></i><span>Test 7</span>
+              </a>
+              <a class="nav-link collapsed" data-bs-target="#test7-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-chevron-down"></i>
+              </a>
+          </div>
+          <ul id="test7-nav" class="nav-content collapse" data-bs-parent="#classroom4-nav">
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/7/question/1">
+                      <i class="bi bi-circle"></i><span>Question 1</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/7/question/2">
+                      <i class="bi bi-circle"></i><span>Question 2</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/7/question/3">
+                      <i class="bi bi-circle"></i><span>Question 3</span>
+                  </a>
+              </li>
+              <li>
+                  <a routerLink="/teacher/classroom/104/test/7/question/4">
+                      <i class="bi bi-circle"></i><span>Question 4</span>
+                  </a>
+              </li>
+          </ul>
+      </li>
+  </ul>
+</li>
+
+    
+    <li class="nav-item">
+      <div class="d-flex align-items-center justify-content-between">
+          <a class="nav-link" routerLink="/teacher/classroom/105">
+              <i class="bi bi-menu-button-wide"></i><span>Classroom 5</span>
+          </a>
+          <a class="nav-link collapsed" data-bs-target="#classroom5-nav" data-bs-toggle="collapse" href="#">
+              <i class="bi bi-chevron-down"></i>
+          </a>
+      </div>
+      <ul id="classroom5-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+              <div class="d-flex align-items-center justify-content-between">
+                  <a class="nav-link" routerLink="/teacher/classroom/105/test/5">
+                      <i class="bi bi-menu-button-wide"></i><span>Test 5</span>
+                  </a>
+                  <a class="nav-link collapsed" data-bs-target="#test5-nav" data-bs-toggle="collapse" href="#">
+                      <i class="bi bi-chevron-down"></i>
+                  </a>
+              </div>
+              <ul id="test5-nav" class="nav-content collapse" data-bs-parent="#classroom5-nav">
+                  <li>
+                      <a routerLink="/teacher/classroom/105/test/5">
+                          <i class="bi bi-circle"></i><span>Test Dashboard</span>
+                      </a>
+                  </li>
+                  <li>
+                      <div class="d-flex align-items-center justify-content-between">
+                          <a class="nav-link" routerLink="/teacher/classroom/105/test/5/question/1">
+                              <i class="bi bi-circle"></i><span>Question 1</span>
+                          </a>
+                          <a class="nav-link collapsed" data-bs-target="#question1-nav" data-bs-toggle="collapse" href="#">
+                              <i class="bi bi-chevron-down"></i>
+                          </a>
+                      </div>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/105/test/5/question/2">
+                          <i class="bi bi-circle"></i><span>Question 2</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a routerLink="/teacher/classroom/105/test/5/question/3">
+                          <i class="bi bi-circle"></i><span>Question 3</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+  </li>
   
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Question 3</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-  
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Question 4</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-  
+    
+    <li class="nav-heading">Settings</li>
+      
+     
+    
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
