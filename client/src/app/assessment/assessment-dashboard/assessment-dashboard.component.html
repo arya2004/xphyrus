@@ -1,0 +1,92 @@
+<app-teacher-side-bar></app-teacher-side-bar>
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Testooo Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+    <!-- End Page Title -->
+    <div class="pagetitle">
+      
+     
+    </div>
+  
+    <section class="section dashboard">
+      
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Test Details</h5>
+          <p class="card-text">
+            <strong>Title:</strong> Test Title<br>
+            <strong>Description:</strong> Test Description<br>
+            <strong>Start Date:</strong> 2024-08-20<br>
+            <strong>End Date:</strong> 2024-08-21<br>
+            <strong>Duration:</strong> 120 minutes<br>
+            <strong>Classroom:</strong> Room 102<br>
+          </p>
+          <button type="button" class="btn btn-primary" [routerLink]="['/classroom', classroomId, 'test', testId, 'question', 'new']">
+            Add Question
+          </button>
+          <h5 class="card-title"></h5>
+         
+          <!-- Table with hoverable rows -->
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Difficulty</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr onclick="window.location.href='/classroom/102/test/2/question/1';">
+                <th scope="row">1</th>
+                <td>Question 1 Title</td>
+                <td>Short description of question 1</td>
+                <td>Easy</td>
+              </tr>
+              <tr onclick="window.location.href='/classroom/102/test/2/question/2';">
+                <th scope="row">2</th>
+                <td>Question 2 Title</td>
+                <td>Short description of question 2</td>
+                <td>Medium</td>
+              </tr>
+              <tr onclick="window.location.href='/classroom/102/test/2/question/3';">
+                <th scope="row">3</th>
+                <td>Question 3 Title</td>
+                <td>Short description of question 3</td>
+                <td>Hard</td>
+              </tr>
+              <tr onclick="window.location.href='/classroom/102/test/2/question/4';">
+                <th scope="row">4</th>
+                <td>Question 4 Title</td>
+                <td>Short description of question 4</td>
+                <td>Easy</td>
+              </tr>
+              <tr onclick="window.location.href='/classroom/102/test/2/question/5';">
+                <th scope="row">5</th>
+                <td>Question 5 Title</td>
+                <td>Short description of question 5</td>
+                <td>Medium</td>
+              </tr>
+              <!-- Add more questions as needed -->
+            </tbody>
+          </table>
+          <!-- End Table with hoverable rows -->
+      
+        </div>
+      </div>
+      
+    
+    
+    
+            <!-- End Vertical Pills Tabs -->
+ 
+    </section>
+  </main>
+  

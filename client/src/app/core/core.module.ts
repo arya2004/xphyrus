@@ -7,6 +7,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastrModule } from 'ngx-toastr';
 import { SideBarComponent } from './side-bar/side-bar.component';
 
+import { TeacherSideBarComponent } from './teacher-side-bar/teacher-side-bar.component';
+
+
 
 
 @NgModule({
@@ -14,7 +17,9 @@ import { SideBarComponent } from './side-bar/side-bar.component';
     NavBarComponent,
     FooterComponent,
     NotFoundComponent,
-    SideBarComponent
+    SideBarComponent,
+
+    TeacherSideBarComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +38,8 @@ import { SideBarComponent } from './side-bar/side-bar.component';
   exports:[
     NavBarComponent,
     FooterComponent,
-    SideBarComponent
+    SideBarComponent,
+    TeacherSideBarComponent
    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 

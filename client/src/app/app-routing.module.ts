@@ -11,10 +11,11 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const routes: Routes = [
   {path: '', loadChildren: () => import('./home/home.module').then(m => m.HomeModule)},
- 
+  {path: 'classroom', loadChildren: () => import('./classroom/classroom.module').then(m => m.ClassroomModule)},
+  {path: 'classroom/:classroomId/test', loadChildren: () => import('./assessment/assessment.module').then(m => m.AssessmentModule)},
+  {path: 'classroom/:classroomId/test/:testId/question', loadChildren: () => import('./coding-question/coding-question.module').then(m => m.CodingQuestionModule)},
   {path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)},
   {path: 'a', loadChildren: () => import('./examinee/examinee.module').then(m => m.ExamineeModule)},
-  {path: 'teacher', loadChildren: () => import('./teacher/teacher.module').then(m => m.TeacherModule)},
   {path: 'student', loadChildren: () => import('./student/student.module').then(m => m.StudentModule)},
   {path: 'exam', loadChildren: () => import('./exam/exam.module').then(m => m.ExamModule)},
  

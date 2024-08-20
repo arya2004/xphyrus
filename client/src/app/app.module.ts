@@ -16,10 +16,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { AssessmentDashboardComponent } from './assessment/assessment-dashboard/assessment-dashboard.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AssessmentDashboardComponent
   ],
   imports: [
     BrowserModule,
