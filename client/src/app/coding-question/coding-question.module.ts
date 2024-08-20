@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 
@@ -28,7 +29,8 @@ import { SharedModule } from '../shared/shared.module';
     AngularEditorModule,
     CoreModule,
     SharedModule,
-    DataTablesModule
+    DataTablesModule,
+    MarkdownModule.forRoot() 
   ]
 })
 export class CodingQuestionModule { }

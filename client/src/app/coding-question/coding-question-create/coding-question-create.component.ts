@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Subscription } from 'rxjs';
-
+import { MarkdownModule } from 'ngx-markdown';
 @Component({
   selector: 'app-coding-question-create',
   templateUrl: './coding-question-create.component.html',
@@ -57,10 +57,9 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
       this.registerForm.patchValue({ associatedNexusId: this.id });
     });
     this.codingQuestionForm = this.fb.group({
-      title: [''],
-      description: [''],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
       difficulty: [1],  // Default to Easy
-      test: ['']  // Optional
     });
   }
 
@@ -83,4 +82,6 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
       // Handle the form submission logic here
     }
   }
+
+
 }

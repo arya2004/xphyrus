@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MarkdownService } from 'ngx-markdown';
 
 
 
@@ -10,11 +9,10 @@ import { MarkdownService } from 'ngx-markdown';
 })
 export class ExamDashboardComponent   implements OnInit {
 
-  constructor(private markdownService: MarkdownService) { }
+  constructor() { }
 
   ngOnInit() {
-    // outputs: <p>I am using <strong>markdown</strong>.</p>
-    console.log(this.markdownService.parse('I am using __markdown__.'));
+
   }
   markdown = `
 
