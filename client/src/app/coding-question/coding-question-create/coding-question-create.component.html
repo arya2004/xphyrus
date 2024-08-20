@@ -49,53 +49,46 @@
                         <h5 class="card-title">General Form Elements</h5>
     
                         <!-- General Form Elements -->
-                        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                          <div class="row mb-3">
-                            <label for="inputText" class="col-sm-2 col-form-label">Title</label>
-                            <div class="col-sm-10">
-                              <input formControlName="title" type="text" class="form-control" />
+                        <form [formGroup]="codingQuestionForm" (ngSubmit)="onSubmit()">
+                            <div class="row mb-3">
+                              <label for="inputTitle" class="col-sm-2 col-form-label">Title</label>
+                              <div class="col-sm-10">
+                                <input formControlName="title" type="text" class="form-control" id="inputTitle" />
+                              </div>
                             </div>
-                          </div>
-    
-                          <div class="row mb-3">
-                            <label for="inputDate" class="col-sm-2 col-form-label">Start
-                            </label>
-                            <div class="col-sm-10">
-                              <input formControlName="startDate" type="datetime-local" class="form-control" />
+                          
+                            <div class="row mb-3">
+                              <label for="inputDescription" class="col-sm-2 col-form-label">Description</label>
+                              <div class="col-sm-10">
+                                <textarea formControlName="description" class="form-control" id="inputDescription" style="height: 100px"></textarea>
+                              </div>
                             </div>
-                          </div>
-                          <div class="row mb-3">
-                            <label for="inputTime" class="col-sm-2 col-form-label">End</label>
-                            <div class="col-sm-10">
-                              <input formControlName="endDate" type="datetime-local" class="form-control" />
+                          
+                            <div class="row mb-3">
+                              <label for="inputDifficulty" class="col-sm-2 col-form-label">Difficulty</label>
+                              <div class="col-sm-10">
+                                <select formControlName="difficulty" class="form-control" id="inputDifficulty">
+                                  <option [value]="1">Easy</option>
+                                  <option [value]="2">Medium</option>
+                                  <option [value]="3">Hard</option>
+                                </select>
+                              </div>
                             </div>
-                          </div>
-    
-                          <div class="row mb-3">
-                            <label for="inputPassword" class="col-sm-2 col-form-label">Description</label>
-                            <div class="col-sm-10">
-                              <textarea formControlName="description" class="form-control" style="height: 100px"></textarea>
+                          
+                        
+                            <div class="col-12">
+                              <button class="btn btn-primary w-100" type="submit">Create Coding Question</button>
                             </div>
-                          </div>
-    
-                          <angular-editor formControlName="description" [placeholder]="'Enter text here...'"
-                            [config]="config" [(ngModel)]="description"></angular-editor>
-                          <div class="col-12">
-                            <button class="btn btn-primary w-100" type="submit">
-                              Create Assessment
-                            </button>
-                          </div>
-                        </form>
+                          </form>
+                          
                         <!-- End General Form Elements -->
-                        <div class="border border-dark" style="margin: 20px">
-                          <div [innerHTML]="description"></div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>
     
                   <div class="tab-pane fade" id="bordered-contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <h5 class="card-title">Evaluation Cases</h5>
+                    <h5 class="card-title">Preveiw</h5>
                   </div>
                 </div>
                 <!-- End Bordered Tabs -->

@@ -16,14 +16,9 @@
       <div class="col-xl-12">
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-            <h2>Xphyrus.co</h2>
-            <h3>Arya PAthak</h3>
-            <div class="social-links mt-2">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            </div>
+            <h2>{{ applicationUser?.displayName }}</h2>
+            <h3>{{ applicationUser?.bio }}</h3>
+            
           </div>
         </div>
       </div>
@@ -41,7 +36,7 @@
 
               <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">
-                  Edit Company
+                  Edit Profile
                 </button>
               </li>
 
@@ -55,41 +50,34 @@
             </ul>
             <div class="tab-content pt-2">
               <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                <h5 class="card-title">One Line Pitch</h5>
-                <p class="small fst-italic">
-                  Sunt est soluta temporibus accusantium neque nam maiores
-                  cumque temporibus. Tempora libero non est unde veniam est qui
-                  dolor. Ut sunt iure rerum quae quisquam autem eveniet
-                  perspiciatis odit. Fuga sequi sed ea saepe at unde.
-                </p>
-
-                <h5 class="card-title">Company Details</h5>
-
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">DisplayName</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">Profile Details</h5>
+        
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Display Name</div>
+                    <div class="col-lg-9 col-md-8">{{ applicationUser?.displayName }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">PRN</div>
+                    <div class="col-lg-9 col-md-8">{{ applicationUser?.prn }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Division</div>
+                    <div class="col-lg-9 col-md-8">{{ applicationUser?.division }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Batch</div>
+                    <div class="col-lg-9 col-md-8">{{ applicationUser?.batch }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Bio</div>
+                    <div class="col-lg-9 col-md-8">{{ applicationUser?.bio }}</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Role</div>
+                    <div class="col-lg-9 col-md-8">{{ applicationUser?.type }}</div>
+                  </div>
                 </div>
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Work Email</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Location</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Market</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">CompanySize</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Role</div>
-                  <div class="col-lg-9 col-md-8">Kevin Anderson</div>
-                </div>
-
 
 
               </div>
@@ -97,202 +85,122 @@
               <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                 <!-- Profile Edit Form -->
                 <form [formGroup]="applicationUserForm" class="needs-validation" (ngSubmit)="onSubmit()">
-                  <h5 class="card-title">Company Details</h5>
-                  
-                 
                   <div class="row mb-3 has-validation">
                     <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Display Name</label>
-
-
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            applicationUserForm.get('displlayname')?.touched &&
-                            applicationUserForm.get('displlayname')?.invalid
-                          " formControlName="displlayname" type="text" name="username" class="form-control"
-                        id="yourUsername" required />
-                      <div *ngIf="applicationUserForm.get('displlayname')?.errors?.['required']"
-                        class="invalid-feedback">
+                      <input
+                        [class.is-invalid]="
+                          applicationUserForm.get('displlayname')?.touched &&
+                          applicationUserForm.get('displlayname')?.invalid
+                        "
+                        formControlName="displlayname"
+                        type="text"
+                        class="form-control"
+                        id="displlayname"
+                        required
+                      />
+                      <div *ngIf="applicationUserForm.get('displlayname')?.errors?.['required']" class="invalid-feedback">
                         Display Name is required!
                       </div>
-
                     </div>
                   </div>
-
+      
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">One Line Pitch</label>
-
-
+                    <label for="prn" class="col-md-4 col-lg-3 col-form-label">PRN</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <textarea [class.is-invalid]="
-                            applicationUserForm.get('oneLinePitch')?.touched &&
-                            applicationUserForm.get('oneLinePitch')?.invalid
-                          " formControlName="oneLinePitch" type="text" name="username" class="form-control"
-                        id="yourUsername" required ></textarea>
-                      <div *ngIf="applicationUserForm.get('oneLinePitch')?.errors?.['required']"
-                        class="invalid-feedback">
-                        One Line Pitch is required!
+                      <input
+                        [class.is-invalid]="
+                          applicationUserForm.get('prn')?.touched && applicationUserForm.get('prn')?.invalid
+                        "
+                        formControlName="prn"
+                        type="text"
+                        class="form-control"
+                        id="prn"
+                      />
+                      <div *ngIf="applicationUserForm.get('prn')?.errors?.['required']" class="invalid-feedback">
+                        PRN is required!
                       </div>
-
                     </div>
                   </div>
-                  
+      
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Work Email</label>
-
-
+                    <label for="division" class="col-md-4 col-lg-3 col-form-label">Division</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            applicationUserForm.get('workEmail')?.touched &&
-                            applicationUserForm.get('workEmail')?.invalid
-                          " formControlName="workEmail" type="text" name="username" class="form-control"
-                        id="yourUsername" required />
-                      <div *ngIf="applicationUserForm.get('workEmail')?.errors?.['required']"
-                        class="invalid-feedback">
-                        Work Email is required!
+                      <input
+                        [class.is-invalid]="
+                          applicationUserForm.get('division')?.touched && applicationUserForm.get('division')?.invalid
+                        "
+                        formControlName="division"
+                        type="text"
+                        class="form-control"
+                        id="division"
+                      />
+                      <div *ngIf="applicationUserForm.get('division')?.errors?.['required']" class="invalid-feedback">
+                        Division is required!
                       </div>
-                      <div *ngIf="applicationUserForm.get('workEmail')?.errors?.['email']"
-                        class="invalid-feedback">
-                        Invalid Email!
+                    </div>
+                  </div>
+      
+                  <div class="row mb-3 has-validation">
+                    <label for="batch" class="col-md-4 col-lg-3 col-form-label">Batch</label>
+                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+                      <input
+                        [class.is-invalid]="
+                          applicationUserForm.get('batch')?.touched && applicationUserForm.get('batch')?.invalid
+                        "
+                        formControlName="batch"
+                        type="text"
+                        class="form-control"
+                        id="batch"
+                      />
+                      <div *ngIf="applicationUserForm.get('batch')?.errors?.['required']" class="invalid-feedback">
+                        Batch is required!
                       </div>
-
                     </div>
                   </div>
-
-                 
+      
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Location</label>
-
-
+                    <label for="bio" class="col-md-4 col-lg-3 col-form-label">Bio</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <textarea [class.is-invalid]="
-                            applicationUserForm.get('location')?.touched &&
-                            applicationUserForm.get('location')?.invalid
-                          " formControlName="location" type="text" name="username" class="form-control"
-                        id="yourUsername" required ></textarea>
-                      <div *ngIf="applicationUserForm.get('location')?.errors?.['required']"
-                        class="invalid-feedback">
-                        Location is required!
+                      <textarea
+                        [class.is-invalid]="
+                          applicationUserForm.get('bio')?.touched && applicationUserForm.get('bio')?.invalid
+                        "
+                        formControlName="bio"
+                        class="form-control"
+                        id="bio"
+                        required
+                      ></textarea>
+                      <div *ngIf="applicationUserForm.get('bio')?.errors?.['required']" class="invalid-feedback">
+                        Bio is required!
                       </div>
-
                     </div>
                   </div>
-
+      
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Market</label>
-
-
+                    <label for="type" class="col-md-4 col-lg-3 col-form-label">Role</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            applicationUserForm.get('market')?.touched &&
-                            applicationUserForm.get('market')?.invalid
-                          " formControlName="market" type="text" name="username" class="form-control"
-                        id="yourUsername" required />
-                      <div *ngIf="applicationUserForm.get('market')?.errors?.['required']"
-                        class="invalid-feedback">
-                        Market is required!
+                      <select
+                        [class.is-invalid]="
+                          applicationUserForm.get('type')?.touched && applicationUserForm.get('type')?.invalid
+                        "
+                        formControlName="type"
+                        class="form-select"
+                        id="type"
+                        required
+                      >
+                        <option *ngFor="let role of userRoles" [value]="role.value">{{ role.label }}</option>
+                      </select>
+                      <div *ngIf="applicationUserForm.get('type')?.errors?.['required']" class="invalid-feedback">
+                        Role is required!
                       </div>
-
                     </div>
                   </div>
-
-                  <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Company Size</label>
-
-
-                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      
-                        <select [class.is-invalid]="
-                        applicationUserForm.get('companySize')?.touched &&
-                        applicationUserForm.get('companySize')?.invalid
-                      "  class="form-select" id="companySize" formControlName="companySize" aria-label="Default select example" required>
-                          <option *ngFor="let size of companySizes" [value]="size.value">{{ size.label }}</option>
-                        </select>
-                        <div *ngIf="applicationUserForm.get('companySize')?.errors?.['required']" class="invalid-feedback">
-                          Company Size is required!
-                        </div>
-
-                    </div>
-                  </div>
-
-                  <h5 class="card-title">Company Socials</h5>
-
-                  <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Website Url</label>
-
-
-                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            applicationUserForm.get('websiteUrl')?.touched &&
-                            applicationUserForm.get('websiteUrl')?.invalid
-                          " formControlName="websiteUrl" type="text" name="username" class="form-control"
-                        id="yourUsername" required />
-                      <div *ngIf="applicationUserForm.get('websiteUrl')?.errors?.['required']"
-                        class="invalid-feedback">
-                        Website Url is required!
-                      </div>
-
-                    </div>
-                  </div>
-
-                  <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Linkedin Url</label>
-
-
-                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            applicationUserForm.get('linkedinUrl')?.touched &&
-                            applicationUserForm.get('linkedinUrl')?.invalid
-                          " formControlName="linkedinUrl" type="text" name="username" class="form-control"
-                        id="yourUsername" required />
-                      <div *ngIf="applicationUserForm.get('linkedinUrl')?.errors?.['required']"
-                        class="invalid-feedback">
-                        Linkedin Url is required!
-                      </div>
-
-                    </div>
-                  </div>
-
-                  <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Twitter Url</label>
-
-
-                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input  formControlName="twitterUrl" type="text" name="username" class="form-control"
-                        id="yourUsername" />
-                      
-
-                    </div>
-                  </div>
-
-                  <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Facebook Url</label>
-
-
-                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input formControlName="facebookUrl" type="text" name="username" class="form-control"
-                        id="yourUsername" />
-                      
-
-                    </div>
-                  </div>
-
-
-
+      
                   <div class="text-center">
                     <button type="submit" [disabled]="applicationUserForm.invalid" class="btn btn-primary">
                       Save Changes
                     </button>
-
                   </div>
                 </form>
 

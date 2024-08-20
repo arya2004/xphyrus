@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ICompany } from 'src/app/shared/models/ICompany';
 import { INexusDashboard } from 'src/app/shared/models/INexus';
@@ -13,6 +13,7 @@ import { Test } from 'src/app/shared/models/Test';
   styleUrls: ['./classroom-detail.component.scss']
 })
 export class ClassroomDetailComponent {
+  classroomId: string;
   testForm: FormGroup;
   onTestCreate(): void {
     if (this.testForm.valid) {
@@ -83,8 +84,8 @@ export class ClassroomDetailComponent {
   dtTrigger: Subject<any> = new Subject<any>();
   newNexusForm: FormGroup;
 
-  constructor(
- 
+  constructor(  
+    private route: ActivatedRoute,
     private fb: FormBuilder, 
     private router: Router
   ) {
@@ -118,6 +119,11 @@ export class ClassroomDetailComponent {
       pagingType: 'full_numbers'
     };
     this.getAllCompany();
+    this.route.url.subscribe(urlSegments => {
+      this.classroomId = urlSegments[0].path;
+      console.log(this.classroomId);
+  
+    });
   }
 
   /**
@@ -149,6 +155,11 @@ export class ClassroomDetailComponent {
     // });
   }
 
+  redirectToTest(testId: any) {
+    this.router.navigate(['/classroom',this.classroomId,'test', testId]);
+  }
+  
+  
   /**
    * Delete a company by its ID.
    * @param id - The ID of the company to delete

@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SideBarComponent } from './side-bar/side-bar.component';
 
 import { TeacherSideBarComponent } from './teacher-side-bar/teacher-side-bar.component';
+import { ExamSideBarComponent } from './exam-side-bar/exam-side-bar.component';
 
 
 
@@ -19,7 +20,8 @@ import { TeacherSideBarComponent } from './teacher-side-bar/teacher-side-bar.com
     NotFoundComponent,
     SideBarComponent,
 
-    TeacherSideBarComponent
+    TeacherSideBarComponent,
+      ExamSideBarComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { TeacherSideBarComponent } from './teacher-side-bar/teacher-side-bar.com
     NavBarComponent,
     FooterComponent,
     SideBarComponent,
-    TeacherSideBarComponent
+    TeacherSideBarComponent,
+    ExamSideBarComponent
    
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 

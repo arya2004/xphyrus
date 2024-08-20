@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
 import { Subscription } from 'rxjs';
-import { ExamineeService } from 'src/app/examinee/examinee.service';
 import { Examinee, IExaminee } from 'src/app/shared/models/IExaminee';
 import { ITestRun, TestRun } from 'src/app/shared/models/ITestRun';
+import { ExamService } from '../exam.service';
 
 declare var monaco: any;
 
@@ -70,7 +70,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private studentService: ExamineeService,
+    private studentService: ExamService,
     private route: ActivatedRoute,
     private router: Router
   ) {

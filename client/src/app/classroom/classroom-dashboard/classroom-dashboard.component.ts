@@ -72,7 +72,10 @@ export class ClassroomDashboardComponent implements OnInit {
  
 
 
-
+  redirectToClassroom(classroomId: string) {
+    this.router.navigate(['/classroom', classroomId]);
+  }
+  
 
  
   company: ICompany[] = [];

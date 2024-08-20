@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
         if (user) {
           console.log('User data:', user);
           this.applicationUserForm.patchValue(user);
+          console.log('User data:', this.applicationUserForm.value);
         } else {
           this.applicationUserForm.reset();
         }
@@ -45,18 +46,11 @@ export class ProfileComponent implements OnInit {
   initializeForm(): void {
     this.applicationUserForm = this.fb.group({
       displlayname: ['', Validators.required],
-      companyName: [''],
-      email: [''],
-      workEmail: ['', [Validators.required, Validators.email]],
-      location: [''],
-      market: [''],
-      oneLinePitch: [''],
-      companySize: [null, Validators.required],
-      websiteUrl: ['', [ Validators.required]],
-      twitterUrl: [''],
-      facebookUrl: [''],
-      linkedinUrl: ['', [ Validators.required]],
-      role: ['']
+      prn: ['', Validators.required],
+      division: ['', Validators.required],
+      batch: ['', Validators.required],
+      bio: ['', Validators.required],
+      type: ['', Validators.required]
     });
 
     this.passwordChangeForm = this.fb.group({
@@ -96,4 +90,18 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  userRoles = [
+    { value: 'Student', label: 'Student' },
+    { value: 'Teacher', label: 'Teacher' },
+    { value: 'Admin', label: 'Admin' }
+  ];
+
+  applicationUser = {
+    displayName: 'John Doe',
+    prn: '123456',
+    division: 'A',
+    batch: '2021',
+    bio: 'A brief bio about John Doe.',
+    type: 'Student'
+  };
 }

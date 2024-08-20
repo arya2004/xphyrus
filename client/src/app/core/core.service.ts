@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Classroom } from '../shared/teacherSidebar';
+import { Exam } from '../shared/examSidebar';
 
 @Injectable({
   providedIn: 'root'
@@ -202,4 +203,22 @@ export class CoreService {
     // Use 'of' to simulate an Observable data stream
     return of(sidebarData);
   }
+
+
+  getExamData(): Observable<Exam> {
+    const examData: Exam = {
+      id: 79,
+      title: 'Sample Exam',
+      questions: [
+        { id: 1, title: 'Question 1345' },
+        { id: 2, title: 'Question 2' },
+        { id: 3, title: 'Question 3' },
+        { id: 4, title: 'Question 4' }
+      ]
+    };
+
+    return of(examData);
+  }
+
+  
 }

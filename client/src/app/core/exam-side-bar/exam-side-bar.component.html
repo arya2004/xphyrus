@@ -1,0 +1,37 @@
+<aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <ng-container *ngIf="exam$ | async as exam">
+        <li class="nav-heading">{{ exam.title }}</li>
+  
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="generateRouterLink(exam.id, 0)">
+            <i class="bi bi-grid"></i>
+            <span>Dashboar</span>
+          </a>
+        </li>
+        <!-- End Dashboard Nav -->
+        <li class="nav-heading">Questions</li>
+        <ng-container *ngFor="let question of exam.questions">
+          <li class="nav-item">
+            <a class="nav-link collapsed" [routerLink]="generateRouterLink(exam.id, question.id)">
+              <i class="bi bi-question-circle"></i>
+              <span>{{ question.title }}</span>
+            </a>
+          </li>
+          <!-- End Question Nav -->
+        </ng-container>
+  
+        <li class="nav-heading">Test</li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-login.html">
+            <i class="bi bi-box-arrow-in-right"></i>
+            <span>Submit Test</span>
+          </a>
+        </li>
+        <!-- End Submit Test Nav -->
+  
+      </ng-container>
+    </ul>
+  </aside>
+  <!-- End Sidebar-->
+  

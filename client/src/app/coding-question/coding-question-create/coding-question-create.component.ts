@@ -15,6 +15,7 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
   description = "";
   selectedOption: string = "student";
   registerForm: FormGroup;
+  codingQuestionForm: FormGroup;
 
   // Editor configuration
   config: AngularEditorConfig = {
@@ -55,6 +56,12 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
       // Update associatedNexusId with the id from route params
       this.registerForm.patchValue({ associatedNexusId: this.id });
     });
+    this.codingQuestionForm = this.fb.group({
+      title: [''],
+      description: [''],
+      difficulty: [1],  // Default to Easy
+      test: ['']  // Optional
+    });
   }
 
   /**
@@ -71,21 +78,9 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
    * Handles form submission.
    */
   onSubmit(): void {
-    if (this.registerForm.valid) {
-      const formValue = this.registerForm.value;
-
-      // Convert date fields to ISO string format
-      formValue.startDate = new Date(formValue.startDate).toISOString();
-      formValue.endDate = new Date(formValue.endDate).toISOString();
-
-      // Log form value for debugging
-      console.log(formValue);
-
-      // Post form data to the server
-      
-    } else {
-      // Handle form invalid case
-      alert('Please fill out all required fields correctly.');
+    if (this.codingQuestionForm.valid) {
+      console.log(this.codingQuestionForm.value);
+      // Handle the form submission logic here
     }
   }
 }

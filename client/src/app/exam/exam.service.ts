@@ -1,18 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
-import { IResponse } from '../shared/models/IResponse';
 import { TestRun } from '../shared/models/ITestRun';
-import { Submit } from '../shared/models/ISubmit';
+import { IResponse } from '../shared/models/IResponse';
 
-/**
- * Service to handle operations related to examinees.
- */
 @Injectable({
   providedIn: 'root'
 })
-export class ExamineeService {
+export class ExamService {
 
   private assignmentUrl = environment.assessmentApiUrl;
   private subUrl = "https://localhost:7003/api/TestRun/Run";
