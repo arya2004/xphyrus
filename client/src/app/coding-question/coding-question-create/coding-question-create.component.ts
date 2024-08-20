@@ -12,36 +12,17 @@ import { MarkdownModule } from 'ngx-markdown';
 export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
   id!: string;
   private sub: Subscription | null = null;
-  description = "";
-  selectedOption: string = "student";
-  registerForm: FormGroup;
+
   codingQuestionForm: FormGroup;
 
-  // Editor configuration
-  config: AngularEditorConfig = {
-    editable: true,
-    spellcheck: true,
-    height: '15rem',
-    minHeight: '5rem',
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    defaultParagraphSeparator: 'p',
-    defaultFontName: 'Arial',
-  };
-
+  
   constructor(
     private fb: FormBuilder, 
     private router: Router, 
     private route: ActivatedRoute
   ) {
-    // Initialize form
-    this.registerForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      associatedNexusId: ['']
-    });
+  
+ 
   }
 
   /**
@@ -53,8 +34,7 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
       this.id = params['id'];
       console.log(this.id);
 
-      // Update associatedNexusId with the id from route params
-      this.registerForm.patchValue({ associatedNexusId: this.id });
+  
     });
     this.codingQuestionForm = this.fb.group({
       title: ['', Validators.required],

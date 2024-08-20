@@ -78,11 +78,7 @@ export class ClassroomDashboardComponent implements OnInit {
   
 
  
-  company: ICompany[] = [];
-  nexus: INexusDashboard[] = [];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
-  newNexusForm: FormGroup;
+
 
   constructor(
 
@@ -115,19 +111,11 @@ export class ClassroomDashboardComponent implements OnInit {
       type: ['', Validators.required],
     
     });
-    this.dtOptions = {
-      pagingType: 'full_numbers'
-    };
+
     this.getAllCompany();
   }
 
-  /**
-   * Lifecycle hook that is called when the component is destroyed.
-   */
-  ngOnDestroy(): void {
-    // Complete the DataTable trigger to avoid memory leaks
-    this.dtTrigger.unsubscribe();
-  }
+
 
   /**
    * Fetch all companies from the service.

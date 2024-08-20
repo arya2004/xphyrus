@@ -14,6 +14,19 @@ import { Test } from 'src/app/shared/models/Test';
 })
 export class AssessmentDashboardComponent  implements OnInit {
   testForm: FormGroup;
+
+  ngOnInit(): void {
+    this.testForm = this.fb.group({
+      title: ['', Validators.required],
+      description: [''],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      duration: [0, Validators.required]
+    });
+ 
+    this.getAllCompany();
+  }
+
   onTestCreate(): void {
     if (this.testForm.valid) {
       const formData: Test = {
@@ -63,10 +76,7 @@ export class AssessmentDashboardComponent  implements OnInit {
 
 
  
-  
-  nexus: INexusDashboard[] = [];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
+
   newNexusForm: FormGroup;
 
   constructor(
@@ -78,28 +88,9 @@ export class AssessmentDashboardComponent  implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.testForm = this.fb.group({
-      title: ['', Validators.required],
-      description: [''],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      duration: [0, Validators.required]
-    });
-    this.dtOptions = {
-      pagingType: 'full_numbers'
-    };
-    this.getAllCompany();
-  }
 
-  /**
-   * Lifecycle hook that is called when the component is destroyed.
-   */
-  ngOnDestroy(): void {
-    // Complete the DataTable trigger to avoid memory leaks
-    this.dtTrigger.unsubscribe();
-  }
 
+  
   /**
    * Fetch all companies from the service.
    */

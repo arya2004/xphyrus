@@ -5,7 +5,6 @@ import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastrModule } from 'ngx-toastr';
-import { SideBarComponent } from './side-bar/side-bar.component';
 
 import { TeacherSideBarComponent } from './teacher-side-bar/teacher-side-bar.component';
 import { ExamSideBarComponent } from './exam-side-bar/exam-side-bar.component';
@@ -18,8 +17,6 @@ import { ExamSideBarComponent } from './exam-side-bar/exam-side-bar.component';
     NavBarComponent,
     FooterComponent,
     NotFoundComponent,
-    SideBarComponent,
-
     TeacherSideBarComponent,
       ExamSideBarComponent
   ],
@@ -40,7 +37,6 @@ import { ExamSideBarComponent } from './exam-side-bar/exam-side-bar.component';
   exports:[
     NavBarComponent,
     FooterComponent,
-    SideBarComponent,
     TeacherSideBarComponent,
     ExamSideBarComponent
    

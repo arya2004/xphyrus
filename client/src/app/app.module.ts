@@ -29,23 +29,12 @@ import { AssessmentDashboardComponent } from './assessment/assessment-dashboard/
     CoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
-
     FormsModule, 
     ReactiveFormsModule,
   
-    MatInputModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatSortModule,
-    MatTableModule,
    
     
   
-  ],
-  exports:[
-    MatDatepickerModule, 
-    MatNativeDateModule 
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}

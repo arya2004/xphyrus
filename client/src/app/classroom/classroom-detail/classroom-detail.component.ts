@@ -78,11 +78,8 @@ export class ClassroomDetailComponent {
 
 
  
-  company: ICompany[] = [];
-  nexus: INexusDashboard[] = [];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
-  newNexusForm: FormGroup;
+  
+
 
   constructor(  
     private route: ActivatedRoute,
@@ -115,9 +112,8 @@ export class ClassroomDetailComponent {
       endDate: ['', Validators.required],
       duration: [0, Validators.required]
     });
-    this.dtOptions = {
-      pagingType: 'full_numbers'
-    };
+   
+
     this.getAllCompany();
     this.route.url.subscribe(urlSegments => {
       this.classroomId = urlSegments[0].path;
@@ -126,13 +122,6 @@ export class ClassroomDetailComponent {
     });
   }
 
-  /**
-   * Lifecycle hook that is called when the component is destroyed.
-   */
-  ngOnDestroy(): void {
-    // Complete the DataTable trigger to avoid memory leaks
-    this.dtTrigger.unsubscribe();
-  }
 
   /**
    * Fetch all companies from the service.
