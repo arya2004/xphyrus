@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Subscription } from 'rxjs';
 import { MarkdownModule } from 'ngx-markdown';
+import { CodingQuestion, CodingQuestionService } from '../coding-question.service';
 @Component({
   selector: 'app-coding-question-create',
   templateUrl: './coding-question-create.component.html',
@@ -12,14 +13,15 @@ import { MarkdownModule } from 'ngx-markdown';
 export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
   id!: string;
   private sub: Subscription | null = null;
-
+  testId: string;
   codingQuestionForm: FormGroup;
 
   
   constructor(
     private fb: FormBuilder, 
     private router: Router, 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private codingQuestionService: CodingQuestionService,
   ) {
   
  
@@ -41,6 +43,7 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
       description: ['', Validators.required],
       difficulty: [1],  // Default to Easy
     });
+    this.testId = this.route.snapshot.paramMap.get('testId') || '';
   }
 
   /**
@@ -58,10 +61,31 @@ export class CodingQuestionCreateComponent  implements OnInit, OnDestroy {
    */
   onSubmit(): void {
     if (this.codingQuestionForm.valid) {
-      console.log(this.codingQuestionForm.value);
-      // Handle the form submission logic here
+      let codingQuestion: any = {
+        ...this.codingQuestionForm.value,
+        testId: this.testId
+      };
+      codingQuestion.difficulty = parseInt(codingQuestion.difficulty, 10);
+      console.log('Creating coding question:', codingQuestion);
+
+      this.codingQuestionService.createCodingQuestion(codingQuestion).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            console.log('Coding question created successfully:', data.result);
+            window.location.reload()// Refresh the list of coding questions after creating a new one
+          } else {
+            console.error('Failed to create coding question:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Creation failed:', err);
+        }
+      });
+    } else {
+      console.log('Form is invalid');
     }
+  }
   }
 
 
-}
+

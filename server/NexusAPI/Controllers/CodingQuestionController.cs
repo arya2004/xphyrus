@@ -6,6 +6,7 @@ using NexusAPI.Data;
 using NexusAPI.Dto;
 using NexusAPI.Models;
 using NexusAPI.Service.IService;
+using System.Net.Http;
 
 namespace NexusAPI.Controllers
 {
@@ -40,13 +41,13 @@ namespace NexusAPI.Controllers
             return _responseDto;
         }
 
-        [HttpGet("GetAllByDifficulty")]
-        public async Task<ActionResult<ResponseDto>> GetAllByDifficulty(int difficulty)
+        [HttpGet("GetAllForTest")]
+        public async Task<ActionResult<ResponseDto>> GetAllForTest(Guid testId)
         {
             _responseDto = _authorizationService.VerifyToken(this.HttpContext);
             if (!_responseDto.IsSuccess) return _responseDto;
 
-            _responseDto = await _codingQuestionService.GetAllByDifficulty(HttpContext, (Difficulty)difficulty);
+            _responseDto = await _codingQuestionService.GetAllForTest(this.HttpContext,  testId);
             return _responseDto;
         }
 
@@ -73,7 +74,7 @@ namespace NexusAPI.Controllers
             if (!_responseDto.IsSuccess) return _responseDto;
 
             CodingQuestion questionToSave = _mapper.Map<CodingQuestion>(questionDto);
-            _responseDto = await _codingQuestionService.Create(HttpContext, questionToSave);
+            _responseDto = await _codingQuestionService.Create(HttpContext, questionToSave, questionDto.TestId);
             return _responseDto;
         }
 

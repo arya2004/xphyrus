@@ -2,9 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { ICompany } from 'src/app/shared/models/ICompany';
-import { INexusDashboard } from 'src/app/shared/models/INexus';
+
+
+import { ClassroomService } from '../classroom.service';
 import { Classroom } from 'src/app/shared/models/teacher/Classroom';
+
+
+
+export interface createClassroom {
+  name: string;
+  number: string;
+  description: string;
+  type: number;
+}
+
+
 
 @Component({
   selector: 'app-classroom-dashboard',
@@ -19,52 +31,51 @@ export class ClassroomDashboardComponent implements OnInit {
     { value: 3, viewValue: 'Lab' }
   ];
 
-  classrooms: Classroom[] = [
-    {
-      classroomId: '1',
-      name: 'Math 101',
-      number: 'A1',
-      description: 'Basic Mathematics',
-      type: 1, // Theory
-      creationDate: '2024-08-19T01:30:00.000-05:00'
-    },
-    {
-      classroomId: '2',
-      name: 'Physics Lab',
-      number: 'B2',
-      description: 'Introduction to Physics Lab',
-      type: 3, // Lab
-      creationDate: '2024-08-19T09:00:00.000-05:00'
-    },
-    {
-      classroomId: '3',
-      name: 'English 201',
-      number: 'C3',
-      description: 'Advanced English Literature',
-      type: 1, // Theory
-      creationDate: '2024-08-20T11:00:00.000-05:00'
-    },
-    {
-      classroomId: '4',
-      name: 'Chemistry Tutorial',
-      number: 'D4',
-      description: 'Chemistry Problem Solving Session',
-      type: 2, // Tutorial
-      creationDate: '2024-08-21T14:00:00.000-05:00'
-    },
-    {
-      classroomId: '5',
-      name: 'Computer Science 101',
-      number: 'E5',
-      description: 'Introduction to Computer Science',
-      type: 1, // Theory
-      creationDate: '2024-08-22T16:30:00.000-05:00'
-    }
-  ];
+  classrooms: Classroom[] = []
 
+  
+  constructor(
+
+    private fb: FormBuilder, 
+    private router: Router,
+    private classroomService: ClassroomService
+  ) {
+
+  }
+  
+  ngOnInit(): void {
+    this.classroomForm = this.fb.group({
+      name: ['', Validators.required],
+      number: ['', Validators.required],
+      description: [''], // Description is now optional
+      type: ['', Validators.required],
+    
+    });
+
+    this.fetchClassrooms();
+  }
+
+  responseOutput: any;
   onClassroomCreate(): void {
     if (this.classroomForm.valid) {
-      console.log('Classroom created:', this.classroomForm.value);
+      const classroom: createClassroom = {
+        name: this.classroomForm.value.name,
+        number: this.classroomForm.value.number,
+        description: this.classroomForm.value.description,
+        type: parseInt(this.classroomForm.value.type,10)
+      };
+      console.log('Creating classroom:', classroom);
+
+      this.classroomService.createClassroom(classroom).subscribe({
+        next: data => {
+          this.responseOutput = data.result;
+          window.location.reload()
+          console.log('Classroom created successfully:', data.result);
+        },
+        error: err => {
+          console.error('Creation failed:', err);
+        }
+      });
     } else {
       console.log('Form is invalid');
     }
@@ -80,13 +91,6 @@ export class ClassroomDashboardComponent implements OnInit {
  
 
 
-  constructor(
-
-    private fb: FormBuilder, 
-    private router: Router
-  ) {
-
-  }
 
   getCourseTypeName(type: number): string {
     switch (type) {
@@ -103,25 +107,24 @@ export class ClassroomDashboardComponent implements OnInit {
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
-  ngOnInit(): void {
-    this.classroomForm = this.fb.group({
-      name: ['', Validators.required],
-      number: ['', Validators.required],
-      description: [''], // Description is now optional
-      type: ['', Validators.required],
-    
+ 
+
+
+
+  fetchClassrooms(): void {
+    this.classroomService.getMyClassrooms().subscribe({
+      next: data => {
+        if (data.isSuccess) {
+          this.classrooms = data.result;
+          console.log('Classrooms fetched successfully:', this.classrooms);
+        } else {
+          console.error('Failed to fetch classrooms:', data.message);
+        }
+      },
+      error: err => {
+        console.error('Error fetching classrooms:', err);
+      }
     });
-
-    this.getAllCompany();
-  }
-
-
-
-  /**
-   * Fetch all companies from the service.
-   */
-  getAllCompany(): void {
-   
   }
 
   /**

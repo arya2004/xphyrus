@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+import { CodingQuestionService, CreateTestCase, TestCase } from '../coding-question.service';
 
 @Component({
   selector: 'app-coding-question-dashboard',
@@ -8,35 +11,72 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CodingQuestionDashboardComponent implements OnInit {
   testCaseForm: FormGroup;
-
-  constructor(private fb: FormBuilder) {
+  testCases: TestCase[] = [];
+  codingQuestionId: string;
+  constructor(private fb: FormBuilder,    private testCaseService: CodingQuestionService,
+    private route: ActivatedRoute) {
     // Initialize the form
     this.testCaseForm = this.fb.group({
-      inputCase: ['', Validators.required],
+      inputCase: ['',],
       outputCase: ['', Validators.required],
-      description: [''],
+      description: ['', ],
       isHidden: [false],
-      marks: [0, [Validators.required, Validators.min(0)]]
+      marks: ['', [Validators.required, this.nonNegativeValidator]],
     });
+    this.codingQuestionId = this.route.snapshot.paramMap.get('questionId') || '';
+ 
   }
 
   ngOnInit(): void {
-    // You can add any additional initialization logic here if needed.
+
+    this.fetchTestCases();
+  
   }
 
+  nonNegativeValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (value && +value < 0) {
+      return { negativeMarks: true };
+    }
+    return null;
+  }
+
+  fetchTestCases(): void {
+    this.testCaseService.getTestCasesByCodingQuestion(this.codingQuestionId).subscribe({
+      next: data => {
+        if (data.isSuccess) {
+          this.testCases = data.result;
+          console.log('Test cases fetched successfully:', this.testCases);
+        } else {
+          console.error('Failed to fetch test cases:', data.message);
+        }
+      },
+      error: err => {
+        console.error('Error fetching test cases:', err);
+      }
+    });
+  }
   onSubmit(): void {
     if (this.testCaseForm.valid) {
-      const testCaseData = this.testCaseForm.value;
-      // Handle the save logic here, e.g., send the data to a server or log it
-      console.log('Test Case Data:', testCaseData);
-      
-      // Reset the form after saving if needed
-      this.testCaseForm.reset({
-        inputCase: '',
-        outputCase: '',
-        description: '',
-        isHidden: false,
-        marks: 0
+      const testCase: CreateTestCase = {
+        ...this.testCaseForm.value,
+        codingQuestionId: this.codingQuestionId
+      };
+      console.log('Creating test case:', testCase);
+
+      this.testCaseService.createTestCase(testCase).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            console.log('Test case created successfully:', data.result);
+            this.testCaseForm.reset();
+            this.fetchTestCases(); // Refresh the list of test cases after creating a new one
+          } else {
+            console.error('Failed to create test case:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Creation failed:', err);
+        }
       });
     } else {
       console.log('Form is invalid');

@@ -49,7 +49,7 @@ namespace NexusAPI.Service
             }
         }
 
-        public async Task<ResponseDto> Create(HttpContext httpContext, CodingQuestion codingQuestion)
+        public async Task<ResponseDto> Create(HttpContext httpContext, CodingQuestion codingQuestion,Guid testId)
         {
             if (codingQuestion == null)
             {
@@ -58,6 +58,12 @@ namespace NexusAPI.Service
 
             try
             {
+                var test = await _applicationDbContext.Tests.FirstOrDefaultAsync(c => c.TestId == testId);
+                if (test == null)
+                {
+                    return new ResponseDto(false, "Test not found.");
+                }
+                codingQuestion.Test = test;
                 await _applicationDbContext.CodingQuestions.AddAsync(codingQuestion);
                 await _applicationDbContext.SaveChangesAsync();
 
@@ -144,17 +150,17 @@ namespace NexusAPI.Service
             }
         }
 
-        public async Task<ResponseDto> GetAllByDifficulty(HttpContext httpContext, Difficulty difficulty)
+        public async Task<ResponseDto> GetAllForTest(HttpContext httpContext, Guid testId)
         {
             try
             {
                 var questions = await _applicationDbContext.CodingQuestions
-                    .Where(q => q.Difficulty == difficulty)
+                    .Where(q => q.Test != null && q.Test.TestId == testId)
                     .ToListAsync();
 
                 if (questions == null || questions.Count == 0)
                 {
-                    return new ResponseDto(false, $"No coding questions found for difficulty level: {difficulty}.");
+                    return new ResponseDto(false, $"No coding questions found for Test: {testId}.");
                 }
 
                 return new ResponseDto(questions, true, string.Empty);

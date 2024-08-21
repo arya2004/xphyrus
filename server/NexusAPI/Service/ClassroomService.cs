@@ -33,7 +33,7 @@ namespace NexusAPI.Service
                     return new ResponseDto(false, "Invalid Token");
                 }
 
-                classroom.Teacher = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+                classroom.Teacher = await _applicationDbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
                 if (classroom.Teacher == null)
                 {
                     return new ResponseDto(false, "Teacher not found.");
@@ -155,7 +155,7 @@ namespace NexusAPI.Service
                     return new ResponseDto(false, "Invalid Token");
                 }
 
-                var classrooms = await _applicationDbContext.Classrooms.Where(c => c.Teacher != null && c.Teacher.Id.ToString() == userId).ToListAsync();
+                var classrooms = await _applicationDbContext.Classrooms.Where(c => c.Teacher != null && c.Teacher.Id == userId).ToListAsync();
                 if (classrooms == null || classrooms.Count == 0)
                 {
                     return new ResponseDto(false, "No classrooms found for the teacher.");

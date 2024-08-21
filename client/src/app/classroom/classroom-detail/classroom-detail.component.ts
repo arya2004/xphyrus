@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { ICompany } from 'src/app/shared/models/ICompany';
-import { INexusDashboard } from 'src/app/shared/models/INexus';
-import { Test } from 'src/app/shared/models/Test';
+
+import { ClassroomService, Test, TestDto } from '../classroom.service';
 
 
 @Component({
@@ -15,79 +13,105 @@ import { Test } from 'src/app/shared/models/Test';
 export class ClassroomDetailComponent {
   classroomId: string;
   testForm: FormGroup;
-  onTestCreate(): void {
-    if (this.testForm.valid) {
-      const formData: Test = {
-        title: this.testForm.value.title,
-        description: this.testForm.value.description,
-        startDate: new Date(this.testForm.value.startDate),
-        endDate: new Date(this.testForm.value.endDate),
-        duration: this.testForm.value.duration
-      };
-      this.tests.push(formData);
-      console.log('Test created:', formData);
-
-      // Reset the form and close the modal if needed
-      this.testForm.reset();
-    } else {
-      console.log('Form is invalid');
-    }
-  }
-
-    tests: Test[] = [
-      {
-        title: 'Math Test 1',
-        description: 'First math test covering algebra and geometry',
-        startDate: new Date(Date.now()),
-        endDate: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2 hours later
-        duration: 120 // Duration in minutes
-      },
-      {
-        title: 'Physics Test 1',
-        description: 'Basic physics test including motion and forces',
-        startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day later
-        endDate: new Date(Date.now() + 25.5 * 60 * 60 * 1000), // 1.5 hours later
-        duration: 90
-      },
-      {
-        title: 'Chemistry Test 1',
-        description: 'Introductory test on chemical reactions',
-        startDate: new Date(Date.now() + 48 * 60 * 60 * 1000), // 2 days later
-        endDate: new Date(Date.now() + 49.5 * 60 * 60 * 1000), // 1.5 hours later
-        duration: 90
-      },
-      {
-        title: 'English Literature Test',
-        description: 'Test on English literature covering 18th-century poets',
-        startDate: new Date(Date.now() + 72 * 60 * 60 * 1000), // 3 days later
-        endDate: new Date(Date.now() + 73.5 * 60 * 60 * 1000), // 1.5 hours later
-        duration: 90
-      },
-      {
-        title: 'Biology Test 1',
-        description: 'First biology test on cell biology and genetics',
-        startDate: new Date(Date.now() + 96 * 60 * 60 * 1000), // 4 days later
-        endDate: new Date(Date.now() + 98 * 60 * 60 * 1000), // 2 hours later
-        duration: 120
-      }
-    ];
- 
- 
+  tests: Test[] = [];
 
 
 
-
- 
-  
 
 
   constructor(  
     private route: ActivatedRoute,
     private fb: FormBuilder, 
-    private router: Router
+    private router: Router,
+    private testService: ClassroomService,
   ) {
 
   }
+
+  ngOnInit(): void {
+    this.testForm = this.fb.group({
+      title: ['', Validators.required],
+      description: [''],
+      startDate: ['', [Validators.required, this.startDateValidator]],
+      endDate: ['', [Validators.required, this.endDateValidator.bind(this)]],
+      duration: ['', [Validators.required, this.durationValidator.bind(this)]],
+    });
+
+    // Revalidate the duration whenever startDate or endDate changes
+    this.testForm.get('startDate')?.valueChanges.subscribe(() => {
+      this.testForm.get('duration')?.updateValueAndValidity();
+      this.testForm.get('endDate')?.updateValueAndValidity();
+    });
+
+    this.testForm.get('endDate')?.valueChanges.subscribe(() => {
+      this.testForm.get('duration')?.updateValueAndValidity();
+    });
+   
+
+
+    this.route.url.subscribe(urlSegments => {
+      this.classroomId = urlSegments[0].path;
+      console.log(this.classroomId);
+  
+    });
+
+    this.fetchTests();
+  }
+
+
+
+  onTestCreate(): void {
+    if (this.testForm.valid) {
+      const test: TestDto = {
+        ...this.testForm.value,
+        classroomId: this.classroomId
+      };
+
+      this.testService.createTest(test).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            console.log('Test created successfully:', data.result);
+            window.location.reload() // Refresh the list of tests after creating a new one
+          } else {
+            console.error('Failed to create test:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Creation failed:', err);
+        }
+      });
+    } else {
+      console.log('Form is invalid');
+    }
+  
+  }
+
+  
+ 
+ 
+
+
+
+    fetchTests(): void {
+      this.testService.getTestsByClassroom(this.classroomId).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            this.tests = data.result;
+            console.log('Tests fetched successfully:', this.tests);
+          } else {
+            console.error('Failed to fetch tests:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Error fetching tests:', err);
+        }
+      });
+    }
+ 
+  
+
+
+
 
   getCourseTypeName(type: number): string {
     switch (type) {
@@ -104,25 +128,45 @@ export class ClassroomDetailComponent {
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
-  ngOnInit(): void {
-    this.testForm = this.fb.group({
-      title: ['', Validators.required],
-      description: [''],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      duration: [0, Validators.required]
-    });
-   
-
-    this.getAllCompany();
-    this.route.url.subscribe(urlSegments => {
-      this.classroomId = urlSegments[0].path;
-      console.log(this.classroomId);
   
-    });
+
+  startDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const startDate = control.value ? new Date(control.value) : null;
+    const currentDate = new Date();
+    if (startDate && startDate < currentDate) {
+      return { invalidStartDate: true };
+    }
+    return null;
   }
 
+  endDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const startDateControl = this.testForm?.get('startDate');
+    const endDate = control.value ? new Date(control.value) : null;
+    const startDate = startDateControl?.value ? new Date(startDateControl.value) : null;
+    const currentDate = new Date();
 
+    if (endDate && (endDate < currentDate || (startDate && endDate < startDate))) {
+      return { invalidEndDate: true };
+    }
+    return null;
+  }
+
+  durationValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const startDateControl = this.testForm?.get('startDate');
+    const endDateControl = this.testForm?.get('endDate');
+    const duration = control.value;
+
+    const startDate = startDateControl?.value ? new Date(startDateControl.value) : null;
+    const endDate = endDateControl?.value ? new Date(endDateControl.value) : null;
+
+    if (startDate && endDate) {
+      const differenceInMinutes = (endDate.getTime() - startDate.getTime()) / (1000 * 60);
+      if (duration > differenceInMinutes) {
+        return { invalidDuration: true };
+      }
+    }
+    return null;
+  }
   /**
    * Fetch all companies from the service.
    */

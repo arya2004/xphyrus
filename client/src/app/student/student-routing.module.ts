@@ -9,7 +9,7 @@ import { ResultComponent } from './result/result.component';
 const routes: Routes = [
   
   {path: '', component: StudentDashboardComponent},
-  {path: ':testId', component: ResultComponent},
+  {path: 'result/:testId', component: ResultComponent},
 
 ]
 

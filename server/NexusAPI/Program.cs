@@ -76,9 +76,12 @@ builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IClassroomService, ClassroomService>();
+builder.Services.AddScoped<ITestService, TestService>();
+builder.Services.AddScoped<ITestCaseService, TestCaseService>();
+
 //builder.Services.AddScoped<IResultsService, ResultsService>();
 builder.Services.AddScoped<ICodingQuestionService, CodingQuestionService>();
-//builder.services.addscoped<itestcaseservice, testcaseservice>();
+
 builder.Services.AddScoped<IMQSender, MQSender>();
 
 builder.Services.AddControllers();

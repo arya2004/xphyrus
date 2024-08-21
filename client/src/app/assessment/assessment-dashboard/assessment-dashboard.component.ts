@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { CodingQuestion, Difficulty } from 'src/app/shared/models/CodingQuestion';
+import {  Difficulty } from 'src/app/shared/models/CodingQuestion';
 import { INexusDashboard } from 'src/app/shared/models/INexus';
 import { Test } from 'src/app/shared/models/Test';
+import { Question } from 'src/app/shared/question';
+import { AssessmentService, CodingQuestion } from '../assessment.service';
 
 
 @Component({
@@ -14,6 +16,18 @@ import { Test } from 'src/app/shared/models/Test';
 })
 export class AssessmentDashboardComponent  implements OnInit {
   testForm: FormGroup;
+  classroomId: string;
+  testId: string;
+
+  questions: CodingQuestion[] = [];
+
+  constructor(
+    private route: ActivatedRoute,
+    private fb: FormBuilder, 
+    private router: Router,
+    private codingQuestionService: AssessmentService,
+  ) {}
+
 
   ngOnInit(): void {
     this.testForm = this.fb.group({
@@ -24,8 +38,17 @@ export class AssessmentDashboardComponent  implements OnInit {
       duration: [0, Validators.required]
     });
  
-    this.getAllCompany();
+
+    this.classroomId = this.route.snapshot.paramMap.get('classroomId') || '';
+    this.testId = this.route.snapshot.paramMap.get('testId') || '';
+
+   
+    this.fetchCodingQuestions();
   }
+  navigateTo(link: string): void {
+    this.router.navigateByUrl(link);
+  }
+
 
   onTestCreate(): void {
     if (this.testForm.valid) {
@@ -46,76 +69,35 @@ export class AssessmentDashboardComponent  implements OnInit {
     }
   }
 
-  deleteQuestion(title: string): void {
-    this.codingQuestions = this.codingQuestions.filter(q => q.title !== title);
-}
+
+   // Method to generate the link dynamically
+   generateLink(questionId: any): string {
+    return `/classroom/${this.classroomId}/test/${this.testId}/question/${questionId}`;
+  }
+
+
  
-    codingQuestions: CodingQuestion[] = [
-      {
-          title: 'Two Sum',
-          difficulty: Difficulty.Easy,
-          totalTestCases: 10,
-          totalMarks: 100
+
+
+  fetchCodingQuestions(): void {
+    this.codingQuestionService.getCodingQuestionsByTest(this.testId).subscribe({
+      next: data => {
+        if (data.isSuccess) {
+          this.questions = data.result;
+          console.log('Coding questions fetched successfully:', this.questions);
+        } else {
+          console.error('Failed to fetch coding questions:', data.message);
+        }
       },
-      {
-          title: 'Binary Search',
-          difficulty: Difficulty.Medium,
-          totalTestCases: 15,
-          totalMarks: 150
-      },
-      {
-          title: 'Merge Intervals',
-          difficulty: Difficulty.Hard,
-          totalTestCases: 20,
-          totalMarks: 200
+      error: err => {
+        console.error('Error fetching coding questions:', err);
       }
-  ];
-  classroomId = 123;
-  testId = 1;
-
-
-
- 
-
-  newNexusForm: FormGroup;
-
-  constructor(
-
-    private fb: FormBuilder, 
-    private router: Router
-  ) {
-
+    });
   }
 
 
 
 
-  
-  /**
-   * Fetch all companies from the service.
-   */
-  getAllCompany(): void {
-    // this.companyService.getNexus().subscribe({
-    //   next: res => {
-    //     this.nexus = res.result.map((c : INexusDashboard) => {
-    //       // Convert the creationDate to the desired format
-    //       const date = new Date(c.creationDate);
-    //       const formattedDate = date.toISOString().split('T')[0];
-    //       return { ...c, creationDate: formattedDate };
-    //     });
-    //     this.dtTrigger.next(null);
-    //   },
-    //   error: err => {
-    //     console.error('Error fetching companies:', err);
-    //     alert('There was an error fetching the companies. Please try again later.');
-    //   }
-    // });
-  }
-
-  /**
-   * Delete a company by its ID.
-   * @param id - The ID of the company to delete
-   */
   deleteTest(id: string): void {
     // if (confirm('Are you sure you want to delete this company?')) {
     //   this.companyService.deleteNexus(id).subscribe({

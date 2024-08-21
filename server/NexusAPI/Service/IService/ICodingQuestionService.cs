@@ -9,7 +9,7 @@ namespace NexusAPI.Service.IService
         Task<ResponseDto> GetAsync(HttpContext httpContext, Guid codingQuestionId);
 
 
-        Task<ResponseDto> Create(HttpContext httpContext, CodingQuestion codingQuestion);
+        Task<ResponseDto> Create(HttpContext httpContext, CodingQuestion codingQuestion, Guid testId);
 
 
         Task<ResponseDto> Delete(HttpContext httpContext, Guid codingQuestionId);
@@ -21,7 +21,7 @@ namespace NexusAPI.Service.IService
         Task<ResponseDto> GetAll(HttpContext httpContext);
 
 
-        Task<ResponseDto> GetAllByDifficulty(HttpContext httpContext, Difficulty difficulty);
+        Task<ResponseDto> GetAllForTest(HttpContext httpContext, Guid testId);
     }
 
 }

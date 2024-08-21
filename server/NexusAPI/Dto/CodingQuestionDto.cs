@@ -10,7 +10,6 @@ namespace NexusAPI.Dto
 
         public Difficulty Difficulty { get; set; }
 
-        public ICollection<TestCase>? TestCases { get; set; } = new List<TestCase>();
-  
+        public Guid TestId { get; set; }
     }
 }

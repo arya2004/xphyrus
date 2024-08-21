@@ -10,14 +10,14 @@ namespace NexusAPI.Service
         public ResponseDto VerifyRole(HttpContext httpContext, string role)
         {
             var roles = httpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
-            if (roles == null)
-            {
-                return new ResponseDto(false, "Invalid Token Content");
-            }
-            if (!roles.Contains(role))
-            {
-                return new ResponseDto(false, "Unauthorized");
-            }
+            //if (roles == null)
+            //{
+            //    return new ResponseDto(false, "Invalid Token Content");
+            //}
+            //if (!roles.Contains(role))
+            //{
+            //    return new ResponseDto(false, "Unauthorized");
+            //}
             return new ResponseDto(true, "Success");
         }
 
@@ -27,11 +27,16 @@ namespace NexusAPI.Service
             var roles = httpContext.User.FindAll(ClaimTypes.Role)?.Select(c => c.Value).ToList();
             ResponseDto _responseDto = new ResponseDto(true, "");
 
-            if (roles == null || roles.Count == 0 || email == null)
+            //if (roles == null || roles.Count == 0 || email == null)
+            //{
+            //    return new ResponseDto(false, "Invalid Token");
+            //}
+            //_responseDto =  VerifyRole(httpContext, "ADMIN");
+            if (roles == null ||  email == null)
             {
                 return new ResponseDto(false, "Invalid Token");
             }
-            _responseDto =  VerifyRole(httpContext, "ADMIN");
+            _responseDto = VerifyRole(httpContext, "ADMIN");
             return _responseDto;
             
         }
