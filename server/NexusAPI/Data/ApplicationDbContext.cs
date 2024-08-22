@@ -21,6 +21,7 @@ namespace NexusAPI.Data
    
         public DbSet<Test> Tests { get; set; }
          public DbSet<StudentAnswer> StudentAnswers { get; set; }
+        public DbSet<StudentAnswerMetadata> StudentAnswerMetadatas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -5,7 +5,7 @@ import { DiffEditorModel, NgxEditorModel } from 'ngx-monaco-editor-v2';
 import { Subscription } from 'rxjs';
 import { Examinee, IExaminee } from 'src/app/shared/models/IExaminee';
 import { ITestRun, TestRun } from 'src/app/shared/models/ITestRun';
-import { ExamService } from '../exam.service';
+import { ExamService, StartTestResponseDto, SubmitQuestionDto, Test } from '../exam.service';
 
 declare var monaco: any;
 
@@ -17,9 +17,11 @@ declare var monaco: any;
 })
 export class CodeEditorComponent implements OnInit, OnDestroy {
   id: string;
+  questionId: string;
+  testId: string;
   title: string;
   private sub: Subscription;
-  submissionForm: FormGroup;
+ 
   codeInput: string = 'Sample Code';
   editor: any;
   diffEditor: any;
@@ -51,7 +53,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   };
   description: string = "<p>Write a function to find the longest common prefix string amongst an array of strings.</p><p>If there is no common prefix, return an empty string&#160;<code>&#34;&#34;</code>.</p><p>&#160;</p><p><span class=\"example\">Example 1:</span></p><pre><span>Input:</span> strs = [&#34;flower&#34;,&#34;flow&#34;,&#34;flight&#34;]&#10;<span>Output:</span> &#34;fl&#34;&#10;</pre><p><span class=\"example\">Example 2:</span></p><pre><span>Input:</span> strs = [&#34;dog&#34;,&#34;racecar&#34;,&#34;car&#34;]&#10;<span>Output:</span> &#34;&#34;&#10;<span>Explanation:</span> There is no common prefix among the input strings.&#10;</pre><p>&#160;</p><p><span>Constraints:</span></p><ul><li><code>1 &lt;= strs.length &lt;= 200</code></li><li><code>0 &lt;= strs[i].length &lt;= 200</code></li><li><code>strs[i]</code>&#160;consists of only lowercase English letters.</li></ul>";
   above: FormGroup;
-  responseOutput: object = {};
+
   languageForm: FormGroup;
   languages = [
   
@@ -68,19 +70,19 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     
   ];
 
+  examForm: FormGroup;
+  currentTest: StartTestResponseDto | null = null;
+  responseOutput: any;
+  private testSubscription: Subscription;
+
   constructor(
     private fb: FormBuilder,
     private studentService: ExamService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private examService: ExamService
   ) {
-    this.submissionForm = this.fb.group({
-      name: ['', Validators.required],
-      linkedin: [''],
-      twitter: [''],
-      email: ['', [Validators.required, Validators.email]],
-      language: ['']
-    });
+   
 
     this.above = this.fb.group({
       input: [''],
@@ -92,33 +94,33 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
   ngOnInit(): void {
     this.updateOptions();
     this.sub = this.route.params.subscribe(params => {
       this.id = params['questionId'];
-      this.loadAssessment(this.id);
+      this.questionId = params['questionId'];
+      this.testId = params['testId'];
+      //this.loadAssessment(this.id);
+      //this.fetchTests();
+    });
+    this.testSubscription = this.examService.getTest().subscribe(testData => {
+      this.currentTest = testData;
+      if (testData) {
+        console.log('Test data updated:', testData);
+      }
     });
   }
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    if (this.testSubscription) {
+      this.testSubscription.unsubscribe();
+    }
   }
 
-  /**
-   * Load assessment details by ID
-   * @param id Assessment ID
-   */
-  private loadAssessment(id: string): void {
-    this.studentService.getOneAssessment(id).subscribe({
-      next: data => {
-        this.title = data.result.title;
-        this.description = data.result.description;
-      },
-      error: err => {
-        console.error('Failed to load assessment:', err);
-      }
-    });
-  }
+  
 
   /**
    * Update editor options
@@ -150,79 +152,126 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   /**
    * Handle test run action
-   */
-  testRun(): void {
-    if (this.languageForm.invalid) {
-      console.error('Language form is invalid');
-      return;
-    }
+  //  */
+  // testRun(): void {
+  //   if (this.languageForm.invalid) {
+  //     console.error('Language form is invalid');
+  //     return;
+  //   }
 
-    const coding: ITestRun = new TestRun();
-    coding.source_code = this.code;
-    const selectedLanguageId = this.languageForm.value.selectedLanguage;
-    const selectedLanguage = this.languages.find(lang => lang.id === selectedLanguageId);
+  //   const coding: ITestRun = new TestRun();
+  //   coding.source_code = this.code;
+  //   const selectedLanguageId = this.languageForm.value.selectedLanguage;
+  //   const selectedLanguage = this.languages.find(lang => lang.id === selectedLanguageId);
 
-    if (!selectedLanguage) {
-      console.error('Selected language not found');
-      return;
-    }
+  //   if (!selectedLanguage) {
+  //     console.error('Selected language not found');
+  //     return;
+  //   }
 
-    coding.stdin = this.above.value.input;
-    coding.exprected_output = this.above.value.output;
+  //   coding.stdin = this.above.value.input;
+  //   coding.exprected_output = this.above.value.output;
 
-    this.studentService.testRun(coding).subscribe({
-      next: data => {
-        this.responseOutput = data.result;
-        console.log(data.result);
-      },
-      error: err => {
-        console.error('Test run failed:', err);
-      }
-    });
-  }
+  //   this.studentService.testRun(coding).subscribe({
+  //     next: data => {
+  //       this.responseOutput = data.result;
+  //       console.log(data.result);
+  //     },
+  //     error: err => {
+  //       console.error('Test run failed:', err);
+  //     }
+  //   });
+  // }
 
   /**
    * Handle form submission
-   */
-  onSubmit(): void {
-    const coding: ITestRun = new TestRun();
-    coding.source_code = this.code;
-    coding.stdin = this.above.value.input;
-    coding.exprected_output = this.above.value.output;
+  //  */
+  // onSubmit(): void {
+  //   const coding: ITestRun = new TestRun();
+  //   coding.source_code = this.code;
+  //   coding.stdin = this.above.value.input;
+  //   coding.exprected_output = this.above.value.output;
 
-    this.studentService.testRun(coding).subscribe({
-      next: data => {
-        this.responseOutput = data.result;
-        console.log(data.result);
-      },
-      error: err => {
-        console.error('Submission failed:', err);
-      }
-    });
-  }
+  //   this.studentService.testRun(coding).subscribe({
+  //     next: data => {
+  //       this.responseOutput = data.result;
+  //       console.log(data.result);
+  //     },
+  //     error: err => {
+  //       console.error('Submission failed:', err);
+  //     }
+  //   });
+  // }
 
   /**
    * Handle code submission
    */
-  onCodeSubmit(): void {
-    const coding: IExaminee = new Examinee();
-    coding.source_code = this.code;
-    coding.email = this.submissionForm.value.email || '';
-    coding.linkedIn = this.submissionForm.value.linkedin || '';
-    coding.name = this.submissionForm.value.name || '';
-    coding.twitter = this.submissionForm.value.twitter || '';
-    coding.language = this.languageForm.value.selectedLanguage || '';
-    coding.input = this.above.value.input || '';
-    coding.assessmentId = this.id;
+  // onCodeSubmit(): void {
+  //   const coding: IExaminee = new Examinee();
+  //   coding.source_code = this.code;
+  //   coding.email = this.submissionForm.value.email || '';
+  //   coding.linkedIn = this.submissionForm.value.linkedin || '';
+  //   coding.name = this.submissionForm.value.name || '';
+  //   coding.twitter = this.submissionForm.value.twitter || '';
+  //   coding.language = this.languageForm.value.selectedLanguage || '';
+  //   coding.input = this.above.value.input || '';
+  //   coding.assessmentId = this.id;
 
-    this.studentService.submitRun(coding).subscribe({
-      next: () => {
-        this.router.navigateByUrl('');
-      },
-      error: err => {
-        console.error('Code submission failed:', err);
-        this.router.navigateByUrl('');
-      }
-    });
+  //   this.studentService.submitRun(coding).subscribe({
+  //     next: () => {
+  //       this.router.navigateByUrl('');
+  //     },
+  //     error: err => {
+  //       console.error('Code submission failed:', err);
+  //       this.router.navigateByUrl('');
+  //     }
+  //   });
+  // }
+
+  onSubmitQuestion(): void {
+    
+    ;
+    if (this.currentTest) {
+      const submitQuestionDto: SubmitQuestionDto = {
+        submittedCode: this.code,
+        marksAwarded: 0 // Initially zero, to be updated later
+      };
+
+      this.examService.submitQuestion(submitQuestionDto, this.questionId).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            console.log('Question submitted successfully:', data.result);
+          } else {
+            console.error('Failed to submit question:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Question submission failed:', err);
+        }
+      });
+    } else {
+      console.error('No test in progress');
+    }
+  }
+
+  onSubmitTest(): void {
+    if (this.currentTest) {
+      const testId: string = this.currentTest.test.testId;
+
+      this.examService.submitTest(testId).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            console.log('Test submitted successfully');
+          } else {
+            console.error('Failed to submit test:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Test submission failed:', err);
+        }
+      });
+    } else {
+      console.error('No test in progress');
+    }
   }
 }

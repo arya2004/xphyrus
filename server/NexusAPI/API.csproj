@@ -38,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\StudentDto\" />
     <Folder Include="Dto\TeacherDto\" />
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NexusAPI.Data;
 
@@ -11,9 +12,11 @@ using NexusAPI.Data;
 namespace NexusAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240822204604_metadata")]
+    partial class metadata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -521,7 +524,7 @@ namespace NexusAPI.Migrations
                         .HasForeignKey("StudentIdId");
 
                     b.HasOne("NexusAPI.Models.Test", "Test")
-                        .WithMany("StudentAnswerMetadatas")
+                        .WithMany()
                         .HasForeignKey("TestId");
 
                     b.Navigation("StudentId");
@@ -574,8 +577,6 @@ namespace NexusAPI.Migrations
             modelBuilder.Entity("NexusAPI.Models.Test", b =>
                 {
                     b.Navigation("CodingQuestions");
-
-                    b.Navigation("StudentAnswerMetadatas");
                 });
 #pragma warning restore 612, 618
         }

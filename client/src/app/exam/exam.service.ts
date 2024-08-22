@@ -3,51 +3,106 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
 import { TestRun } from '../shared/models/ITestRun';
-import { IResponse } from '../shared/models/IResponse';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+export interface IResponse<T> {
+  result: T;
+  isSuccess: boolean;
+  message: string;
+}
+
+
+export interface Test {
+  testId: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  duration: number;
+  classroomId: string;
+  codingQuestions: CodingQuestion[];
+}
+
+export interface CodingQuestion {
+  codingQuestionId: string;
+  questionText: string;
+  maxMarks: number;
+  testId: string;
+}
+
+export interface StartTestResponseDto {
+  test: Test;
+  studentAnswerMetadataId: string;
+}
+
+export interface SubmitQuestionDto {
+  submittedCode: string;
+  marksAwarded: number;
+}
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamService {
 
-  private assignmentUrl = environment.assessmentApiUrl;
-  private subUrl = "https://localhost:7003/api/TestRun/Run";
-  private doneUrl = "https://localhost:5000/api/Submission/Submit";
-  private studUrl = "https://localhost:7000/api/Participants/Joined";
-  private joinUrl = "https://localhost:7000/api/Participants/Register";
+  
+  private apiUrl = 'https://localhost:5000/api/StudentTest'; // Replace with your actual API URL
 
-  /**
-   * Constructor to inject necessary services.
-   * @param http HttpClient to perform HTTP requests.
-   * @param router Router to navigate between routes.
-   */
-  constructor(private http: HttpClient, private router: Router) { }
+  // BehaviorSubject to hold the current test data
+  private testSubject = new BehaviorSubject<StartTestResponseDto | null>(null);
 
-  /**
-   * Method to trigger a test run.
-   * @param code The TestRun object containing the test details.
-   * @returns Observable of the response.
-   */
-  testRun(code: TestRun) {
-    return this.http.post<IResponse<any>>(this.subUrl, code);
+  constructor(private http: HttpClient) {}
+
+  // Expose the test as an observable for components to subscribe to
+  getTest(): Observable<StartTestResponseDto | null> {
+    return this.testSubject.asObservable();
   }
 
-  /**
-   * Method to submit a test run.
-   * @param code The submission data.
-   * @returns Observable of the response.
-   */
-  submitRun(code: any) {
-    return this.http.post<IResponse<any>>(this.doneUrl, code);
+  // Update the test subject when a test is started
+  startTest(testId: string): Observable<IResponse<StartTestResponseDto>> {
+    return new Observable<IResponse<StartTestResponseDto>>(observer => {
+      this.http.post<IResponse<StartTestResponseDto>>(`${this.apiUrl}/StartTest?testId=${testId}`, {}).subscribe({
+        next: (data) => {
+          if (data.isSuccess) {
+            this.testSubject.next(data.result); // Update the BehaviorSubject with the new test data
+          }
+          observer.next(data);
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
+    });
   }
 
-  /**
-   * Method to get one assessment by its ID.
-   * @param nexus The ID of the assessment.
-   * @returns Observable of the response.
-   */
-  getOneAssessment(nexus: any) {
-    const url = `https://localhost:5000/api/CodingAssessment/GetOne?id=${nexus}`;
-    return this.http.get<IResponse<any>>(url);
+  // Method to submit a question
+  submitQuestion(submitQuestionDto: SubmitQuestionDto, questionId: string): Observable<IResponse<any>> {
+    return this.http.post<IResponse<any>>(`${this.apiUrl}/SubmitQuestion?questionId=${questionId}`, submitQuestionDto);
+  }
+
+  // Method to submit the entire test
+  submitTest(testId: string): Observable<IResponse<any>> {
+    return new Observable<IResponse<any>>(observer => {
+      this.http.post<IResponse<any>>(`${this.apiUrl}/SubmitTest?testId=${testId}`, {}).subscribe({
+        next: (data) => {
+          if (data.isSuccess) {
+            this.testSubject.next(null); // Clear the test data when the test is submitted
+          }
+          observer.next(data);
+          observer.complete();
+        },
+        error: (err) => {
+          observer.error(err);
+        }
+      });
+    });
+  }
+
+  // Optional method to clear the test data manually
+  clearTest(): void {
+    this.testSubject.next(null);
   }
 }

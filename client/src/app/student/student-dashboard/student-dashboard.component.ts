@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ExamService } from 'src/app/exam/exam.service';
 import { StudentAnswer } from 'src/app/shared/models/StudentAnswer';
 
 @Component({
@@ -19,25 +20,46 @@ export class StudentDashboardComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   newNexusForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private examService: ExamService) {
     this.joinTestForm = this.fb.group({
       testCode: ['', Validators.required]
     });
   }
-  onJoinTest(): void {
-    const testCode = this.joinTestForm.value.testCode;
-    if (this.joinTestForm.valid) {
+  // onJoinTest(): void {
+  //   const testCode = this.joinTestForm.value.testCode;
+  //   if (this.joinTestForm.valid) {
     
-      // Redirect to the exam page with the test code
-      this.router.navigate([`/exam/${testCode}`]);
-    }else{
+  //     // Redirect to the exam page with the test code
+  //     this.router.navigate([`/exam/${testCode}`]);
+  //   }else{
+  //     console.log('Form is invalid');
+  //     this.router.navigate([`/exam/${testCode}`]);
+  //   }
+  // }
+
+  onJoinTest(): void {
+    if (this.joinTestForm.valid) {
+      const testId: string = this.joinTestForm.value.testCode;
+      console.log('Starting test:', testId);
+
+      this.examService.startTest(testId).subscribe({
+        next: data => {
+          if (data.isSuccess) {
+            console.log('Test started successfully:', data.result);
+            this.router.navigate([`/exam/${testId}`]);
+          } else {
+            console.error('Failed to start test:', data.message);
+          }
+        },
+        error: err => {
+          console.error('Test start failed:', err);
+        }
+      });
+    } else {
       console.log('Form is invalid');
-      this.router.navigate([`/exam/${testCode}`]);
     }
   }
-  /**
-   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
-   */
+ 
   ngOnInit(): void {
    
     this.dtOptions = {
@@ -52,17 +74,13 @@ export class StudentDashboardComponent implements OnInit {
     ];
   }
 
-  /**
-   * Lifecycle hook that is called when the component is destroyed.
-   */
+  
   ngOnDestroy(): void {
     // Complete the DataTable trigger to avoid memory leaks
     this.dtTrigger.unsubscribe();
   }
 
-  /**
-   * Fetch all companies from the service.
-   */
+
   getAllCompany(): void {
   
   }
