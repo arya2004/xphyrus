@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NexusAPI.Dto;
 using NexusAPI.Dto.StudentDto;
+using NexusAPI.Models;
 using NexusAPI.Service.IService;
 
 namespace NexusAPI.Controllers
@@ -31,6 +32,8 @@ namespace NexusAPI.Controllers
             if (!_responseDto.IsSuccess) return _responseDto;
 
             _responseDto = await _studentTestService.StartTest(this.HttpContext, testId);
+  
+
             return _responseDto;
         }
 

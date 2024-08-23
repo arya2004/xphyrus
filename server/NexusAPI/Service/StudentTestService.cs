@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NexusAPI.Data;
 using NexusAPI.Dto;
 using NexusAPI.Dto.StudentDto;
@@ -11,9 +12,11 @@ namespace NexusAPI.Service
     public class StudentTestService : IStudentTestService
     {
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IMapper _mapper;
 
-        public StudentTestService(ApplicationDbContext applicationDbContext)
+        public StudentTestService(IMapper mapper, ApplicationDbContext applicationDbContext)
         {
+            _mapper = mapper;
             _applicationDbContext = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
         }
 
@@ -50,9 +53,11 @@ namespace NexusAPI.Service
             await _applicationDbContext.StudentAnswerMetadatas.AddAsync(studentAnswerMetadata);
             await _applicationDbContext.SaveChangesAsync();
 
+            StudentTestDto studentTestDto = _mapper.Map<StudentTestDto>(test);
+
             var responseData = new StartTestResponseDto
             {
-                Test = test,
+                Test = studentTestDto,
                 StudentAnswerMetadataId = studentAnswerMetadata.StudentAnswerMetadataId
             };
 

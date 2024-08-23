@@ -1,10 +1,9 @@
 <app-exam-side-bar></app-exam-side-bar>
-<main id="main" class="main">
+<main id="main" class="main" style="overflow-y: auto; max-height: calc(100vh - 150px);">
     <div class="parent">
       <div class="smolchild">
         <h3>Title: {{ title }}</h3>
-        <h3>{{ id }}</h3>
-  
+        <h3>Question ID: {{ question?.codingQuestionId }}</h3>
         
       </div>
   
@@ -42,7 +41,7 @@
       </div>
   
       <div class="child">
-        <div [innerHTML]="description"></div>
+        <markdown [data]="description"></markdown>
         <form class="add-cases-form" [formGroup]="above">
           <h1>Test Run:</h1>
   

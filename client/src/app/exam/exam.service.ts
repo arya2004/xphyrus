@@ -19,15 +19,14 @@ export interface Test {
   startDate: string;
   endDate: string;
   duration: number;
-  classroomId: string;
   codingQuestions: CodingQuestion[];
 }
 
 export interface CodingQuestion {
   codingQuestionId: string;
-  questionText: string;
-  maxMarks: number;
-  testId: string;
+  title: string;
+  description: string;
+  difficulty: number;
 }
 
 export interface StartTestResponseDto {
