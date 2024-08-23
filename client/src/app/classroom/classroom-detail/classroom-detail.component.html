@@ -1,162 +1,235 @@
 <app-teacher-side-bar></app-teacher-side-bar>
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Classroom Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-    </div>
-    <!-- End Page Title -->
-    <div class="pagetitle">
-      <h1>Tests</h1>
-     
-    </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTestModal">
-      Create New Test
-    </button>
-    <section class="section dashboard">
-      <div class="row">
-        <div class="col-lg-12 mb-3" style="overflow-x: auto">
-            <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                    <th scope="col">Duration (minutes)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    *ngFor="let test of tests; let i = index"
-                    (click)="redirectToTest(test.testId)"
-                    style="cursor: pointer;"
-                  >
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td>{{ test.title }}</td>
-                    <td>{{ test.description }}</td>
-                    <td>{{ test.startDate | date:'medium' }}</td>
-                    <td>{{ test.endDate | date:'medium' }}</td>
-                    <td>{{ test.duration }}</td>
-                  </tr>
-                </tbody>
-              </table>
-              
-          </div>
-          
-        
-  
-          <div class="card">
-            <!-- Create Test Modal -->
-            <div class="modal fade" id="createTestModal" tabindex="-1" data-bs-backdrop="false">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Create New Test</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form [formGroup]="testForm" class="needs-validation" (ngSubmit)="onTestCreate()">
-                      <div class="mb-3">
-                        <label for="testTitle" class="form-label">Test Title</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="testTitle"
-                          formControlName="title"
-                          [class.is-invalid]="testForm.get('title')?.touched && testForm.get('title')?.invalid"
-                          required
-                        />
-                        <div *ngIf="testForm.get('title')?.errors?.['required']" class="invalid-feedback">
-                          Test Title is required!
-                        </div>
-                      </div>
-                    
-                      <div class="mb-3">
-                        <label for="testDescription" class="form-label">Description</label>
-                        <textarea
-                          class="form-control"
-                          id="testDescription"
-                          formControlName="description"
-                          [class.is-invalid]="testForm.get('description')?.touched && testForm.get('description')?.invalid"
-                        ></textarea>
-                      </div>
-                    
-                      <div class="mb-3">
-                        <label for="startDate" class="form-label">Start Date</label>
-                        <input
-                          type="datetime-local"
-                          class="form-control"
-                          id="startDate"
-                          formControlName="startDate"
-                          [class.is-invalid]="testForm.get('startDate')?.touched && testForm.get('startDate')?.invalid"
-                          required
-                        />
-                        <div *ngIf="testForm.get('startDate')?.errors?.['required']" class="invalid-feedback">
-                          Start Date is required!
-                        </div>
-                        <div *ngIf="testForm.get('startDate')?.errors?.['invalidStartDate']" class="invalid-feedback">
-                          Start Date should not be in the past.
-                        </div>
-                      </div>
-                    
-                      <div class="mb-3">
-                        <label for="endDate" class="form-label">End Date</label>
-                        <input
-                          type="datetime-local"
-                          class="form-control"
-                          id="endDate"
-                          formControlName="endDate"
-                          [class.is-invalid]="testForm.get('endDate')?.touched && testForm.get('endDate')?.invalid"
-                          required
-                        />
-                        <div *ngIf="testForm.get('endDate')?.errors?.['required']" class="invalid-feedback">
-                          End Date is required!
-                        </div>
-                        <div *ngIf="testForm.get('endDate')?.errors?.['invalidEndDate']" class="invalid-feedback">
-                          End Date should not be before the current time or Start Date.
-                        </div>
-                      </div>
-                    
-                      <div class="mb-3">
-                        <label for="duration" class="form-label">Duration (minutes)</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="duration"
-                          formControlName="duration"
-                          [class.is-invalid]="testForm.get('duration')?.touched && testForm.get('duration')?.invalid"
-                          required
-                        />
-                        <div *ngIf="testForm.get('duration')?.errors?.['required']" class="invalid-feedback">
-                          Duration is required!
-                        </div>
-                        <div *ngIf="testForm.get('duration')?.errors?.['invalidDuration']" class="invalid-feedback">
-                          Duration should not exceed the time difference between Start Date and End Date.
-                        </div>
-                      </div>
-                    
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" [disabled]="testForm.invalid" class="btn btn-primary">
-                          Create
-                        </button>
-                      </div>
-                    </form>
-                    
-                  </div>
-                </div>
-              </div>
-            </div><!-- End Create Test Modal-->
-          </div>
-          
-        
+  <div class="pagetitle">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h1>Classroom Dashboard</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Dashboard
+            </li>
+          </ol>
+        </nav>
       </div>
-    </section>
-  </main>
-  
+      <button
+        type="button"
+        class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#createTestModal"
+      >
+        Create New Test
+      </button>
+    </div>
+  </div>
+
+  <div class="pagetitle">
+    <h2>Manage Tests</h2>
+    <p class="text-muted">
+      View, create, and manage all tests within this classroom.
+    </p>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+      <div class="col-lg-12 mb-3" style="overflow-x: auto">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Duration (minutes)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let test of tests; let i = index"
+              (click)="redirectToTest(test.testId)"
+              style="cursor: pointer"
+            >
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ test.title }}</td>
+              <td>{{ test.description }}</td>
+              <td>{{ test.startDate | date : "medium" }}</td>
+              <td>{{ test.endDate | date : "medium" }}</td>
+              <td>{{ test.duration }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <!-- Create Test Modal -->
+        <div
+          class="modal fade"
+          id="createTestModal"
+          tabindex="-1"
+          data-bs-backdrop="false"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Create New Test</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  [formGroup]="testForm"
+                  class="needs-validation"
+                  (ngSubmit)="onTestCreate()"
+                >
+                  <div class="mb-3">
+                    <label for="testTitle" class="form-label">Test Title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="testTitle"
+                      formControlName="title"
+                      [class.is-invalid]="
+                        testForm.get('title')?.touched &&
+                        testForm.get('title')?.invalid
+                      "
+                      required
+                    />
+                    <div
+                      *ngIf="testForm.get('title')?.errors?.['required']"
+                      class="invalid-feedback"
+                    >
+                      Test Title is required!
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="testDescription" class="form-label"
+                      >Description</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="testDescription"
+                      formControlName="description"
+                      [class.is-invalid]="
+                        testForm.get('description')?.touched &&
+                        testForm.get('description')?.invalid
+                      "
+                    ></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      id="startDate"
+                      formControlName="startDate"
+                      [class.is-invalid]="
+                        testForm.get('startDate')?.touched &&
+                        testForm.get('startDate')?.invalid
+                      "
+                      required
+                    />
+                    <div
+                      *ngIf="testForm.get('startDate')?.errors?.['required']"
+                      class="invalid-feedback"
+                    >
+                      Start Date is required!
+                    </div>
+                    <div
+                      *ngIf="testForm.get('startDate')?.errors?.['invalidStartDate']"
+                      class="invalid-feedback"
+                    >
+                      Start Date should not be in the past.
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input
+                      type="datetime-local"
+                      class="form-control"
+                      id="endDate"
+                      formControlName="endDate"
+                      [class.is-invalid]="
+                        testForm.get('endDate')?.touched &&
+                        testForm.get('endDate')?.invalid
+                      "
+                      required
+                    />
+                    <div
+                      *ngIf="testForm.get('endDate')?.errors?.['required']"
+                      class="invalid-feedback"
+                    >
+                      End Date is required!
+                    </div>
+                    <div
+                      *ngIf="testForm.get('endDate')?.errors?.['invalidEndDate']"
+                      class="invalid-feedback"
+                    >
+                      End Date should not be before the current time or Start
+                      Date.
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="duration" class="form-label"
+                      >Duration (minutes)</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="duration"
+                      formControlName="duration"
+                      [class.is-invalid]="
+                        testForm.get('duration')?.touched &&
+                        testForm.get('duration')?.invalid
+                      "
+                      required
+                    />
+                    <div
+                      *ngIf="testForm.get('duration')?.errors?.['required']"
+                      class="invalid-feedback"
+                    >
+                      Duration is required!
+                    </div>
+                    <div
+                      *ngIf="testForm.get('duration')?.errors?.['invalidDuration']"
+                      class="invalid-feedback"
+                    >
+                      Duration should not exceed the time difference between
+                      Start Date and End Date.
+                    </div>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="submit"
+                      [disabled]="testForm.invalid"
+                      class="btn btn-primary"
+                    >
+                      Create
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Create Test Modal-->
+      </div>
+    </div>
+  </section>
+</main>

@@ -1,69 +1,82 @@
 <app-teacher-side-bar></app-teacher-side-bar>
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Testooo Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-    </div>
-    <!-- End Page Title -->
-    <div class="pagetitle">
-      
-     
-    </div>
-  
-    <section class="section dashboard">
-      
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Test Details</h5>
-          <p class="card-text">
-            <strong>Title:</strong> Test Title<br>
-            <strong>Description:</strong> Test Description<br>
-            <strong>Start Date:</strong> 2024-08-20<br>
-            <strong>End Date:</strong> 2024-08-21<br>
-            <strong>Duration:</strong> 120 minutes<br>
-            <strong>Classroom:</strong> Room 102<br>
-          </p>
-          <button type="button" class="btn btn-primary" [routerLink]="['/classroom', classroomId, 'test', testId, 'question', 'new']">
-            Add Question
-          </button>
-          <h5 class="card-title"></h5>
-         
-          <table class="table table-hover">
-            <thead>
-              <tr>
-
-                <th scope="col">Title</th>
-
-                <th scope="col">Difficulty</th>
-                <th scope="col">Total Test Cases</th>
-                <th scope="col">Total Marks</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let question of questions" (click)="navigateTo(generateLink(question.codingQuestionId))">
-                 <td>{{ question.title }}</td>
-
-                <td>{{ question.difficulty }}</td>
-                <td>{{ 1 + 1}}</td>
-                <td>{{ 2 + 1 }}</td>
-              </tr>
-            </tbody>
-          </table>
-          
-      
-        </div>
+  <div class="pagetitle">
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <h1>Test Dashboard</h1>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Dashboard
+            </li>
+          </ol>
+        </nav>
       </div>
-      
-    
-    
-    
-            <!-- End Vertical Pills Tabs -->
- 
-    </section>
-  </main>
-  
+    </div>
+  </div>
+
+  <div class="pagetitle">
+    <h2>Coding Questions</h2>
+    <p class="text-muted">
+      Manage and organize coding questions for this test.
+    </p>
+  </div>
+
+  <section class="section dashboard">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Test Details</h5>
+        <p class="card-text">
+          <strong>Title:</strong> Test Title<br />
+          <strong>Description:</strong> Test Description<br />
+          <strong>Start Date:</strong> 2024-08-20<br />
+          <strong>End Date:</strong> 2024-08-21<br />
+          <strong>Duration:</strong> 120 minutes<br />
+          <strong>Classroom:</strong> Room 102<br />
+        </p>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [routerLink]="[
+            '/classroom',
+            classroomId,
+            'test',
+            testId,
+            'question',
+            'new'
+          ]"
+        >
+          Add Question
+        </button>
+        <h5 class="card-title"></h5>
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Title</th>
+
+              <th scope="col">Difficulty</th>
+              <th scope="col">Total Test Cases</th>
+              <th scope="col">Total Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let question of questions"
+              (click)="navigateTo(generateLink(question.codingQuestionId))"
+            >
+              <td>{{ question.title }}</td>
+
+              <td>{{ question.difficulty }}</td>
+              <td>{{ 1 + 1 }}</td>
+              <td>{{ 2 + 1 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- End Vertical Pills Tabs -->
+  </section>
+</main>
