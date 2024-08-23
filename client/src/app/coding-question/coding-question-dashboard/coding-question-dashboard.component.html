@@ -53,30 +53,40 @@
                       formControlName="inputCase"
                     ></textarea>
                   </div>
-                
+
                   <div class="mb-3">
-                    <label for="outputCase" class="form-label">Output Case</label>
+                    <label for="outputCase" class="form-label"
+                      >Output Case</label
+                    >
                     <textarea
                       id="outputCase"
                       class="form-control"
                       formControlName="outputCase"
-                      [class.is-invalid]="testCaseForm.get('outputCase')?.touched && testCaseForm.get('outputCase')?.invalid"
+                      [class.is-invalid]="
+                        testCaseForm.get('outputCase')?.touched &&
+                        testCaseForm.get('outputCase')?.invalid
+                      "
                       required
                     ></textarea>
-                    <div *ngIf="testCaseForm.get('outputCase')?.errors?.['required']" class="invalid-feedback">
+                    <div
+                      *ngIf="testCaseForm.get('outputCase')?.errors?.['required']"
+                      class="invalid-feedback"
+                    >
                       Output Case is required!
                     </div>
                   </div>
-                
+
                   <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label"
+                      >Description</label
+                    >
                     <textarea
                       id="description"
                       class="form-control"
                       formControlName="description"
                     ></textarea>
                   </div>
-                
+
                   <div class="mb-3 form-check">
                     <input
                       type="checkbox"
@@ -84,9 +94,11 @@
                       id="isHidden"
                       formControlName="isHidden"
                     />
-                    <label class="form-check-label" for="isHidden">Is Hidden</label>
+                    <label class="form-check-label" for="isHidden"
+                      >Is Hidden</label
+                    >
                   </div>
-                
+
                   <div class="mb-3">
                     <label for="marks" class="form-label">Marks</label>
                     <input
@@ -94,21 +106,26 @@
                       id="marks"
                       class="form-control"
                       formControlName="marks"
-                      [class.is-invalid]="testCaseForm.get('marks')?.touched && testCaseForm.get('marks')?.invalid"
+                      [class.is-invalid]="
+                        testCaseForm.get('marks')?.touched &&
+                        testCaseForm.get('marks')?.invalid
+                      "
                       required
                     />
-                    <div *ngIf="testCaseForm.get('marks')?.errors?.['required']" class="invalid-feedback">
+                    <div
+                      *ngIf="testCaseForm.get('marks')?.errors?.['required']"
+                      class="invalid-feedback"
+                    >
                       Marks are required!
                     </div>
-                    <div *ngIf="testCaseForm.get('marks')?.errors?.['negativeMarks']" class="invalid-feedback">
+                    <div
+                      *ngIf="testCaseForm.get('marks')?.errors?.['negativeMarks']"
+                      class="invalid-feedback"
+                    >
                       Marks cannot be negative!
                     </div>
                   </div>
-                
-                  
                 </form>
-                
-                
               </div>
               <div class="modal-footer">
                 <button
@@ -135,36 +152,48 @@
         <!-- Accordion for Test Cases -->
         <!-- test-cases.component.html -->
         <!-- test-cases.component.html -->
-<div class="accordion" id="testCasesAccordion">
-  <div class="accordion-item" *ngFor="let testCase of testCases; let i = index">
-    <h2 class="accordion-header" [id]="'heading' + testCase.testCaseId">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-              [attr.data-bs-target]="'#collapse' + testCase.testCaseId" aria-expanded="false"
-              [attr.aria-controls]="'collapse' + testCase.testCaseId">
-        Test Case #{{ i + 1 }}
-      </button>
-    </h2>
-    <div [id]="'collapse' + testCase.testCaseId" class="accordion-collapse collapse"
-         [attr.aria-labelledby]="'heading' + testCase.testCaseId" data-bs-parent="#testCasesAccordion">
-      <div class="accordion-body">
-        <p><strong>Description:</strong> {{ testCase.description }}</p>
-        
-        <p><strong>Input:</strong></p>
-        <textarea class="form-control" rows="3" readonly>{{ testCase.inputCase }}</textarea>
+        <div class="accordion" id="testCasesAccordion">
+          <div
+            class="accordion-item"
+            *ngFor="let testCase of testCases; let i = index"
+          >
+            <h2 class="accordion-header" [id]="'heading' + testCase.testCaseId">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + testCase.testCaseId"
+                aria-expanded="false"
+                [attr.aria-controls]="'collapse' + testCase.testCaseId"
+              >
+                Test Case #{{ i + 1 }}
+              </button>
+            </h2>
+            <div
+              [id]="'collapse' + testCase.testCaseId"
+              class="accordion-collapse collapse"
+              [attr.aria-labelledby]="'heading' + testCase.testCaseId"
+              data-bs-parent="#testCasesAccordion"
+            >
+              <div class="accordion-body">
+                <p><strong>Description:</strong> {{ testCase.description }}</p>
 
-        <p class="mt-3"><strong>Expected Output:</strong></p>
-        <textarea class="form-control" rows="3" readonly>{{ testCase.outputCase }}</textarea>
+                <p><strong>Input:</strong></p>
+                <textarea class="form-control" rows="3" readonly>{{
+                  testCase.inputCase
+                }}</textarea>
 
-        <p class="mt-3"><strong>Marks:</strong> {{ testCase.marks }}</p>
-        <p *ngIf="testCase.isHidden"><strong>Hidden:</strong> Yes</p>
-      </div>
-    </div>
-  </div>
-</div>
+                <p class="mt-3"><strong>Expected Output:</strong></p>
+                <textarea class="form-control" rows="3" readonly>{{
+                  testCase.outputCase
+                }}</textarea>
 
-
-
-
+                <p class="mt-3"><strong>Marks:</strong> {{ testCase.marks }}</p>
+                <p *ngIf="testCase.isHidden"><strong>Hidden:</strong> Yes</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
