@@ -11,76 +11,90 @@
     </div>
     <!-- End Page Title -->
 
-    
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#joinTestModal">
-        Join Test
-    </button>
+    <!-- Button to Join a Test -->
+    <div class="d-flex justify-content-end mb-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#joinTestModal">
+            <i class="bi bi-person-plus"></i> Join Test
+        </button>
+    </div>
 
     <section class="section dashboard">
         <div class="row">
-            <div class="col-lg-12 mb-3" style="overflow-x: auto">
-                <h2>My Test Results</h2>
-                <table
-                    datatable
-                    [dtOptions]="dtOptions"
-                    [dtTrigger]="dtTrigger"
-                    class="table table-hover"
-                >
-                    <thead>
-                        <tr>
-                            <th scope="col">Test Name</th>
-                            <th scope="col">Marks Awarded</th>
-                            <th scope="col">Submitted Date</th>
-                            <th scope="col">Number of Coding Questions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let result of testResults">
-                            <td>{{ result.test }}</td>
-                            <td>{{ result.marksAwarded }}</td>
-                            <td>{{ result.submittedDate | date: 'medium' }}</td>
-                            <td>{{ result.numberOfCodingQuestion || 'N/A' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- Test Results Section -->
+            <div class="col-lg-12 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">My Test Results</h3>
+                    </div>
+                    <div class="card-body p-4" style="overflow-x: auto">
+                        <table
+                            datatable
+                            [dtOptions]="dtOptions"
+                            [dtTrigger]="dtTrigger"
+                            class="table table-hover table-bordered"
+                        >
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Test Name</th>
+                                    <th scope="col">Start Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Duration</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let exam of exams">
+                                    <td>{{ exam.testTitle }}</td>
+                                    <td>{{ exam.startDate | date: 'medium' }}</td>
+                                    <td>{{ exam.endDate | date: 'medium' }}</td>
+                                    <td>{{ exam.duration }} minutes</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" (click)="redirectToExam(exam.examId)">
+                                            View Details
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <div class="card">
-                <!-- Join Test Modal -->
-                <div class="modal fade" id="joinTestModal" tabindex="-1" data-bs-backdrop="false">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Join Test</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form [formGroup]="joinTestForm" class="needs-validation" (ngSubmit)="onJoinTest()">
-                                    <div class="mb-3">
-                                        <label for="testCode" class="form-label">Test Code</label>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="testCode"
-                                            formControlName="testCode"
-                                            [class.is-invalid]="joinTestForm.get('testCode')?.touched && joinTestForm.get('testCode')?.invalid"
-                                            required
-                                        />
-                                        <div *ngIf="joinTestForm.get('testCode')?.errors?.['required']" class="invalid-feedback">
-                                            Test Code is required!
-                                        </div>
+            <!-- Join Test Modal -->
+            <div class="modal fade" id="joinTestModal" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Join Test</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="joinTestForm" class="needs-validation" (ngSubmit)="onJoinTest()">
+                                <div class="mb-3">
+                                    <label for="testCode" class="form-label">Test Code</label>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="testCode"
+                                        formControlName="testCode"
+                                        [class.is-invalid]="joinTestForm.get('testCode')?.touched && joinTestForm.get('testCode')?.invalid"
+                                        required
+                                    />
+                                    <div *ngIf="joinTestForm.get('testCode')?.errors?.['required']" class="invalid-feedback">
+                                        Test Code is required!
                                     </div>
+                                </div>
 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Join</button>
-                                    </div>
-                                </form>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Join</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div><!-- End Join Test Modal-->
+                </div>
             </div>
+            <!-- End Join Test Modal-->
         </div>
     </section>
 </main>

@@ -79,6 +79,7 @@ builder.Services.AddScoped<IClassroomService, ClassroomService>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddScoped<ITestCaseService, TestCaseService>();
 builder.Services.AddScoped<IStudentTestService, StudentTestService>();
+builder.Services.AddScoped<IStudentDashboardService, StudentDashboardService>();
 
 //builder.Services.AddScoped<IResultsService, ResultsService>();
 builder.Services.AddScoped<ICodingQuestionService, CodingQuestionService>();

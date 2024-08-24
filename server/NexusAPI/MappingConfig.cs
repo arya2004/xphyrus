@@ -22,6 +22,25 @@ namespace NexusAPI
                 config.CreateMap<StudentTestCaseDto, TestCase>().ReverseMap();
                 config.CreateMap<StudentQuestionDto, CodingQuestion>().ReverseMap();
                 config.CreateMap<StudentTestDto, Test>().ReverseMap();
+
+
+                config.CreateMap<StudentAnswerMetadata, ExamOverviewDto>()
+            .ForMember(dest => dest.ExamId, opt => opt.MapFrom(src => src.StudentAnswerMetadataId))
+            .ForMember(dest => dest.TestTitle, opt => opt.MapFrom(src => src.Test.Title));
+
+                // Map StudentAnswerMetadata to ExamDetailsDto
+                config.CreateMap<StudentAnswerMetadata, ExamDetailsDto>()
+                    .ForMember(dest => dest.ExamId, opt => opt.MapFrom(src => src.StudentAnswerMetadataId));
+
+                // Map StudentAnswer to StudentAnswerDto
+                config.CreateMap<StudentAnswer, StudentAnswerDto>()
+                    .ForMember(dest => dest.QuestionText, opt => opt.MapFrom(src => src.CodingQuestion.Description));
+
+                // Map Test to TestDto
+                config.CreateMap<Test, DetailTestDto>();
+
+                // Map CodingQuestion to CodingQuestionDto
+                config.CreateMap<CodingQuestion, DetailCodingQuestionDto>();
             });
             return mappingCOnfig;
         }

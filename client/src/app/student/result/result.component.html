@@ -1,1 +1,81 @@
 <app-student-side-bar></app-student-side-bar>
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Test Details Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
+
+  <section class="section dashboard">
+    <div *ngIf="testDetails" class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ testDetails.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Difficulty: Medium</h6>
+        <p class="card-text">{{ testDetails.description }}</p>
+
+        <h5 class="card-title">Coding Questions</h5>
+        <div class="accordion" id="testCasesAccordion">
+          <div
+            class="accordion-item"
+            *ngFor="let testCase of testCases; let i = index"
+          >
+            <h2 class="accordion-header" [id]="'heading' + testCase.codingQuestionId">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                [attr.data-bs-target]="'#collapse' + testCase.codingQuestionId"
+                aria-expanded="false"
+                [attr.aria-controls]="'collapse' + testCase.codingQuestionId"
+              >
+                Question #{{ i + 1 }}
+              </button>
+            </h2>
+            <div
+              [id]="'collapse' + testCase.codingQuestionId"
+              class="accordion-collapse collapse"
+              [attr.aria-labelledby]="'heading' + testCase.codingQuestionId"
+              data-bs-parent="#testCasesAccordion"
+            >
+              <div class="accordion-body">
+                <p><strong>Description:</strong> {{ testCase.questionText }}</p>
+                <p><strong>Marks:</strong> {{ testCase.maxMarks }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Classroom Name</th>
+          <th scope="col">Classroom Number</th>
+          <th scope="col">Course Type</th>
+          <th scope="col">Creation Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let classroom of classrooms; let i = index"
+          (click)="redirectToClassroom(classroom.classroomId)"
+          style="cursor: pointer"
+        >
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ classroom.name }}</td>
+          <td>{{ classroom.number }}</td>
+          <td>{{ getCourseTypeName(classroom.type) }}</td>
+          <td>{{ classroom.creationDate }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>

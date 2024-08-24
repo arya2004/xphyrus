@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ExamService } from 'src/app/exam/exam.service';
 import { StudentAnswer } from 'src/app/shared/models/StudentAnswer';
+import { StudentExamOverviewDto, StudentService } from '../student.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -12,30 +13,19 @@ import { StudentAnswer } from 'src/app/shared/models/StudentAnswer';
 })
 export class StudentDashboardComponent implements OnInit {
   joinTestForm: FormGroup;
-
-  testResults: StudentAnswer[] = [];
- 
-
+  exams: StudentExamOverviewDto[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  newNexusForm: FormGroup;
+ 
 
-  constructor(private fb: FormBuilder, private router: Router, private examService: ExamService) {
+  constructor(private fb: FormBuilder, 
+    private studentDashboardService: StudentService,
+    private router: Router, private examService: ExamService) {
     this.joinTestForm = this.fb.group({
       testCode: ['', Validators.required]
     });
   }
-  // onJoinTest(): void {
-  //   const testCode = this.joinTestForm.value.testCode;
-  //   if (this.joinTestForm.valid) {
-    
-  //     // Redirect to the exam page with the test code
-  //     this.router.navigate([`/exam/${testCode}`]);
-  //   }else{
-  //     console.log('Form is invalid');
-  //     this.router.navigate([`/exam/${testCode}`]);
-  //   }
-  // }
+ 
 
   onJoinTest(): void {
     if (this.joinTestForm.valid) {
@@ -63,15 +53,12 @@ export class StudentDashboardComponent implements OnInit {
   ngOnInit(): void {
    
     this.dtOptions = {
-      pagingType: 'full_numbers'
+      pagingType: 'full_numbers',
+      stateSave: true
     };
-    this.getAllCompany();
+ 
 
-    this.testResults = [
-      { test: 'Test 1', marksAwarded: 85, submittedDate: new Date(), numberOfCodingQuestion: 5 },
-      { test: 'Test 2', marksAwarded: 90, submittedDate: new Date(), numberOfCodingQuestion: 3 },
-      // More test results
-    ];
+    this.fetchExamsTaken();
   }
 
   
@@ -80,9 +67,30 @@ export class StudentDashboardComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
 
+  /**
+   * Navigates to a specific page based on the selected exam.
+   * @param examId - The ID of the exam to navigate to.
+   */
+  redirectToExam(examId: string): void {
+    this.router.navigate(['/student/result', examId]);
+  }
 
-  getAllCompany(): void {
-  
+
+  private fetchExamsTaken(): void {
+    this.studentDashboardService.getExamsTaken().subscribe({
+      next: data => {
+        if (data.isSuccess) {
+          this.exams = data.result;
+          this.dtTrigger.next(null); // Trigger DataTable rendering
+          console.log('Exams fetched successfully:', this.exams);
+        } else {
+          console.error('Failed to fetch exams:', data.message);
+        }
+      },
+      error: err => {
+        console.error('Error fetching exams:', err);
+      }
+    });
   }
 
 
