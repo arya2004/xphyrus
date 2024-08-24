@@ -8,20 +8,41 @@ import { AccountService } from 'src/app/account/account.service';
 })
 export class NavBarComponent {
 
-  constructor(public accountService: AccountService, private renderer: Renderer2, private el: ElementRef) {
-    console.log(accountService.currentUser$);
+  constructor(
+    public accountService: AccountService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {
+    this.logCurrentUser();
   }
 
+  /**
+   * Logs the current user observable from the account service.
+   */
+  private logCurrentUser(): void {
+    this.accountService.currentUser$.subscribe({
+      next: (user) => {
+        console.log('Current user:', user);
+      },
+      error: (err) => {
+        console.error('Failed to retrieve current user:', err);
+      }
+    });
+  }
 
-  
-
-  toggleSidebar() {
-    // Toggle the 'toggle-sidebar' class on the body element
+  /**
+   * Toggles the 'toggle-sidebar' class on the body element.
+   */
+  toggleSidebar(): void {
     const body = this.el.nativeElement.ownerDocument.body;
-    if (body.classList.contains('toggle-sidebar')) {
-      this.renderer.removeClass(body, 'toggle-sidebar');
+    const sidebarClass = 'toggle-sidebar';
+
+    if (body.classList.contains(sidebarClass)) {
+      this.renderer.removeClass(body, sidebarClass);
+      console.log('Sidebar toggled off');
     } else {
-      this.renderer.addClass(body, 'toggle-sidebar');
+      this.renderer.addClass(body, sidebarClass);
+      console.log('Sidebar toggled on');
     }
   }
 }

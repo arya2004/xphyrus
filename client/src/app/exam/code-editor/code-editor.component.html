@@ -1,16 +1,19 @@
 <app-exam-side-bar></app-exam-side-bar>
-<main id="main" class="main" style="overflow-y: auto; max-height: calc(100vh - 150px);">
-    <div class="parent">
-      <div class="smolchild">
-        <h3>Title: {{ title }}</h3>
-        <h3>Question ID: {{ question?.codingQuestionId }}</h3>
-        
-      </div>
-  
-      <div class="smolchild">
-        <div class="form-inline">
-          <div class="col-sr-6">
-            <form [formGroup]="languageForm" >
+<main
+  id="main"
+  class="main"
+  style="overflow-y: auto; max-height: calc(100vh - 150px)"
+>
+  <div class="parent">
+    <div class="smolchild">
+      <h3>Title: {{ title }}</h3>
+      <h3>Question ID: {{ question?.codingQuestionId }}</h3>
+    </div>
+
+    <div class="smolchild">
+      <div class="form-inline">
+        <div class="col-sr-6">
+          <form [formGroup]="languageForm">
             <select
               formControlName="selectedLanguage"
               id="languageSelect"
@@ -22,84 +25,85 @@
               </option>
             </select>
           </form>
-          </div>
-          <div class="mx-2">
-            <button
-              type="button"
-              class="btn btn-primary mr-2"
-              (click)="onSubmitQuestion()"
-            >
-              Submit
-            </button>
-          </div>
-          <div class="mx-2">
-            <button type="button" class="btn btn-secondary" (click)="onSubmitQuestion()">
-              Test Run
-            </button>
-          </div>
+        </div>
+        <div class="mx-2">
+          <button
+            type="button"
+            class="btn btn-primary mr-2"
+            (click)="onSubmitQuestion()"
+          >
+            Submit
+          </button>
+        </div>
+        <div class="mx-2">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onSubmitQuestion()"
+          >
+            Test Run
+          </button>
         </div>
       </div>
-  
-      <div class="child">
-        <markdown [data]="description"></markdown>
-        <form class="add-cases-form" [formGroup]="above">
-          <h1>Test Run:</h1>
-  
-          <div class="row mb-3">
-            <div class="col-sm-12">
-              <textarea
-                formControlName="input"
-                placeholder="Input"
-                class="form-control"
-                style="height: 100px"
-              ></textarea>
-            </div>
+    </div>
+
+    <div class="child">
+      <markdown [data]="description"></markdown>
+      <form class="add-cases-form" [formGroup]="above">
+        <h1>Test Run:</h1>
+
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <textarea
+              formControlName="input"
+              placeholder="Input"
+              class="form-control"
+              style="height: 100px"
+            ></textarea>
           </div>
-          <div class="row mb-3">
-            <div class="col-sm-12">
-              <textarea
-                formControlName="output"
-                placeholder="OutPut"
-                class="form-control"
-                style="height: 100px"
-              ></textarea>
-            </div>
-          </div>
-  
-          <br />
-          <p>{{ responseOutput | json }}</p>
-        </form>
-      </div>
-      <div class="child">
-        <button (click)="updateOptions()">Change Language</button>
-        <button (click)="code = ''; codeInput = ''">
-          Set Value To Empty String
-        </button>
-        <button (click)="code = null; codeInput = null">Set Value To Null</button>
-        <button (click)="code = undefined; codeInput = undefined">
-          Set Value To undefined
-        </button>
-  
-        <div>
-          <ngx-monaco-editor
-            class="template-editor"
-            [options]="options"
-            [(ngModel)]="code"
-            (onInit)="onInit($event)"
-          ></ngx-monaco-editor>
         </div>
-  
+        <div class="row mb-3">
+          <div class="col-sm-12">
+            <textarea
+              formControlName="output"
+              placeholder="OutPut"
+              class="form-control"
+              style="height: 100px"
+            ></textarea>
+          </div>
+        </div>
+
+        <br />
+        <p>{{ responseOutput | json }}</p>
+      </form>
+    </div>
+    <div class="child">
+      <button (click)="updateOptions()">Change Language</button>
+      <button (click)="code = ''; codeInput = ''">
+        Set Value To Empty String
+      </button>
+      <button (click)="code = null; codeInput = null">Set Value To Null</button>
+      <button (click)="code = undefined; codeInput = undefined">
+        Set Value To undefined
+      </button>
+
+      <div>
         <ngx-monaco-editor
           class="template-editor"
-          *ngIf="showMultiple"
           [options]="options"
           [(ngModel)]="code"
+          (onInit)="onInit($event)"
         ></ngx-monaco-editor>
-  
-        <pre>{{ code | json }}</pre>
       </div>
-  
-     
+
+      <ngx-monaco-editor
+        class="template-editor"
+        *ngIf="showMultiple"
+        [options]="options"
+        [(ngModel)]="code"
+      ></ngx-monaco-editor>
+
+      <pre>{{ code | json }}</pre>
     </div>
-  </main>
-  
+  </div>
+</main>

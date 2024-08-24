@@ -25,7 +25,10 @@
             class="accordion-item"
             *ngFor="let testCase of testCases; let i = index"
           >
-            <h2 class="accordion-header" [id]="'heading' + testCase.codingQuestionId">
+            <h2
+              class="accordion-header"
+              [id]="'heading' + testCase.codingQuestionId"
+            >
               <button
                 class="accordion-button collapsed"
                 type="button"

@@ -2,22 +2,25 @@
 
 <app-exam-side-bar></app-exam-side-bar>
 
-<main id="main" class="main" style="overflow-y: auto; max-height: calc(100vh - 150px);">
-
+<main
+  id="main"
+  class="main"
+  style="overflow-y: auto; max-height: calc(100vh - 150px)"
+>
   <div class="pagetitle" *ngIf="test$ | async as test">
     <h1>{{ test.test.title }}</h1>
   </div>
 
-  <section  class="section dashboard" *ngIf="test$ | async as test">
+  <section class="section dashboard" *ngIf="test$ | async as test">
     <div class="row">
       <div class="col-12">
         <h2>Duration</h2>
         <p>{{ test.test.duration }} minutes</p>
 
         <h2>Description</h2>
-     
-          <markdown [data]="markdown"></markdown>
-       
+
+        <markdown [data]="markdown"></markdown>
+
         <h2>Questions</h2>
         <ul>
           <li *ngFor="let question of test.test.codingQuestions">

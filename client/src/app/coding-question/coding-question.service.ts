@@ -16,7 +16,6 @@ export interface CodingQuestion {
   testId: string;
 }
 
-
 export interface TestCase {
   testCaseId?: string;
   inputCase: string;
@@ -39,26 +38,46 @@ export interface CreateTestCase {
   providedIn: 'root'
 })
 export class CodingQuestionService {
-
-  private baseUrl = 'https://localhost:5000/api/CodingQuestion';
+  private readonly baseUrl = 'https://localhost:5000/api/CodingQuestion';
+  private readonly testUrl = 'https://localhost:5000/api/TestCase';
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Creates a new coding question.
+   * @param codingQuestion - The coding question data to create.
+   * @returns An observable with the response.
+   */
   createCodingQuestion(codingQuestion: CodingQuestion): Observable<IResponse<any>> {
-    return this.http.post<IResponse<any>>(`${this.baseUrl}`, codingQuestion);
+    return this.http.post<IResponse<any>>(this.baseUrl, codingQuestion);
   }
 
+  /**
+   * Retrieves all coding questions associated with a specific test.
+   * @param testId - The ID of the test.
+   * @returns An observable with the response containing an array of coding questions.
+   */
   getCodingQuestionsByTest(testId: string): Observable<IResponse<CodingQuestion[]>> {
-    return this.http.get<IResponse<CodingQuestion[]>>(`${this.baseUrl}/GetMy?testId=${testId}`);
+    const url = `${this.baseUrl}/GetMy?testId=${testId}`;
+    return this.http.get<IResponse<CodingQuestion[]>>(url);
   }
 
-  private testUrl = 'https://localhost:5000/api/TestCase';
-
+  /**
+   * Creates a new test case for a specific coding question.
+   * @param testCase - The test case data to create.
+   * @returns An observable with the response.
+   */
   createTestCase(testCase: CreateTestCase): Observable<IResponse<any>> {
-    return this.http.post<IResponse<any>>(`${this.testUrl}`, testCase);
+    return this.http.post<IResponse<any>>(this.testUrl, testCase);
   }
 
+  /**
+   * Retrieves all test cases associated with a specific coding question.
+   * @param codingQuestionId - The ID of the coding question.
+   * @returns An observable with the response containing an array of test cases.
+   */
   getTestCasesByCodingQuestion(codingQuestionId: string): Observable<IResponse<TestCase[]>> {
-    return this.http.get<IResponse<TestCase[]>>(`${this.testUrl}/GetAllForAssessment?assessmentId=${codingQuestionId}`);
+    const url = `${this.testUrl}/GetAllForAssessment?assessmentId=${codingQuestionId}`;
+    return this.http.get<IResponse<TestCase[]>>(url);
   }
 }

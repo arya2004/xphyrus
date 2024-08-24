@@ -61,18 +61,11 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   languageForm: FormGroup;
   languages = [
-  
- 
-    { id: 50, name: "C", version: "GCC 9.2.0" },
-    { id: 54, name: "C++", version: "GCC 9.2.0" },
-
-    { id: 51, name: "C#", version: "Mono 6.6.0.161" },
-   
-    { id: 62, name: "Java", version: "OpenJDK 13.0.1" },
-  
-
-    { id: 71, name: "Python", version: "3.8.1" },
-    
+    { id: 50, name: 'C', version: 'GCC 9.2.0' },
+    { id: 54, name: 'C++', version: 'GCC 9.2.0' },
+    { id: 51, name: 'C#', version: 'Mono 6.6.0.161' },
+    { id: 62, name: 'Java', version: 'OpenJDK 13.0.1' },
+    { id: 71, name: 'Python', version: '3.8.1' },
   ];
 
   examForm: FormGroup;
@@ -107,8 +100,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       this.id = params['questionId'];
       this.questionId = params['questionId'];
       this.testId = params['testId'];
-      //this.loadAssessment(this.id);
-      //this.fetchTests();
     });
     this.testSubscription = this.examService.getTest().subscribe(testData => {
       this.currentTest = testData;
@@ -132,6 +123,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   }
 
+  /**
+   * Lifecycle hook that is called when the component is destroyed.
+   */
   ngOnDestroy(): void {
     this.sub.unsubscribe();
     if (this.testSubscription) {
@@ -139,6 +133,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     }
   }
 
+   
   
 
   /**
@@ -170,13 +165,14 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
 
-  onSubmitQuestion(): void {
-    
-    ;
-    if (this.currentTest) {
+   /**
+   * Handles the submission of the current question.
+   */
+   onSubmitQuestion(): void {
+    if (this.currentTest && this.questionId) {
       const submitQuestionDto: SubmitQuestionDto = {
         submittedCode: this.code,
-        marksAwarded: 0 // Initially zero, to be updated later
+        marksAwarded: 0
       };
 
       this.examService.submitQuestion(submitQuestionDto, this.questionId).subscribe({
@@ -192,13 +188,16 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      console.error('No test in progress');
+      console.error('No active test or question ID found.');
     }
   }
 
-  onSubmitTest(): void {
+   /**
+   * Handles the submission of the entire test.
+   */
+   onSubmitTest(): void {
     if (this.currentTest) {
-      const testId: string = this.currentTest.test.testId;
+      const testId = this.currentTest.test.testId;
 
       this.examService.submitTest(testId).subscribe({
         next: data => {
@@ -213,7 +212,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
         }
       });
     } else {
-      console.error('No test in progress');
+      console.error('No active test found to submit.');
     }
   }
 }

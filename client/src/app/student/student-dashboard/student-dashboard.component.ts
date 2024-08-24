@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ExamService } from 'src/app/exam/exam.service';
-import { StudentAnswer } from 'src/app/shared/models/StudentAnswer';
 import { StudentExamOverviewDto, StudentService } from '../student.service';
 
 @Component({
@@ -11,73 +10,83 @@ import { StudentExamOverviewDto, StudentService } from '../student.service';
   templateUrl: './student-dashboard.component.html',
   styleUrls: ['./student-dashboard.component.scss']
 })
-export class StudentDashboardComponent implements OnInit {
+export class StudentDashboardComponent implements OnInit, OnDestroy {
   joinTestForm: FormGroup;
   exams: StudentExamOverviewDto[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
- 
 
-  constructor(private fb: FormBuilder, 
-    private studentDashboardService: StudentService,
-    private router: Router, private examService: ExamService) {
+  constructor(
+    private fb: FormBuilder,
+    private studentService: StudentService,
+    private router: Router,
+    private examService: ExamService
+  ) {
     this.joinTestForm = this.fb.group({
       testCode: ['', Validators.required]
     });
   }
- 
 
-  onJoinTest(): void {
-    if (this.joinTestForm.valid) {
-      const testId: string = this.joinTestForm.value.testCode;
-      console.log('Starting test:', testId);
-
-      this.examService.startTest(testId).subscribe({
-        next: data => {
-          if (data.isSuccess) {
-            console.log('Test started successfully:', data.result);
-            this.router.navigate([`/exam/${testId}`]);
-          } else {
-            console.error('Failed to start test:', data.message);
-          }
-        },
-        error: err => {
-          console.error('Test start failed:', err);
-        }
-      });
-    } else {
-      console.log('Form is invalid');
-    }
-  }
- 
+  /**
+   * Lifecycle hook that is called after data-bound properties are initialized.
+   */
   ngOnInit(): void {
-   
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      stateSave: true
-    };
- 
-
+    this.initializeDataTableOptions();
     this.fetchExamsTaken();
   }
 
-  
+  /**
+   * Lifecycle hook that is called when the component is destroyed.
+   * Unsubscribes from DataTable trigger to prevent memory leaks.
+   */
   ngOnDestroy(): void {
-    // Complete the DataTable trigger to avoid memory leaks
     this.dtTrigger.unsubscribe();
   }
 
   /**
-   * Navigates to a specific page based on the selected exam.
-   * @param examId - The ID of the exam to navigate to.
+   * Initializes DataTable options.
    */
-  redirectToExam(examId: string): void {
-    this.router.navigate(['/student/result', examId]);
+  private initializeDataTableOptions(): void {
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      stateSave: true
+    };
   }
 
+  /**
+   * Handles the logic for joining a test.
+   * Navigates to the test page if the test code is valid.
+   */
+  onJoinTest(): void {
+    if (this.joinTestForm.invalid) {
+      console.warn('Join test form is invalid:', this.joinTestForm.errors);
+      return;
+    }
 
+    const testId: string = this.joinTestForm.value.testCode;
+    console.log('Starting test with ID:', testId);
+
+    this.examService.startTest(testId).subscribe({
+      next: data => {
+        if (data.isSuccess) {
+          console.log('Test started successfully:', data.result);
+          this.router.navigate([`/exam/${testId}`]);
+        } else {
+          console.error('Failed to start test:', data.message);
+        }
+      },
+      error: err => {
+        console.error('Test start failed:', err);
+      }
+    });
+  }
+
+  /**
+   * Fetches the exams that the student has taken.
+   * Triggers DataTable rendering after successful data retrieval.
+   */
   private fetchExamsTaken(): void {
-    this.studentDashboardService.getExamsTaken().subscribe({
+    this.studentService.getExamsTaken().subscribe({
       next: data => {
         if (data.isSuccess) {
           this.exams = data.result;
@@ -93,7 +102,18 @@ export class StudentDashboardComponent implements OnInit {
     });
   }
 
+  /**
+   * Navigates to the exam result page for a specific exam.
+   * @param examId - The ID of the exam to navigate to.
+   */
+  redirectToExam(examId: string): void {
+    if (!examId) {
+      console.warn('Cannot navigate to exam without an exam ID.');
+      return;
+    }
 
-
- 
+    this.router.navigate(['/student/result', examId]).catch(err => {
+      console.error('Navigation error:', err);
+    });
+  }
 }
