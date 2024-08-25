@@ -1,4 +1,5 @@
 using EvaluationService.Data;
+using EvaluationService.Data.Initialize;
 using EvaluationService.RabbitMQ;
 using EvaluationService.Service;
 using EvaluationService.Service.IService;
@@ -9,7 +10,7 @@ using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
 using System.Text;
-//using Xphyrus.EvaluationAPI.RabbitMQ;
+using Xphyrus.EvaluationAPI.RabbitMQ;
 using Xphyrus.EvaluationAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +22,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
 return ConnectionMultiplexer.Connect(options);
 });
 
-builder.Services.AddDbContext<ApplicatioDbContext>(
+builder.Services.AddDbContext<ApplicationDbContext>(
     options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -31,17 +32,17 @@ builder.Services.AddDbContext<ApplicatioDbContext>(
 
 builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
 
-var optionBuilder = new DbContextOptionsBuilder<ApplicatioDbContext>(); //cant use scoped db on singletoon service
+var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>(); //cant use scoped db on singletoon service
 
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
 builder.Services.AddSingleton<ICachingService, CachingService>();
-builder.Services.AddTransient<IJudgeService, JudgeService>();
+
 builder.Services.AddSingleton<IMQSender, MQSender>();
 
-//builder.Services.AddHostedService<MQConsumer>();
+builder.Services.AddHostedService<MQConsumer>();
 
-//builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddHttpContextAccessor();
 
 

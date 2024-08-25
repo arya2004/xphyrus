@@ -1,5 +1,6 @@
 ﻿using EvaluationService.Dtos;
 using EvaluationService.Models;
+using EvaluationService.RabbitMQ;
 
 namespace EvaluationService.Service.IService
 {

@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Dto\TeacherDto\" />
+    <Folder Include="EmailTemplates\" />
   </ItemGroup>
 
 </Project>
