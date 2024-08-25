@@ -5,14 +5,14 @@ using RabbitMQ.Client.Events;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
-using EmailService.Models;
+using NexusAPI.Models;
 
-namespace EmailService.RabbitMQ
+namespace NexusAPI.RabbitMQ
 {
     public class MQConsumer : BackgroundService
     {
         private readonly IConfiguration _configuration;
-    
+
         private IConnection _connection;
         private IModel _channel;
         private readonly string smtpServer = "smtp.office365.com";
@@ -23,7 +23,7 @@ namespace EmailService.RabbitMQ
         public MQConsumer(IConfiguration configuration)
         {
             _configuration = configuration;
-         
+
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",
@@ -32,7 +32,7 @@ namespace EmailService.RabbitMQ
             };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.QueueDeclare(_configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"), false, false, false, null);
+            _channel.QueueDeclare(_configuration.GetValue<string>("TopicAndQueueName:EmailService"), false, false, false, null);
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -49,7 +49,7 @@ namespace EmailService.RabbitMQ
                 _channel.BasicAck(ea.DeliveryTag, false);
 
             };
-            _channel.BasicConsume(_configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"), false, consumer);
+            _channel.BasicConsume(_configuration.GetValue<string>("TopicAndQueueName:EmailService"), false, consumer);
             return Task.CompletedTask;
         }
 
@@ -57,62 +57,50 @@ namespace EmailService.RabbitMQ
         {
             try
             {
-                foreach (var item in email.To)
+                using (SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort))
                 {
-                    // neu insance always, causse this is in singleton
-                    SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort);
                     smtpClient.EnableSsl = true;
-
-
                     smtpClient.Credentials = new NetworkCredential(username, password);
 
-
-                    MailMessage mailMessage = new MailMessage();
-                    mailMessage.From = new MailAddress(username);
-                    mailMessage.To.Add(item);
-
-
-
-
-                    mailMessage.Subject = email.Subject;
-                    //mailMessage.IsBodyHtml = true;
-                    mailMessage.Body = email.Body;
-
-                    try
+                    foreach (var item in email.To)
                     {
+                        using (MailMessage mailMessage = new MailMessage())
+                        {
+                            mailMessage.From = new MailAddress(username);
+                            mailMessage.To.Add(item);
+                            mailMessage.Subject = email.Subject;
+                            mailMessage.Body = email.Body;
 
-                        await smtpClient.SendMailAsync(mailMessage);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        throw;
-                    }
-                    finally
-                    {
-                        smtpClient?.Dispose();
-                    }
-                    await Task.Delay(2000);
+                            try
+                            {
+                                await smtpClient.SendMailAsync(mailMessage);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"Error sending email to {item}: {ex.Message}");
+                                // Optionally, log the error or handle it accordingly
+                                throw;
+                            }
+                        }
 
+                        await Task.Delay(2000); // Delay between sending emails, if necessary
+                    }
                 }
 
-
-
-                Console.WriteLine(email);
-             
+                Console.WriteLine("Emails sent successfully.");
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine($"General error: {ex.Message}");
                 throw;
             }
         }
     }
 }
 //{
-//    "To": ["arya20j4@gmail.com"],
-//  "Cc": ["arya20j4@gmail.com", "arya.pathak22@vit.edu"],
-//  "Bcc": ["arya.pathak2004@gmail.com"],
-//  "Subject": "Example Subject",
-//  "Body": "This is an example email body."
+//    "to": ["arya20j4@gmail.com"],
+//  "cc": ["arya20j4@gmail.com", "arya.pathak22@vit.edu"],
+//  "bcc": ["arya.pathak2004@gmail.com"],
+//  "subject": "example subject",
+//  "body": "this is an example email body."
 //}

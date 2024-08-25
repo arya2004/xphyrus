@@ -41,34 +41,54 @@ namespace NexusAPI.Service
 
         public async Task<UserDto> Login(LoginRequestDto requestDto)
         {
-           var user = await _userManager.FindByEmailAsync(requestDto.Email);
+            var user = await _userManager.FindByEmailAsync(requestDto.Email);
             if (user == null)
             {
                 return new UserDto()
                 {
                     Email = null,
-                    Displlayname = null,
-                    Token = ""
-
+                    DisplayName = null,
+                    Token = "",
+                    Name = null,
+                    PRN = null,
+                    Division = null,
+                    Batch = null,
+                    Bio = null,
+                    Role = null
                 };
             }
+
             var result = await signInManager.CheckPasswordSignInAsync(user, requestDto.Password, false);
-            if (! result.Succeeded)
+            if (!result.Succeeded)
             {
                 return new UserDto()
                 {
                     Email = null,
-                    Displlayname = null,
-                    Token = ""
-
+                    DisplayName = null,
+                    Token = "",
+                    Name = null,
+                    PRN = null,
+                    Division = null,
+                    Batch = null,
+                    Bio = null,
+                    Role = null
                 };
             }
+
             var roles = await _userManager.GetRolesAsync(user);
+            string roleName = roles.FirstOrDefault(); // Assuming the user has only one role
+
             return new UserDto
             {
                 Email = user.Email,
                 Token = _jwtService.GenerateToken(user, roles),
-                Displlayname = user.Email
+                DisplayName = user.DisplayName,
+                Name = user.UserName,
+                PRN = user.PRN,
+                Division = user.Division,
+                Batch = user.Batch,
+                Bio = user.Bio,
+                Role = roleName
             };
         }
 
@@ -77,30 +97,52 @@ namespace NexusAPI.Service
             ApplicationUser user = new()
             {
                 Email = requestDto.Email,
-                UserName = requestDto.Name,
-                DisplayName = requestDto.Email,
-                NormalizedEmail = requestDto.Email.Normalize()
-
+                UserName = requestDto.DisplayName,
+                DisplayName = requestDto.Name,
+                NormalizedEmail = requestDto.Email.Normalize(),
+                PRN = requestDto.PRN,
+                Division = requestDto.Division,
+                Batch = requestDto.Batch,
+                Bio = requestDto.Bio,
+                Type = (UserRole)requestDto.UserRole // Casting the int Role to UserRole enum
             };
+
             try
             {
+                // Create the user
                 var result = await _userManager.CreateAsync(user, requestDto.Password);
                 if (result.Succeeded)
                 {
+                    // Determine the role name based on the numeric role value
+                    string roleName = requestDto.UserRole switch
+                    {
+                        1 => "Student",
+                        2 => "Teacher",
+                        3 => "Admin",
+                        _ => throw new ArgumentException("Invalid role value")
+                    };
+
+                    // Check if the role exists, if not, create it
+                    if (!await _roleManager.RoleExistsAsync(roleName))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(roleName));
+                    }
+
+                    // Assign the role to the user
+                    await _userManager.AddToRoleAsync(user, roleName);
 
                     return "";
                 }
                 else
                 {
-                    return result.Errors.FirstOrDefault().Description;
+                    return result.Errors.FirstOrDefault()?.Description ?? "Unknown error";
                 }
             }
             catch (Exception ex)
             {
-
+                // Log the exception if necessary
                 throw;
             }
-            return "Error";
         }
 
 

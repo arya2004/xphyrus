@@ -29,23 +29,7 @@ namespace EvaluationService.Models
             
         }
 
-        public CodingAssessmentResult(CodingAssessmentSubmission codingAssessmentSubmission, SubmissionStatusResponse submissionStatusResponse)
-        {
-            Source_code = codingAssessmentSubmission.Source_code;
-            Email = codingAssessmentSubmission.Email;
-            LinkedIn = codingAssessmentSubmission.LinkedIn;
-            Name = codingAssessmentSubmission.Name;
-            Twitter = codingAssessmentSubmission.Twitter;
-            Language = codingAssessmentSubmission.Language;
-            AssessmentId = codingAssessmentSubmission.AssessmentId;
-
-            Time = submissionStatusResponse.time;
-            Memory = submissionStatusResponse.memory;
-            Message = submissionStatusResponse.message;
-            Description = submissionStatusResponse.status.description;
-
-
-        }
+        
 
 
     }

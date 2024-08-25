@@ -25,11 +25,11 @@ namespace Xphyrus.EvaluationAPI.Service
         {
             try
             {
-                CodingAssessmentResult codingAssessmentResult = new CodingAssessmentResult(codingAssessmentSubmission, submissionStatusResponse);
+                //CodingAssessmentResult codingAssessmentResult = new CodingAssessmentResult(codingAssessmentSubmission, submissionStatusResponse);
                 
-                await using var _db = new ApplicatioDbContext(_options);
-                await _db.CodingAssessmentResult.AddAsync(codingAssessmentResult);
-                await _db.SaveChangesAsync();
+                //await using var _db = new ApplicatioDbContext(_options);
+                //await _db.CodingAssessmentResult.AddAsync(codingAssessmentResult);
+                //await _db.SaveChangesAsync();
 
             }
             catch (Exception ex)

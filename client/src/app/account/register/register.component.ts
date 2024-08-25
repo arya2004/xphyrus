@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/fo
 import { Router } from '@angular/router';
 import { AccountService } from '../account.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subject, takeUntil } from 'rxjs';
 
 /**
  * RegisterComponent handles the user registration functionality.
@@ -14,9 +15,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  selectedOption: string = 'student';
-  //complexPasswd: string = "(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$";
-  
+  isStudentRole: boolean = false;
+  private unsubscribe$ = new Subject<void>();
+  // Uncomment and use if complex password validation is required
+  // complexPasswd: string = "(?=^.{6,10}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\":;'?/>,<.])(?!.*\\s).*$";
+
   /**
    * Constructor for RegisterComponent
    * @param fb FormBuilder to create reactive forms
@@ -25,27 +28,57 @@ export class RegisterComponent {
    */
   constructor(private fb: FormBuilder, private router: Router, private accService: AccountService) {
     this.registerForm = this.fb.group({
-      companyName: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-     // password: ['', [Validators.required, Validators.pattern(this.complexPasswd)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required]],
-      terms: [false, Validators.requiredTrue]
+      confirmPassword: ['', Validators.required],
+      displayName: ['', Validators.required],
+      userRole: ['', Validators.required],
+      prn: [''],
+      division: [''],
+      batch: [''],
+      bio: [''],
     }, { validator: this.passwordMatchValidator });
+
+    this.onRoleChange(); // Ensure correct initial state
   }
 
-  passwordMatchValidator(formGroup: FormGroup) : any{
-    const password = formGroup.get('password').value;
-    const confirmPassword = formGroup.get('confirmPassword').value;
-  
-    if (password !== confirmPassword) {
-      formGroup.get('confirmPassword').setErrors({ mismatch: true });
+  /**
+   * Updates the form based on the selected role.
+   */
+  onRoleChange(): void {
+    const userRole = this.registerForm.get('userRole')?.value;
+    this.isStudentRole = userRole === '1'; // Assuming '1' represents the Student role
+
+    if (this.isStudentRole) {
+      this.registerForm.get('prn')?.setValidators([Validators.required]);
+      this.registerForm.get('division')?.setValidators([Validators.required]);
+      this.registerForm.get('batch')?.setValidators([Validators.required]);
     } else {
-      return null;
+      this.registerForm.get('prn')?.clearValidators();
+      this.registerForm.get('division')?.clearValidators();
+      this.registerForm.get('batch')?.clearValidators();
+    }
+
+    this.registerForm.get('prn')?.updateValueAndValidity();
+    this.registerForm.get('division')?.updateValueAndValidity();
+    this.registerForm.get('batch')?.updateValueAndValidity();
+  }
+
+  /**
+   * Validates if the password and confirm password fields match.
+   * @param formGroup The FormGroup containing the password controls.
+   */
+  passwordMatchValidator(formGroup: FormGroup): any {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
+
+    if (password !== confirmPassword) {
+      formGroup.get('confirmPassword')?.setErrors({ mismatch: true });
+    } else {
+      formGroup.get('confirmPassword')?.setErrors(null);
     }
   }
-  
 
   /**
    * Handles form submission for user registration.
@@ -54,16 +87,18 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       console.log('Registration form submitted with values:', this.registerForm.value);
 
-      this.accService.register(this.registerForm.value).subscribe({
-        next: () => {
-          console.log('Registration successful, navigating to login page.');
-          this.router.navigateByUrl('/account/login');
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error('Registration failed:', error);
-          this.handleError(error);
-        }
-      });
+      this.accService.register(this.registerForm.value)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe({
+          next: () => {
+            console.log('Registration successful, navigating to login page.');
+            this.router.navigateByUrl('/account/login');
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error('Registration failed:', error);
+            this.handleError(error);
+          }
+        });
     } else {
       this.logValidationErrors();
       this.markAllAsTouched();
@@ -109,5 +144,13 @@ export class RegisterComponent {
     Object.values(this.registerForm.controls).forEach(control => {
       control.markAsTouched();
     });
+  }
+
+  /**
+   * Clean up subscriptions on component destroy to prevent memory leaks.
+   */
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

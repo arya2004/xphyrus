@@ -48,12 +48,18 @@ namespace NexusAPI.Controllers
 
             var roles = await _userManager.GetRolesAsync(user);
 
+
             return new UserDto
             {
                 Email = user.Email,
                 Token = _jwtService.GenerateToken(user, roles),
-                Displlayname = user.DisplayName
-
+                DisplayName = user.DisplayName,
+                Name = user.UserName,
+                PRN = user.PRN,
+                Division = user.Division,
+                Batch = user.Batch,
+                Bio = user.Bio,
+                Role = roles[0]
             };
         }
 
@@ -70,8 +76,8 @@ namespace NexusAPI.Controllers
                 return BadRequest(_responseDto);
             }
             return Ok(_responseDto);
-
         }
+
         [HttpPost("login")]
         public async Task<ActionResult<ResponseDto>> Login([FromBody] LoginRequestDto loginRequestDto)
         {
@@ -86,14 +92,14 @@ namespace NexusAPI.Controllers
             return _responseDto;
         }
 
-        [HttpPost("assign")]
-        public async Task<ActionResult<ResponseDto>> Assign([FromBody] RegisterRequestDto registerRequestDto)
-        {
+        //[HttpPost("assign")]
+        //public async Task<ActionResult<ResponseDto>> Assign([FromBody] RegisterRequestDto registerRequestDto)
+        //{
 
-            var result = await _authService.AssignRole(registerRequestDto.Email, registerRequestDto.Role.ToUpper());
-            if (!result) _responseDto.IsSuccess = false;
-            return Ok(_responseDto);
-        }
+        //    var result = await _authService.AssignRole(registerRequestDto.Email, (UserRole)registerRequestDto.Role);
+        //    if (!result) _responseDto.IsSuccess = false;
+        //    return Ok(_responseDto);
+        //}
 
         [HttpGet("user")]
         public async Task<ActionResult<ResponseDto>> LoadCurrentUser()
@@ -106,7 +112,7 @@ namespace NexusAPI.Controllers
             {
                 Email = user.Email,
                 Token = _jwtService.GenerateToken(user, roles),
-                Displlayname = user.DisplayName
+                DisplayName = user.DisplayName
 
             };
             _responseDto.Result = dt;

@@ -18,7 +18,6 @@
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
             <h2>{{ applicationUser?.displayName }}</h2>
             <h3>{{ applicationUser?.bio }}</h3>
-            
           </div>
         </div>
       </div>
@@ -40,78 +39,112 @@
                 </button>
               </li>
 
-
-
               <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">
                   Change Password
                 </button>
               </li>
             </ul>
+
             <div class="tab-content pt-2">
+              <!-- Profile Overview -->
               <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  <h5 class="card-title">Profile Details</h5>
-        
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Display Name</div>
-                    <div class="col-lg-9 col-md-8">{{ applicationUser?.displayName }}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">PRN</div>
-                    <div class="col-lg-9 col-md-8">{{ applicationUser?.prn }}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Division</div>
-                    <div class="col-lg-9 col-md-8">{{ applicationUser?.division }}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Batch</div>
-                    <div class="col-lg-9 col-md-8">{{ applicationUser?.batch }}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Bio</div>
-                    <div class="col-lg-9 col-md-8">{{ applicationUser?.bio }}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Role</div>
-                    <div class="col-lg-9 col-md-8">{{ applicationUser?.type }}</div>
-                  </div>
+                <h5 class="card-title">Profile Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Name</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.name }}</div>
                 </div>
 
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.email }}</div>
+                </div>
 
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Display Name</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.displayName }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">PRN</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.prn }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Division</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.division }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Batch</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.batch }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Bio</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.bio }}</div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Role</div>
+                  <div class="col-lg-9 col-md-8">{{ applicationUser?.role }}</div>
+                </div>
               </div>
 
+              <!-- Edit Profile -->
               <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                <!-- Profile Edit Form -->
                 <form [formGroup]="applicationUserForm" class="needs-validation" (ngSubmit)="onSubmit()">
+                  <!-- Email (Read-only) -->
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Display Name</label>
+                    <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+                      <input formControlName="email" type="email" class="form-control" id="email" />
+                    </div>
+                  </div>
+
+                  <!-- Name -->
+                  <div class="row mb-3 has-validation">
+                    <label for="name" class="col-md-4 col-lg-3 col-form-label">Name</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
                       <input
-                        [class.is-invalid]="
-                          applicationUserForm.get('displlayname')?.touched &&
-                          applicationUserForm.get('displlayname')?.invalid
-                        "
-                        formControlName="displlayname"
+                        [class.is-invalid]="applicationUserForm.get('name')?.touched && applicationUserForm.get('name')?.invalid"
+                        formControlName="name"
                         type="text"
                         class="form-control"
-                        id="displlayname"
+                        id="name"
                         required
                       />
-                      <div *ngIf="applicationUserForm.get('displlayname')?.errors?.['required']" class="invalid-feedback">
+                      <div *ngIf="applicationUserForm.get('name')?.errors?.['required']" class="invalid-feedback">
+                        Name is required!
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Display Name -->
+                  <div class="row mb-3 has-validation">
+                    <label for="displayName" class="col-md-4 col-lg-3 col-form-label">Display Name</label>
+                    <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+                      <input
+                        [class.is-invalid]="applicationUserForm.get('displayName')?.touched && applicationUserForm.get('displayName')?.invalid"
+                        formControlName="displayName"
+                        type="text"
+                        class="form-control"
+                        id="displayName"
+                        required
+                      />
+                      <div *ngIf="applicationUserForm.get('displayName')?.errors?.['required']" class="invalid-feedback">
                         Display Name is required!
                       </div>
                     </div>
                   </div>
-      
+
+                  <!-- PRN -->
                   <div class="row mb-3 has-validation">
                     <label for="prn" class="col-md-4 col-lg-3 col-form-label">PRN</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
                       <input
-                        [class.is-invalid]="
-                          applicationUserForm.get('prn')?.touched && applicationUserForm.get('prn')?.invalid
-                        "
+                        [class.is-invalid]="applicationUserForm.get('prn')?.touched && applicationUserForm.get('prn')?.invalid"
                         formControlName="prn"
                         type="text"
                         class="form-control"
@@ -122,14 +155,13 @@
                       </div>
                     </div>
                   </div>
-      
+
+                  <!-- Division -->
                   <div class="row mb-3 has-validation">
                     <label for="division" class="col-md-4 col-lg-3 col-form-label">Division</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
                       <input
-                        [class.is-invalid]="
-                          applicationUserForm.get('division')?.touched && applicationUserForm.get('division')?.invalid
-                        "
+                        [class.is-invalid]="applicationUserForm.get('division')?.touched && applicationUserForm.get('division')?.invalid"
                         formControlName="division"
                         type="text"
                         class="form-control"
@@ -140,14 +172,13 @@
                       </div>
                     </div>
                   </div>
-      
+
+                  <!-- Batch -->
                   <div class="row mb-3 has-validation">
                     <label for="batch" class="col-md-4 col-lg-3 col-form-label">Batch</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
                       <input
-                        [class.is-invalid]="
-                          applicationUserForm.get('batch')?.touched && applicationUserForm.get('batch')?.invalid
-                        "
+                        [class.is-invalid]="applicationUserForm.get('batch')?.touched && applicationUserForm.get('batch')?.invalid"
                         formControlName="batch"
                         type="text"
                         class="form-control"
@@ -158,136 +189,106 @@
                       </div>
                     </div>
                   </div>
-      
+
+                  <!-- Bio -->
                   <div class="row mb-3 has-validation">
                     <label for="bio" class="col-md-4 col-lg-3 col-form-label">Bio</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
                       <textarea
-                        [class.is-invalid]="
-                          applicationUserForm.get('bio')?.touched && applicationUserForm.get('bio')?.invalid
-                        "
+                        [class.is-invalid]="applicationUserForm.get('bio')?.touched && applicationUserForm.get('bio')?.invalid"
                         formControlName="bio"
                         class="form-control"
                         id="bio"
-                        required
                       ></textarea>
                       <div *ngIf="applicationUserForm.get('bio')?.errors?.['required']" class="invalid-feedback">
                         Bio is required!
                       </div>
                     </div>
                   </div>
-      
+
+                  <!-- Role (Read-only) -->
                   <div class="row mb-3 has-validation">
-                    <label for="type" class="col-md-4 col-lg-3 col-form-label">Role</label>
+                    <label for="role" class="col-md-4 col-lg-3 col-form-label">Role</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-                      <select
-                        [class.is-invalid]="
-                          applicationUserForm.get('type')?.touched && applicationUserForm.get('type')?.invalid
-                        "
-                        formControlName="type"
-                        class="form-select"
-                        id="type"
-                        required
-                      >
-                        <option *ngFor="let role of userRoles" [value]="role.value">{{ role.label }}</option>
-                      </select>
-                      <div *ngIf="applicationUserForm.get('type')?.errors?.['required']" class="invalid-feedback">
-                        Role is required!
-                      </div>
+                      <input formControlName="role" type="text" class="form-control" id="role" />
                     </div>
                   </div>
-      
+
                   <div class="text-center">
                     <button type="submit" [disabled]="applicationUserForm.invalid" class="btn btn-primary">
                       Save Changes
                     </button>
                   </div>
                 </form>
-
-
-                
-                <!-- End Profile Edit Form -->
               </div>
 
-
-
+              <!-- Change Password -->
               <div class="tab-pane fade pt-3" id="profile-change-password">
-                <!-- Change Password Form -->
-                <form  [formGroup]="passwordChangeForm" (ngSubmit)="onSubmitPasswordForm()" >
-
+                <form [formGroup]="passwordChangeForm" (ngSubmit)="onSubmitPasswordForm()">
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-
-
+                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            passwordChangeForm.get('currentPassword')?.touched &&
-                            passwordChangeForm.get('currentPassword')?.invalid
-                          " formControlName="currentPassword" type="password"  name="username" class="form-control"
-                        id="yourUsername" required />
-                      <div *ngIf="passwordChangeForm.get('currentPassword')?.errors?.['required']"
-                        class="invalid-feedback">
+                      <input
+                        [class.is-invalid]="passwordChangeForm.get('currentPassword')?.touched && passwordChangeForm.get('currentPassword')?.invalid"
+                        formControlName="currentPassword"
+                        type="password"
+                        class="form-control"
+                        id="currentPassword"
+                        required
+                      />
+                      <div *ngIf="passwordChangeForm.get('currentPassword')?.errors?.['required']" class="invalid-feedback">
                         Current Password is required!
                       </div>
-
                     </div>
                   </div>
 
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-
-
+                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
-
-                      <input [class.is-invalid]="
-                            passwordChangeForm.get('newPassword')?.touched &&
-                            passwordChangeForm.get('newPassword')?.invalid
-                          " formControlName="newPassword" type="password"  name="username" class="form-control"
-                        id="yourUsername" required />
-                        <div *ngIf="passwordChangeForm.get('newPassword')?.errors?.['required']" class="invalid-feedback">
-                          New Password is required!
-                        </div>
-                        <div *ngIf="passwordChangeForm.get('newPassword')?.errors?.['minlength']" class="invalid-feedback">
-                          New Password must be at least 8 characters long!
-                        </div>
-
+                      <input
+                        [class.is-invalid]="passwordChangeForm.get('newPassword')?.touched && passwordChangeForm.get('newPassword')?.invalid"
+                        formControlName="newPassword"
+                        type="password"
+                        class="form-control"
+                        id="newPassword"
+                        required
+                      />
+                      <div *ngIf="passwordChangeForm.get('newPassword')?.errors?.['required']" class="invalid-feedback">
+                        New Password is required!
+                      </div>
+                      <div *ngIf="passwordChangeForm.get('newPassword')?.errors?.['minlength']" class="invalid-feedback">
+                        New Password must be at least 8 characters long!
+                      </div>
                     </div>
                   </div>
 
                   <div class="row mb-3 has-validation">
-                    <label for="displlayname" class="col-md-4 col-lg-3 col-form-label">Re-New Password</label>
-
-
+                    <label for="reEnterNewPassword" class="col-md-4 col-lg-3 col-form-label">Re-New Password</label>
                     <div class="col-md-8 col-lg-9 input-Syndicate has-validation">
+                      <input
+                        [class.is-invalid]="passwordChangeForm.get('reEnterNewPassword')?.touched && passwordChangeForm.get('reEnterNewPassword')?.invalid"
+                        formControlName="reEnterNewPassword"
+                        type="password"
+                        class="form-control"
+                        id="reEnterNewPassword"
+                        required
+                      />
+                      <div *ngIf="passwordChangeForm.get('reEnterNewPassword')?.errors?.['required']" class="invalid-feedback">
+                        Re-enter New Password is required!
+                      </div>
 
-                      <input [class.is-invalid]="
-                            passwordChangeForm.get('reEnterNewPassword')?.touched &&
-                            passwordChangeForm.get('reEnterNewPassword')?.invalid 
-                          " formControlName="reEnterNewPassword"type="password"  name="username" class="form-control"
-                        id="yourUsername" required />
-                        <div *ngIf="passwordChangeForm.get('reEnterNewPassword')?.errors?.['required']" class="invalid-feedback">
-                          Re-enter New Password is required!
-                        </div>
-
-                        <div *ngIf="passwordChangeForm.get('reEnterNewPassword')?.errors?.['mismatch']" class="invalid-feedback">
-                          New Password and Re-entered Password do not match!
-                        </div>
-                        
-
+                      <div *ngIf="passwordChangeForm.get('reEnterNewPassword')?.errors?.['mismatch']" class="invalid-feedback">
+                        New Password and Re-entered Password do not match!
+                      </div>
                     </div>
                   </div>
-
-                
-
 
                   <div class="text-center">
-                    <button type="submit"  [disabled]="passwordChangeForm.invalid" class="btn btn-primary">
+                    <button type="submit" [disabled]="passwordChangeForm.invalid" class="btn btn-primary">
                       Change Password
                     </button>
                   </div>
                 </form>
-                <!-- End Change Password Form -->
               </div>
             </div>
             <!-- End Bordered Tabs -->

@@ -56,7 +56,7 @@ else
 }
 
 
-
+builder.Services.AddHostedService<MQConsumer>();
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("JwtOptions"));
 
 

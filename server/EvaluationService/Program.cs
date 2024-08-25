@@ -9,7 +9,7 @@ using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using System;
 using System.Text;
-using Xphyrus.EvaluationAPI.RabbitMQ;
+//using Xphyrus.EvaluationAPI.RabbitMQ;
 using Xphyrus.EvaluationAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +39,7 @@ builder.Services.AddSingleton<ICachingService, CachingService>();
 builder.Services.AddTransient<IJudgeService, JudgeService>();
 builder.Services.AddSingleton<IMQSender, MQSender>();
 
-builder.Services.AddHostedService<MQConsumer>();
+//builder.Services.AddHostedService<MQConsumer>();
 
 //builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddHttpContextAccessor();
