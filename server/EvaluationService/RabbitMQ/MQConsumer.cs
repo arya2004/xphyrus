@@ -1,5 +1,7 @@
 ﻿
 using Azure.Core;
+using Docker.DotNet.Models;
+using Docker.DotNet;
 using EvaluationService.Dtos;
 using EvaluationService.Models;
 using EvaluationService.RabbitMQ;
@@ -29,7 +31,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             _configuration = configuration;
             _resultService = resultService;
             _bus = bus;
-     
+
 
 
             var factory = new ConnectionFactory
@@ -66,146 +68,15 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
 
         private async Task HandleAsync(CodingAssessmentSubmission msg)
         {
-            string resultOutput = "";
-            string sourceFilePath = "";
-            string outputFilePath = "";
-
-            // Define file extensions and commands based on language
-            string fileExtension = "";
-            string compileCommand = "";
-            string executeCommand = "";
-
-            switch (msg.Language.ToLower())
-            {
-                case "c":
-                    fileExtension = ".c";
-                    sourceFilePath = $"temp{fileExtension}";
-                    outputFilePath = "temp.exe";
-                    compileCommand = $"gcc {sourceFilePath} -o {outputFilePath}";
-                    executeCommand = $"{outputFilePath}";
-                    break;
-
-                case "c++":
-                    fileExtension = ".cpp";
-                    sourceFilePath = $"temp{fileExtension}";
-                    outputFilePath = "temp.exe";
-                    compileCommand = $"g++ {sourceFilePath} -o {outputFilePath}";
-                    executeCommand = $"{outputFilePath}";
-                    break;
-
-                case "c#":
-                    fileExtension = ".cs";
-                    sourceFilePath = $"temp{fileExtension}";
-                    outputFilePath = "temp.exe";
-                    compileCommand = $"csc {sourceFilePath} -out:{outputFilePath}";
-                    executeCommand = $"{outputFilePath}";
-                    break;
-
-                case "java":
-                    fileExtension = ".java";
-                    sourceFilePath = "Main.java";
-                    outputFilePath = "Main";
-                    compileCommand = $"javac {sourceFilePath}";
-                    executeCommand = $"java {outputFilePath}";
-                    break;
-
-                case "python":
-                    fileExtension = ".py";
-                    sourceFilePath = $"temp{fileExtension}";
-                    executeCommand = $"python {sourceFilePath}";
-                    break;
-
-                default:
-                    throw new Exception("Unsupported language");
-            }
-
-            // Write the source code to a file
-            await File.WriteAllTextAsync(sourceFilePath, msg.Source_code);
-
-            try
-            {
-                if (!string.IsNullOrEmpty(compileCommand))
-                {
-                    // Compile the source code (if necessary)
-                    var compileProcess = new Process
-                    {
-                        StartInfo = new ProcessStartInfo
-                        {
-                            FileName = "cmd.exe",
-                            Arguments = $"/c {compileCommand}",
-                            RedirectStandardOutput = true,
-                            RedirectStandardError = true,
-                            UseShellExecute = false,
-                            CreateNoWindow = true,
-                        }
-                    };
-
-                    compileProcess.Start();
-                    string compileResult = await compileProcess.StandardOutput.ReadToEndAsync();
-                    string compileError = await compileProcess.StandardError.ReadToEndAsync();
-                    compileProcess.WaitForExit();
-
-                    if (compileProcess.ExitCode != 0)
-                    {
-                        throw new Exception($"Compilation failed: {compileError}");
-                    }
-                }
-
-                // Execute the compiled file or script
-                var executeProcess = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = "cmd.exe",
-                        Arguments = $"/c {executeCommand}",
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                    }
-                };
-
-                executeProcess.Start();
-
-                if (!string.IsNullOrEmpty(msg.Input))
-                {
-                    await executeProcess.StandardInput.WriteLineAsync(msg.Input);
-                }
-
-                resultOutput = await executeProcess.StandardOutput.ReadToEndAsync();
-                string executionError = await executeProcess.StandardError.ReadToEndAsync();
-                executeProcess.WaitForExit();
-
-                if (executeProcess.ExitCode != 0)
-                {
-                    throw new Exception($"Execution failed: {executionError}");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                resultOutput = ex.Message;
-            }
-            finally
-            {
-                // Cleanup
-                if (File.Exists(sourceFilePath))
-                {
-                    File.Delete(sourceFilePath);
-                }
-                if (File.Exists(outputFilePath))
-                {
-                    File.Delete(outputFilePath);
-                }
-            }
+            var executor = new CodeExecutor();
+            string output = await executor.ExecuteCodeAsync(msg.Language, msg.Source_code, msg.Input);
 
             // Prepare the email
             EmailLogger emailLogger = new EmailLogger();
             emailLogger.To.Add(msg.Email);
             emailLogger.Subject = "Your Result";
-            emailLogger.Body = resultOutput;
-            Console.WriteLine(resultOutput.ToString());
+            emailLogger.Body = output;
+            Console.WriteLine(output);
             Console.WriteLine(msg);
 
             try
@@ -215,10 +86,142 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message.ToString());
+                Console.WriteLine(ex.Message);
+            }
+
+
+
+
+
+        }
+
+    }
+
+    public class CodeExecutor
+    {
+        private readonly DockerClient _client;
+
+        public CodeExecutor()
+        {
+            _client = new DockerClientConfiguration(new Uri("npipe://./pipe/docker_engine")).CreateClient();
+        }
+
+        public async Task<string> ExecuteCodeAsync(string language, string code, string input)
+        {
+            string imageName = GetDockerImageName(language);
+
+            if (string.IsNullOrEmpty(imageName))
+            {
+                throw new ArgumentException("Unsupported language.");
+            }
+
+            await PullImageIfNotExistsAsync(imageName);
+
+            string containerId = await CreateContainerAsync(imageName, code, input);
+
+            try
+            {
+                return await StartContainerAndFetchOutputAsync(containerId);
+            }
+            finally
+            {
+                await _client.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters() { Force = true });
             }
         }
 
+        private string GetDockerImageName(string language)
+        {
+            return language.ToLower() switch
+            {
+                "c" => "gcc:latest",
+                "c++" => "gcc:latest",
+                "java" => "openjdk:latest",
+                "c#" => "mcr.microsoft.com/dotnet/sdk:latest",
+                "python" => "python:latest",
+                _ => null
+            };
+        }
 
+        private async Task PullImageIfNotExistsAsync(string imageName)
+        {
+            var images = await _client.Images.ListImagesAsync(new ImagesListParameters
+            {
+                Filters = new Dictionary<string, IDictionary<string, bool>>
+                {
+                    ["reference"] = new Dictionary<string, bool> { [imageName] = true }
+                }
+            });
+
+            if (!images.Any())
+            {
+                await _client.Images.CreateImageAsync(new ImagesCreateParameters { FromImage = imageName }, null, new Progress<JSONMessage>());
+            }
+        }
+
+        private async Task<string> CreateContainerAsync(string imageName, string code, string input)
+        {
+            var containerCreateParams = new CreateContainerParameters
+            {
+                Image = imageName,
+                Cmd = GetExecutionCommand(imageName, code),
+                AttachStdout = true,
+                AttachStderr = true,
+                AttachStdin = !string.IsNullOrEmpty(input),  // Attach stdin only if input is provided
+                Tty = false,
+            };
+
+            var containerResponse = await _client.Containers.CreateContainerAsync(containerCreateParams);
+            string containerId = containerResponse.ID;
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                var inputData = Encoding.UTF8.GetBytes(input);
+
+                using (var stream = await _client.Containers.AttachContainerAsync(containerId, false, new ContainerAttachParameters { Stdin = true }))
+                {
+                    // Ensure the container is running before writing to stdin
+                    var containerInspect = await _client.Containers.InspectContainerAsync(containerId);
+                    if (containerInspect.State.Running)
+                    {
+                        await stream.WriteAsync(inputData, 0, inputData.Length, CancellationToken.None);
+                        // Properly handle the EOF signal to the process
+                        stream.CloseWrite();  // Close the write side of the pipe
+                    }
+                }
+            }
+
+            return containerId;
+        }
+
+        private string[] GetExecutionCommand(string imageName, string code)
+        {
+            return imageName switch
+            {
+                "gcc:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/main.cpp && g++ /tmp/main.cpp -o /tmp/a.out && /tmp/a.out" },
+                "openjdk:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/Main.java && javac /tmp/Main.java && java -cp /tmp Main" },
+                "mcr.microsoft.com/dotnet/sdk:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/Program.cs && dotnet run /tmp/Program.cs" },
+                "python:latest" => new[] { "python", "-c", code },
+                _ => throw new ArgumentException("Unsupported image.")
+            };
+        }
+
+
+        private async Task<string> StartContainerAndFetchOutputAsync(string containerId)
+        {
+            await _client.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
+
+            var logs = await _client.Containers.GetContainerLogsAsync(containerId, new ContainerLogsParameters
+            {
+                ShowStdout = true,
+                ShowStderr = true,
+                Follow = true
+            });
+
+            using (var reader = new StreamReader(logs))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
     }
 }
+

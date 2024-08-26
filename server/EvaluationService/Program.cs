@@ -30,7 +30,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 
 
-builder.Services.AddHttpClient("Judge0", u => u.BaseAddress = new Uri(builder.Configuration["ServiceUrls:JudgeAPI"])); //add http handler
+
 
 var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>(); //cant use scoped db on singletoon service
 
@@ -47,9 +47,6 @@ builder.Services.AddHttpContextAccessor();
 
 
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
 
 
 //authen before authorizations
@@ -69,48 +66,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Description = "lele",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = JwtBearerDefaults.AuthenticationScheme
-                }
-            }, new string[] {}
-
-        }
-    });
-});
 
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
 
 
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
 //SeedDatabase();
 
-app.MapControllers();
+
 //app.UseAzureServiceBusConsumer();
 app.Run();
 

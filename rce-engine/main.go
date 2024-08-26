@@ -25,4 +25,3 @@ func main() {
 	}
 }
 
-//go run main.go run standalone
