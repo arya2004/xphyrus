@@ -42,7 +42,7 @@ namespace NexusAPI.RabbitMQ
             consumer.Received += (sh, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                EmailLogger? msg = JsonConvert.DeserializeObject<EmailLogger>(content);
+                EmailDetails? msg = JsonConvert.DeserializeObject<EmailDetails>(content);
 
                 HandleAsync(msg).GetAwaiter().GetResult();
 
@@ -53,47 +53,86 @@ namespace NexusAPI.RabbitMQ
             return Task.CompletedTask;
         }
 
-        private async Task HandleAsync(EmailLogger email)
+        private async Task HandleAsync(EmailDetails emailDetails)
         {
             try
             {
-                using (SmtpClient smtpClient = new SmtpClient(smtpServer, smtpPort))
+                // Select the template based on the intent
+                string? templatePath = GetTemplatePath(emailDetails.Intent);
+                if (string.IsNullOrEmpty(templatePath))
                 {
-                    smtpClient.EnableSsl = true;
-                    smtpClient.Credentials = new NetworkCredential(username, password);
-
-                    foreach (var item in email.To)
-                    {
-                        using (MailMessage mailMessage = new MailMessage())
-                        {
-                            mailMessage.From = new MailAddress(username);
-                            mailMessage.To.Add(item);
-                            mailMessage.Subject = email.Subject;
-                            mailMessage.Body = email.Body;
-
-                            try
-                            {
-                                await smtpClient.SendMailAsync(mailMessage);
-                            }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine($"Error sending email to {item}: {ex.Message}");
-                                // Optionally, log the error or handle it accordingly
-                                throw;
-                            }
-                        }
-
-                        await Task.Delay(2000); // Delay between sending emails, if necessary
-                    }
+                    throw new Exception("No template found for the specified intent.");
                 }
 
-                Console.WriteLine("Emails sent successfully.");
+                // Read the HTML template
+                string emailBody = await File.ReadAllTextAsync(templatePath);
+
+                // Replace placeholders in the template with actual values from the Info dictionary
+                foreach (var kvp in emailDetails.Info)
+                {
+                    Console.WriteLine("{{" + $"{kvp.Key}" + "}}");
+                    emailBody = emailBody.Replace("{{"+$"{kvp.Key}" + "}}", kvp.Value);
+                }
+
+                // Prepare the email message
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(username, "Xphyrus"), // Specify the sender's email and display name
+
+                    Subject = emailDetails.Subject,
+                    Body = emailBody,
+                    IsBodyHtml = true
+                };
+
+                // Add recipients
+                foreach (var to in emailDetails.To)
+                {
+                    mailMessage.To.Add(to);
+                }
+
+                foreach (var cc in emailDetails.CC)
+                {
+                    mailMessage.CC.Add(cc);
+                }
+
+                foreach (var bcc in emailDetails.Bcc)
+                {
+                    mailMessage.Bcc.Add(bcc);
+                }
+
+                // Configure the SMTP client
+                using (var smtpClient = new SmtpClient(smtpServer))
+                {
+                    smtpClient.Port = 587; // or 25, or the port your SMTP server uses
+                    smtpClient.Credentials = new NetworkCredential(username, password);
+                    smtpClient.EnableSsl = true;
+
+                    // Send the email
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
+
+                await Task.Delay(2000); // Delay between sending nvalidOperationException: A from address must be specified.emails, if necessary
+                Console.WriteLine("Email sent successfully.");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"General error: {ex.Message}");
                 throw;
             }
+        }
+
+
+        private static string? GetTemplatePath(string intent)
+        {
+            string templateDirectory = Path.Combine(Directory.GetCurrentDirectory(), "EmailTemplates");
+       
+            return intent switch
+            {
+                "confirm-email" => Path.Combine(templateDirectory, "confirm-email.html"),
+                "reset-password" => Path.Combine(templateDirectory, "reset-password.html"),
+                "result-declaration" => Path.Combine(templateDirectory, "result-declaration.html"),
+                _ => null
+            };
         }
     }
 }
