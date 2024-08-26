@@ -1,7 +1,6 @@
 ﻿
 
 using EvaluationService.Models;
-using EvaluationService.RabbitMQ;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;

@@ -1,9 +1,7 @@
 ﻿using EvaluationService.Data;
 using EvaluationService.Dtos;
-using EvaluationService.Models;
 using EvaluationService.RabbitMQ;
 using EvaluationService.Service.IService;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,22 +10,22 @@ namespace Xphyrus.EvaluationAPI.Service
     public class ResultService : IResultService
     {
         private DbContextOptions<ApplicationDbContext> _options;
-       
+
 
         public ResultService(DbContextOptions<ApplicationDbContext> options)
         {
             _options = options;
-        
+
         }
 
-       
+
 
         public async Task AddResult(CodingAssessmentSubmission codingAssessmentSubmission, EvaluationService.Dtos.SubmissionStatusResponse submissionStatusResponse)
         {
             try
             {
                 //CodingAssessmentResult codingAssessmentResult = new CodingAssessmentResult(codingAssessmentSubmission, submissionStatusResponse);
-                
+
                 //await using var _db = new ApplicationDbContext(_options);
                 //await _db.CodingAssessmentResult.AddAsync(codingAssessmentResult);
                 //await _db.SaveChangesAsync();
@@ -44,7 +42,7 @@ namespace Xphyrus.EvaluationAPI.Service
         {
             try
             {
-               
+
                 await using var _applicationDbContext = new ApplicationDbContext(_options);
                 string testCases = "";
                 return new ResponseDto(testCases, true, "");

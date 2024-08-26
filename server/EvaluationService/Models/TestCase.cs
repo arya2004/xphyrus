@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace NexusAPI.Models
+﻿namespace NexusAPI.Models
 {
     public class TestCase
     {

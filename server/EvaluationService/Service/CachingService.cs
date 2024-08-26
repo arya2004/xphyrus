@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace EvaluationService.Service
 {
     public class CachingService : ICachingService
-    {   
+    {
         private readonly IDatabase _database;
         public CachingService(IConnectionMultiplexer redis)
         {
@@ -15,7 +15,7 @@ namespace EvaluationService.Service
 
         public async Task<bool> Cache(string id, object body, TimeSpan timeToLive)
         {
-            if ( body == null)
+            if (body == null)
             {
                 return false;
             }
@@ -32,7 +32,7 @@ namespace EvaluationService.Service
             return true;
         }
 
-      
+
 
         public async Task<string> GetCached(string id)
         {
@@ -40,6 +40,6 @@ namespace EvaluationService.Service
             return cachedResp.ToString();
         }
 
-      
+
     }
 }

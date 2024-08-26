@@ -1,16 +1,10 @@
-﻿
-using Azure.Core;
+﻿using Docker.DotNet;
 using Docker.DotNet.Models;
-using Docker.DotNet;
-using EvaluationService.Dtos;
 using EvaluationService.Models;
 using EvaluationService.RabbitMQ;
-using EvaluationService.Service;
-using EvaluationService.Service.IService;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Diagnostics;
 using System.Text;
 using Xphyrus.EvaluationAPI.Service;
 
@@ -22,15 +16,15 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
         private readonly ResultService _resultService;
         private IConnection _connection;
         private IModel _channel;
-        private readonly IMQSender _bus;
 
 
 
-        public MQConsumer(IConfiguration configuration, ResultService resultService, IMQSender bus)
+
+        public MQConsumer(IConfiguration configuration, ResultService resultService)
         {
             _configuration = configuration;
             _resultService = resultService;
-            _bus = bus;
+
 
 
 
@@ -81,7 +75,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
 
             try
             {
-                //_bus.SendMessage(emailLogger, _configuration.GetValue<string>("TopicAndQueueName:EmailLogging"));
+
                 //_resultService.AddResult(msg, resultOutput).GetAwaiter().GetResult();
             }
             catch (Exception ex)

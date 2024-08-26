@@ -1,6 +1,4 @@
-﻿using EvaluationService.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace EvaluationService.Data.Initialize
 {

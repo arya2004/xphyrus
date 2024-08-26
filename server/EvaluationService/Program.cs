@@ -6,9 +6,7 @@ using EvaluationService.Service.IService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
-using System;
 using System.Text;
 using Xphyrus.EvaluationAPI.RabbitMQ;
 using Xphyrus.EvaluationAPI.Service;
@@ -19,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IConnectionMultiplexer>(c =>
 {
     var options = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"));
-return ConnectionMultiplexer.Connect(options);
+    return ConnectionMultiplexer.Connect(options);
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(
