@@ -19,7 +19,7 @@ namespace NexusAPI.Service
         {
             _applicationDbContext = applicationDbContext;
             _userManager = userManager;
-           _roleManager = roleManager;
+            _roleManager = roleManager;
             _jwtService = jwtService;
             this.signInManager = signInManager;
         }
@@ -146,7 +146,7 @@ namespace NexusAPI.Service
         }
 
 
-       
+
 
 
     }

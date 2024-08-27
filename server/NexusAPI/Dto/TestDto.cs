@@ -1,6 +1,4 @@
-﻿using NexusAPI.Models;
-
-namespace NexusAPI.Dto
+﻿namespace NexusAPI.Dto
 {
     public class TestDto
     {

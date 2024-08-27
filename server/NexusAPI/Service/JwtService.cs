@@ -1,11 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
+using NexusAPI.Models;
+using NexusAPI.Service.IService;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using NexusAPI.Models;
-
-using NexusAPI.Service.IService;
 
 namespace NexusAPI.Service
 {
@@ -27,8 +25,8 @@ namespace NexusAPI.Service
                 new Claim(ClaimTypes.GivenName, user.DisplayName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
 
-                
-              
+
+
             };
             claimsList.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 

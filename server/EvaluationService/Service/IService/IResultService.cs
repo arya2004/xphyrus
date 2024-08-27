@@ -5,7 +5,7 @@ namespace EvaluationService.Service.IService
 {
     public interface IResultService
     {
-        Task AddResult(CodingAssessmentSubmission codingAssessmentSubmission, SubmissionStatusResponse submissionStatusResponse);
+        Task AddResult(CodingAssessmentSubmission codingAssessmentSubmission);
         public Task<ResponseDto> GetAllForAssessment(Guid assessmentId);
 
         Task Migrate();

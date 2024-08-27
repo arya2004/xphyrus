@@ -32,13 +32,13 @@ namespace NexusAPI.Service
             //    return new ResponseDto(false, "Invalid Token");
             //}
             //_responseDto =  VerifyRole(httpContext, "ADMIN");
-            if (roles == null ||  email == null)
+            if (roles == null || email == null)
             {
                 return new ResponseDto(false, "Invalid Token");
             }
             _responseDto = VerifyRole(httpContext, "ADMIN");
             return _responseDto;
-            
+
         }
     }
 }

@@ -1,11 +1,11 @@
 ﻿
 using Newtonsoft.Json;
+using NexusAPI.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
-using NexusAPI.Models;
 
 namespace NexusAPI.RabbitMQ
 {
@@ -71,7 +71,7 @@ namespace NexusAPI.RabbitMQ
                 foreach (var kvp in emailDetails.Info)
                 {
                     Console.WriteLine("{{" + $"{kvp.Key}" + "}}");
-                    emailBody = emailBody.Replace("{{"+$"{kvp.Key}" + "}}", kvp.Value);
+                    emailBody = emailBody.Replace("{{" + $"{kvp.Key}" + "}}", kvp.Value);
                 }
 
                 // Prepare the email message
@@ -125,7 +125,7 @@ namespace NexusAPI.RabbitMQ
         private static string? GetTemplatePath(string intent)
         {
             string templateDirectory = Path.Combine(Directory.GetCurrentDirectory(), "EmailTemplates");
-       
+
             return intent switch
             {
                 "confirm-email" => Path.Combine(templateDirectory, "confirm-email.html"),

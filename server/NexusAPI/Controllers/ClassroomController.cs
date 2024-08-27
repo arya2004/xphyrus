@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NexusAPI.Dto;
 using NexusAPI.Models;
@@ -85,7 +84,7 @@ namespace NexusAPI.Controllers
             return _responseDto;
         }
 
-        
+
 
         [HttpDelete]
         [ActionName("Delete")]

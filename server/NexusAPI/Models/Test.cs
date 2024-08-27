@@ -11,6 +11,6 @@
         public int Duration { get; set; }
         public Classroom? Classroom { get; set; }
         public ICollection<CodingQuestion>? CodingQuestions { get; set; } = new List<CodingQuestion>();
-     
+
     }
 }

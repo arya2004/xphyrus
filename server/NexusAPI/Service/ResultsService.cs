@@ -23,7 +23,7 @@
 //            throw new NotImplementedException();
 //        }
 
-      
+
 
 //        public async Task<ResponseDto> Get(HttpContext httpContext, Guid codingAssessmentId)
 //        {
@@ -34,7 +34,7 @@
 //                {
 //                    return new ResponseDto("not found", false, "");
 //                }
-                
+
 //                return new ResponseDto(assessments, true, "");
 
 //            }

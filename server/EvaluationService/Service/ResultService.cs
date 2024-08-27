@@ -20,7 +20,7 @@ namespace Xphyrus.EvaluationAPI.Service
 
 
 
-        public async Task AddResult(CodingAssessmentSubmission codingAssessmentSubmission, EvaluationService.Dtos.SubmissionStatusResponse submissionStatusResponse)
+        public async Task AddResult(CodingAssessmentSubmission codingAssessmentSubmission)
         {
             try
             {

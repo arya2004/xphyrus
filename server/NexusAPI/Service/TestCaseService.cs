@@ -28,7 +28,7 @@ namespace NexusAPI.Service
 
             try
             {
-                var assessment = await _applicationDbContext.CodingQuestions.FirstOrDefaultAsync(a => a.CodingQuestionId== assessmentId);
+                var assessment = await _applicationDbContext.CodingQuestions.FirstOrDefaultAsync(a => a.CodingQuestionId == assessmentId);
                 if (assessment == null)
                 {
                     return new ResponseDto(false, "Assessment not found.");

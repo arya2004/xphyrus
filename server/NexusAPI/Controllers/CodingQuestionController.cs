@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NexusAPI.Data;
 using NexusAPI.Dto;
 using NexusAPI.Models;
 using NexusAPI.Service.IService;
-using System.Net.Http;
 
 namespace NexusAPI.Controllers
 {
@@ -47,7 +45,7 @@ namespace NexusAPI.Controllers
             _responseDto = _authorizationService.VerifyToken(this.HttpContext);
             if (!_responseDto.IsSuccess) return _responseDto;
 
-            _responseDto = await _codingQuestionService.GetAllForTest(this.HttpContext,  testId);
+            _responseDto = await _codingQuestionService.GetAllForTest(this.HttpContext, testId);
             return _responseDto;
         }
 

@@ -10,14 +10,14 @@
 //    [ApiController]
 //    public class SubmissionController : ControllerBase
 //    {
-     
+
 //        private readonly IMQSender _bus;
 //        private readonly IConfiguration _configuration;
 
 //        protected ResponseDto _responseDto;
 //        public SubmissionController( IMQSender bus, IConfiguration configuration)
 //        {
-           
+
 //            _bus = bus;
 //            _configuration = configuration;
 //            _responseDto = new ResponseDto();
@@ -25,7 +25,7 @@
 
 //        }
 
-  
+
 
 //        [HttpPost("Submit")]
 //        public ActionResult<ResponseDto> Submission([FromBody] CodingAssessmentSubmission submissionDto)

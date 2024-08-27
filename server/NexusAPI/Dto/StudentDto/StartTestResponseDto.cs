@@ -1,6 +1,4 @@
-﻿using NexusAPI.Models;
-
-namespace NexusAPI.Dto.StudentDto
+﻿namespace NexusAPI.Dto.StudentDto
 {
     public class StartTestResponseDto
     {

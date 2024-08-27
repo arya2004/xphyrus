@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using NexusAPI.Dto;
 using RabbitMQ.Client;
-using System;
 using System.Text;
 
 namespace NexusAPI.RabbitMQ

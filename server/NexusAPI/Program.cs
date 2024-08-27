@@ -4,17 +4,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NexusAPI;
 using NexusAPI.Data;
-using NexusAPI.Service;
-using System;
-using System.Text;
 using NexusAPI.Data.Initialize;
 using NexusAPI.Models;
-
-using NexusAPI.Service.IService;
-using NexusAPI;
-using StackExchange.Redis;
 using NexusAPI.RabbitMQ;
+using NexusAPI.Service;
+using NexusAPI.Service.IService;
+using StackExchange.Redis;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,7 +89,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 //authen before authorizations
-builder.Services.AddAuthentication(x => {
+builder.Services.AddAuthentication(x =>
+{
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
@@ -149,8 +148,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("CorsPolicy");
 //app.UseHttpsRedirection();

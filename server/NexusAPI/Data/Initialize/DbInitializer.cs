@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using NexusAPI.Data;
-using NexusAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace NexusAPI.Data.Initialize
 {
@@ -41,7 +38,7 @@ namespace NexusAPI.Data.Initialize
                 }
             }
             catch (Exception ex) { }
-         
+
 
 
 

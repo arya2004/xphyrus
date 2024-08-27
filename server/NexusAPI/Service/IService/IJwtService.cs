@@ -5,6 +5,6 @@ namespace NexusAPI.Service.IService
 {
     public interface IJwtService
     {
-        string GenerateToken(ApplicationUser user, IEnumerable<string> roles);   
+        string GenerateToken(ApplicationUser user, IEnumerable<string> roles);
     }
 }

@@ -12,6 +12,6 @@ namespace NexusAPI.Service.IService
         Task<ResponseDto> Get(HttpContext httpContext, Guid classroomId);
         Task<ResponseDto> GetAll(HttpContext httpContext);
         Task<ResponseDto> GetMy(HttpContext httpContext);
-       
+
     }
 }
