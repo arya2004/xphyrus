@@ -130,8 +130,8 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
                 "c" => "gcc:latest",
                 "c++" => "gcc:latest",
                 "java" => "openjdk:latest",
-                "c#" => "mcr.microsoft.com/dotnet/sdk:latest",
                 "python" => "python:latest",
+                "golang" => "golang:alpine",
                 _ => null
             };
         }
@@ -157,7 +157,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             var containerCreateParams = new CreateContainerParameters
             {
                 Image = imageName,
-                Cmd = GetExecutionCommand(imageName, code),
+                Cmd = GetExecutionCommand(imageName, code, input),
                 AttachStdout = true,
                 AttachStderr = true,
                 AttachStdin = !string.IsNullOrEmpty(input),  // Attach stdin only if input is provided
@@ -187,14 +187,14 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             return containerId;
         }
 
-        private string[] GetExecutionCommand(string imageName, string code)
+        private string[] GetExecutionCommand(string imageName, string code, string input)
         {
             return imageName switch
             {
-                "gcc:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/main.cpp && g++ /tmp/main.cpp -o /tmp/a.out && /tmp/a.out" },
-                "openjdk:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/Main.java && javac /tmp/Main.java && java -cp /tmp Main" },
-                "mcr.microsoft.com/dotnet/sdk:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/Program.cs && dotnet run /tmp/Program.cs" },
-                "python:latest" => new[] { "python", "-c", code },
+                "gcc:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/main.cpp && g++ /tmp/main.cpp -o /tmp/a.out && echo '{input}' | /tmp/a.out" },
+                "openjdk:latest" => new[] { "sh", "-c", $"echo '{code}' > /tmp/Main.java && javac /tmp/Main.java && echo '{input}' | java -cp /tmp Main" },
+                "python:latest" => new[] { "sh", "-c", $"echo '{input}' | python -c \"{code}\"" },
+                "golang:alpine" => new[] { "sh", "-c", $"echo '{code}' > /tmp/main.go && go build -o /tmp/main /tmp/main.go && echo '{input}' | /tmp/main" },
                 _ => throw new ArgumentException("Unsupported image.")
             };
         }
