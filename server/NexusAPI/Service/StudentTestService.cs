@@ -4,6 +4,7 @@ using NexusAPI.Data;
 using NexusAPI.Dto;
 using NexusAPI.Dto.StudentDto;
 using NexusAPI.Models;
+using NexusAPI.RabbitMQ;
 using NexusAPI.Service.IService;
 using System.Security.Claims;
 
@@ -13,11 +14,15 @@ namespace NexusAPI.Service
     {
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IMapper _mapper;
+        private readonly IMQSender _bus;
+        private readonly IConfiguration _configuration;
 
-        public StudentTestService(IMapper mapper, ApplicationDbContext applicationDbContext)
+        public StudentTestService(IMQSender bus, IMapper mapper, ApplicationDbContext applicationDbContext, IConfiguration configuration)
         {
             _mapper = mapper;
             _applicationDbContext = applicationDbContext ?? throw new ArgumentNullException(nameof(applicationDbContext));
+            _bus = bus;
+            _configuration = configuration;
         }
 
         public async Task<ResponseDto> StartTest(HttpContext httpContext, Guid testId)
@@ -102,11 +107,26 @@ namespace NexusAPI.Service
                 Student = student,
                 SubmittedDate = DateTime.UtcNow
             };
+            CodingAssessmentSubmission codingAssessmentSubmission = new CodingAssessmentSubmission()
+            {
+                Source_code = submitQuestion.Source_code,
+                Language = submitQuestion.Language,
+                Email = student.Email,
+                Metadata = "",
+                TestId = submitQuestion.TestId.Value,
+                QuestionId = submitQuestion.QuestionId.Value,
+                UserId = new Guid(student.Id)
 
-            studentAnswerMetadata.StudentAnswers.Add(studentAnswer);
-            await _applicationDbContext.SaveChangesAsync();
 
+
+            };
+            _bus.SendMessage(codingAssessmentSubmission, _configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"));
             return new ResponseDto(true, "Question submitted successfully.");
+
+            //studentAnswerMetadata.StudentAnswers.Add(studentAnswer);
+            //await _applicationDbContext.SaveChangesAsync();
+
+            //return new ResponseDto(true, "Question submitted successfully.");
         }
 
 

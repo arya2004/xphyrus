@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using System.Text;
 using Xphyrus.EvaluationAPI.RabbitMQ;
-using Xphyrus.EvaluationAPI.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +33,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 var optionBuilder = new DbContextOptionsBuilder<ApplicationDbContext>(); //cant use scoped db on singletoon service
 
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
+builder.Services.AddSingleton(new StudentResultService(optionBuilder.Options));
+//builder.Services.AddSingleton(new ResultService(optionBuilder.Options));
+builder.Services.AddSingleton(new CodingQuestionService(optionBuilder.Options));
 builder.Services.AddSingleton<ICachingService, CachingService>();
 
 builder.Services.AddSingleton<IMQSender, MQSender>();

@@ -28,6 +28,9 @@
         public string Metadata { get; set; }
 
         // Additional properties can be added as necessary
+        public Guid TestId { get; set; }
+        public Guid QuestionId { get; set; }
+        public Guid UserId { get; set; }
     }
 
 }

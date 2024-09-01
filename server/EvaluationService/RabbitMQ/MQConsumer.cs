@@ -2,29 +2,33 @@
 using Docker.DotNet.Models;
 using EvaluationService.Models;
 using EvaluationService.RabbitMQ;
+using EvaluationService.Service;
 using Newtonsoft.Json;
+using NexusAPI.Models;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
-using Xphyrus.EvaluationAPI.Service;
+
 
 namespace Xphyrus.EvaluationAPI.RabbitMQ
 {
     public class MQConsumer : BackgroundService
     {
         private readonly IConfiguration _configuration;
-        private readonly ResultService _resultService;
+       
+        private readonly StudentResultService _studentResultService;
+        private readonly CodingQuestionService _codingQuestionService;
         private IConnection _connection;
         private IModel _channel;
 
 
 
 
-        public MQConsumer(IConfiguration configuration, ResultService resultService)
+        public MQConsumer(IConfiguration configuration, CodingQuestionService codingQuestionService, StudentResultService studentResultService)
         {
             _configuration = configuration;
-            _resultService = resultService;
-
+        
+            _codingQuestionService = codingQuestionService;
 
 
 
@@ -37,7 +41,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.QueueDeclare(_configuration.GetValue<string>("TopicAndQueueName:UserSubmissions"), false, false, false, null);
-
+            _studentResultService = studentResultService;
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -63,31 +67,59 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
         private async Task HandleAsync(CodingAssessmentSubmission msg)
         {
             var executor = new CodeExecutor();
-            string output = await executor.ExecuteCodeAsync(msg.Language, msg.Source_code, msg.Input);
-
-            // Prepare the email
-            EmailLogger emailLogger = new EmailLogger();
-            emailLogger.To.Add(msg.Email);
-            emailLogger.Subject = "Your Result";
-            emailLogger.Body = output;
-            Console.WriteLine(output);
-            Console.WriteLine(msg);
+       
 
             try
             {
+                // Fetch the coding question with its test cases
+                var codingQuestion = await _codingQuestionService.GetCodingQuestionByIdAsync(msg.QuestionId);
 
-                //_resultService.AddResult(msg, resultOutput).GetAwaiter().GetResult();
+                if (codingQuestion == null)
+                {
+                    Console.WriteLine("Coding question not found.");
+                    return;
+                }
+
+                // List to store all StudentAnswers for this submission
+                var studentAnswers = new List<StudentAnswer>();
+
+                // Loop through each test case and execute the code
+                foreach (var testCase in codingQuestion.TestCases)
+                {
+                    string output = await executor.ExecuteCodeAsync(msg.Language, msg.Source_code, testCase.InputCase);
+
+                    Console.WriteLine($"Test Case ID: {testCase.TestCaseId}");
+                    Console.WriteLine($"Input: {testCase.InputCase}");
+                    Console.WriteLine($"Expected Output: {testCase.OutputCase}");
+                    Console.WriteLine($"Actual Output: {output}");
+                    Console.WriteLine($"Is Correct: {output == testCase.OutputCase}");
+                    Console.WriteLine();
+
+                    // Create a StudentAnswer for this test case
+                    var studentAnswer = new StudentAnswer
+                    {
+                        SubmittedCode = msg.Source_code,
+                        MarksAwarded = output == testCase.OutputCase ? 100 : 0, // Example scoring logic
+                        SubmittedDate = DateTime.Now,
+                        CodingQuestion = codingQuestion,
+                        //Student = msg.UserId, 
+                    };
+
+                    _studentResultService.AddStudentAnswerAsync(new Guid(msg.Metadata), studentAnswer).GetAwaiter().GetResult();
+                }
+
+            
+           
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Error: {ex.Message}");
             }
 
-
-
-
-
+            Console.WriteLine(msg);
         }
+
+
 
     }
 
@@ -102,7 +134,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
 
         public async Task<string> ExecuteCodeAsync(string language, string code, string input)
         {
-            string imageName = GetDockerImageName(language);
+            string? imageName = GetDockerImageName(language);
 
             if (string.IsNullOrEmpty(imageName))
             {
@@ -123,7 +155,7 @@ namespace Xphyrus.EvaluationAPI.RabbitMQ
             }
         }
 
-        private string GetDockerImageName(string language)
+        private string? GetDockerImageName(string language)
         {
             return language.ToLower() switch
             {
