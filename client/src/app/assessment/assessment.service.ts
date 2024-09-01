@@ -16,6 +16,55 @@ export interface CodingQuestion {
   testId: string;
 }
 
+
+export interface IResponse<T> {
+  result: T;
+  isSuccess: boolean;
+  message: string;
+}
+
+export interface TeacherTestMetadataDto {
+  studentAnswerMetadataId: string;
+  studentName: string;
+  startDate: string;
+  endDate: string;
+  duration: number;
+  test: TeacherTestDto;
+  studentAnswers: TeacherStudentAnswerDto[];
+}
+
+export interface TeacherStudentAnswerDto {
+  studentAnswerId: string;
+  submittedCode: string;
+  marksAwarded: number;
+  submittedDate: string;
+  codingQuestion: TeacherCodingQuestionDto;
+}
+
+export interface TeacherStudentExamDetailsDto {
+  studentAnswerMetadataId: string;
+  studentName: string;
+  startDate: string;
+  endDate: string;
+  duration: number;
+  studentAnswers: TeacherStudentAnswerDto[];
+}
+
+export interface TeacherTestDto {
+  testId: string;
+  testName: string;
+  description: string;
+  dateCreated: string;
+  dateScheduled: string;
+}
+
+export interface TeacherCodingQuestionDto {
+  codingQuestionId: string;
+  questionText: string;
+  maximumMarks: number;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,5 +81,17 @@ export class AssessmentService {
   getCodingQuestionsByTest(testId: string): Observable<IResponse<CodingQuestion[]>> {
     const url = `${this.baseUrl}?testId=${testId}`;
     return this.http.get<IResponse<CodingQuestion[]>>(url);
+  }
+
+  private resUrl = 'https://localhost:5000/api/TeacherDashboard'; // Replace with your actual API URL
+
+
+  getTestMetadata(testId: string): Observable<IResponse<TeacherTestMetadataDto[]>> {
+    return this.http.get<IResponse<TeacherTestMetadataDto[]>>(`${this.resUrl}/GetTestMetadata?testId=${testId}`);
+  }
+
+  // Get detailed information for a specific student's exam
+  getStudentExamDetails(studentAnswerMetadataId: string): Observable<IResponse<{ examDetails: TeacherStudentExamDetailsDto; test: TeacherTestDto }>> {
+    return this.http.get<IResponse<{ examDetails: TeacherStudentExamDetailsDto; test: TeacherTestDto }>>(`${this.resUrl}/GetStudentExamDetails?studentAnswerMetadataId=${studentAnswerMetadataId}`);
   }
 }

@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.development';
-import { TestRun } from '../shared/models/ITestRun';
+
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface IResponse<T> {
@@ -45,12 +43,10 @@ export interface SubmitQuestionDto {
   providedIn: 'root'
 })
 export class ExamService {
-
-  
   private apiUrl = 'https://localhost:5000/api/StudentTest'; // Replace with your actual API URL
 
   // BehaviorSubject to hold the current test data
-  private testSubject = new BehaviorSubject<StartTestResponseDto | null>(null);
+  private testSubject = new BehaviorSubject<StartTestResponseDto | null>(this.getTestFromLocalStorage());
 
   constructor(private http: HttpClient) {}
 
@@ -65,6 +61,7 @@ export class ExamService {
       this.http.post<IResponse<StartTestResponseDto>>(`${this.apiUrl}/StartTest?testId=${testId}`, {}).subscribe({
         next: (data) => {
           if (data.isSuccess) {
+            this.setTestInLocalStorage(data.result); // Save test data to local storage
             this.testSubject.next(data.result); // Update the BehaviorSubject with the new test data
           }
           observer.next(data);
@@ -88,6 +85,7 @@ export class ExamService {
       this.http.post<IResponse<any>>(`${this.apiUrl}/SubmitTest?testId=${testId}`, {}).subscribe({
         next: (data) => {
           if (data.isSuccess) {
+            this.clearTestInLocalStorage(); // Clear the local storage when the test is submitted
             this.testSubject.next(null); // Clear the test data when the test is submitted
           }
           observer.next(data);
@@ -102,6 +100,23 @@ export class ExamService {
 
   // Optional method to clear the test data manually
   clearTest(): void {
+    this.clearTestInLocalStorage(); // Clear local storage when manually clearing the test data
     this.testSubject.next(null);
+  }
+
+  // Helper method to get test data from local storage
+  private getTestFromLocalStorage(): StartTestResponseDto | null {
+    const testJson = localStorage.getItem('test');
+    return testJson ? JSON.parse(testJson) : null;
+  }
+
+  // Helper method to set test data in local storage
+  private setTestInLocalStorage(test: StartTestResponseDto): void {
+    localStorage.setItem('test', JSON.stringify(test));
+  }
+
+  // Helper method to clear test data from local storage
+  private clearTestInLocalStorage(): void {
+    localStorage.removeItem('test');
   }
 }

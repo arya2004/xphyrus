@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using NexusAPI.Dto;
 using NexusAPI.Dto.StudentDto;
+using NexusAPI.Dto.TeacherDto;
 using NexusAPI.Models;
 
 namespace NexusAPI
@@ -41,6 +42,9 @@ namespace NexusAPI
 
                 // Map CodingQuestion to CodingQuestionDto
                 config.CreateMap<CodingQuestion, DetailCodingQuestionDto>();
+
+                config.CreateMap<StudentAnswerMetadata, StudentExamDetailsDto>();
+                
             });
             return mappingCOnfig;
         }
