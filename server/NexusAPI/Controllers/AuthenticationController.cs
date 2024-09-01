@@ -46,6 +46,22 @@ namespace NexusAPI.Controllers
 
             var roles = await _userManager.GetRolesAsync(user);
 
+            if (roles == null)
+            {
+                return new UserDto
+                {
+                    Email = user.Email,
+                    Token = _jwtService.GenerateToken(user, roles),
+                    DisplayName = user.DisplayName,
+                    Name = user.UserName,
+                    PRN = user.PRN,
+                    Division = user.Division,
+                    Batch = user.Batch,
+                    Bio = user.Bio,
+                    Role = "teacher"
+                };
+            }
+
 
             return new UserDto
             {
@@ -57,7 +73,7 @@ namespace NexusAPI.Controllers
                 Division = user.Division,
                 Batch = user.Batch,
                 Bio = user.Bio,
-                Role = roles[0]
+                Role = "teacher"
             };
         }
 

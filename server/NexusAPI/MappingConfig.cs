@@ -43,7 +43,7 @@ namespace NexusAPI
                 // Map CodingQuestion to CodingQuestionDto
                 config.CreateMap<CodingQuestion, DetailCodingQuestionDto>();
 
-                config.CreateMap<StudentAnswerMetadata, StudentExamDetailsDto>();
+                config.CreateMap<StudentAnswerMetadata, StudentAnswerMetadataDto>();
                 
             });
             return mappingCOnfig;

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Test } from 'src/app/shared/models/Test';
 
-import { AssessmentService, CodingQuestion } from '../assessment.service';
+import { AssessmentService, CodingQuestion, TeacherTestMetadataDto } from '../assessment.service';
 
 
 @Component({
@@ -16,6 +16,7 @@ export class AssessmentDashboardComponent implements OnInit {
   classroomId: string;
   testId: string;
   questions: CodingQuestion[] = [];
+  testMetadata: TeacherTestMetadataDto[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +32,19 @@ export class AssessmentDashboardComponent implements OnInit {
     this.initializeForm();
     this.extractRouteParams();
     this.fetchCodingQuestions();
+
+    this.codingQuestionService.getTestMetadata(this.testId).subscribe(
+      (response) => {
+        if (response.isSuccess) {
+          this.testMetadata = response.result;
+        } else {
+          console.error(response.message);
+        }
+      },
+      (error) => {
+        console.error('Error fetching test metadata', error);
+      }
+    );
   }
 
   /**
